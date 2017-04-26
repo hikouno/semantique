@@ -57,16 +57,18 @@ public class RepetitionImpl implements Instruction {
 	 */
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
+		int id = _factory.createLabelNumber();
+		
 		Fragment res = _factory.createFragment();
 			
 			res.append(condition.getCode(_factory));
-			res.addPrefix("boucle:");
-			res.add(_factory.createJumpIf("fin_boucle", 0));
+			res.addPrefix("boucle"+id+":");
+			res.add(_factory.createJumpIf("fin_boucle" + id, 0));
 			
 			res.append(body.getCode(_factory));
 			
-			res.add(_factory.createJump("boucle"));
-			res.addSuffix("fin_boucle:");
+			res.add(_factory.createJump("boucle" + id));
+			res.addSuffix("fin_boucle"+id+":");
 			
 			return res;
 	}
