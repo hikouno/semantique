@@ -73,24 +73,30 @@ public class ConditionalImpl implements Instruction {
 		
 		if (elseBranch.isPresent())
 		{
+			int id = _factory.createLabelNumber();
+			
 			Fragment _then = condition.getCode(_factory);
-			_then.add(_factory.createJumpIf("else_if", 0));
+			_then.add(_factory.createJumpIf("else_if" + id, 0));
 			_then.append(thenBranch.getCode(_factory));
+			_then.add(_factory.createJump("end_if" + id));
 			
 			Fragment _else = _factory.createFragment();
 			_else.append(elseBranch.get().getCode(_factory));
-			_else.addPrefix("else_if:");
+			_else.addPrefix("else_if"+id+":");
 
 			_then.append(_else);
+			_then.addSuffix("end_if"+id+":");
 			
 			return _then;
 		}
 		else
 		{
+			int id = _factory.createLabelNumber();
+			
 			Fragment res = condition.getCode(_factory);
-			res.add(_factory.createJumpIf("end_if", 0));
+			res.add(_factory.createJumpIf("end_if"+id, 0));
 			res.append(thenBranch.getCode(_factory));
-			res.addSuffix("end_if:");
+			res.addSuffix("end_if"+id+":");
 			
 			return res;
 		}
