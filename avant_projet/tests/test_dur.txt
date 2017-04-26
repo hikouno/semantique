@@ -1,0 +1,47 @@
+test {
+	
+	typedef int T1;
+	typedef int T2;
+	
+	if ((5 != 3) || !false)
+	{
+		const T2 j = 3;
+		
+		T2 i = 2;
+		T1 icomp = 3;
+		
+		if ( i == icomp ) {
+			print(5 * j);
+		}
+	}
+	else
+	{
+		T1 i = 42;
+		
+		while (i < 64)
+		{
+			i = i + 1;
+			
+			int j = 4;
+			
+			print(i + j);
+		}
+	}
+	
+	
+	int i = 0;
+	
+	struct T { int n; int m; int toto; } s = { 4, 5, 56 };
+	i = s.n;
+	
+	int v = 1;
+	int *ptr = &v;
+	int *test = new int;
+	
+	*ptr = 4;
+	
+	int t[] = new int[5];
+	t[3] = 4;
+	
+	< int, boolean > c = { 1, false };
+}

@@ -1,0 +1,45 @@
+==Rendu BE Sémantique et traduction des langages==
+Duncan Deveaux
+Groupe C
+
+Le typage fonctionne pour tous les éléments demandés excepté les fonctions.
+La génération de code fonctionne dans des cas simples à moyens.
+
+(Au niveau de la génération du code toujours) j'ai constaté les
+disfonctionnements suivants que je n'ai pas eu le temps de corriger :
+
+-Les enregistrements imbriqués ne fonctionnent pas.
+
+-Quand on utilise plusieurs conditions ou boucles dans le même programme,
+j'observe des problèmes de label ne se plaçant pas à la place où ils devraient
+théoriquement être, peut être est-ce dû à un conflit de nom, donc ça a un
+comportement inattendu.
+
+-Surement aussi manque-t-il des POP à la sortie d'un bloc pour bien vider
+la pile pour la suite de l'exécution du programme.
+
+-Allocation pointeurs & tous les tableaux manquants.
+
+
+J'ai placé dans le répertoire tests/ quelques tests.
+
+Ce qui fonctionne (sur la génération de code) :
+
+-Déclaration & affectation variable, y compris enregistrement (à 1 dimension il semble).
+-Affichage
+-Calcul des expressions
+-If&else simple, if simple, While simple. (simple ie un seul de chaque).
+-Couples
+-Calcul d'adresses de variable. (avec &)
+
+Je n'ai pas réussi à toucher au tas avec les bibliothèques fournies (cela doit etre possible ?)
+Donc je n'ai pas pu implémenter la gestion des allocations de pointeurs,
+dommage, j'aurai bien aimé le faire.
+
+J'ai testé les programmes avec l'interpréteur itam fourni.
+
+A demain.
+Duncan Deveaux
+
+p.s: J'ai aussi eu quelques problèmes selon le PC pour générer la documentation,
+je dois encore corriger quelques warnings/erreurs.

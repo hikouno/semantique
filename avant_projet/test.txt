@@ -1,0 +1,14 @@
+generation_code {
+
+	const int k = 40;
+	
+	int i = 0;
+	
+	typedef <int, int> Couple;
+	
+	Couple c = {4,5};
+	
+	struct T { int n; Couple m; int toto; } s = { 4, {5,3}, 56 };
+	
+	i = snd s.m;
+}
