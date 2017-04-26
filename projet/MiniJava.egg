@@ -374,33 +374,133 @@ Comparatif -> superieur_egal ;
 Condition -> Terme SuiteTerme ;
 
 
-SuiteTerme -> Additif Terme SuiteTerme ;  
+SuiteTerme -> Additif #tds Terme #ast_inh SuiteTerme #ast_syn ;
+#tds {
+do
+	SuiteTerme1^tds := SuiteTerme^tds;
+	Terme^tds := SuiteTerme^tds;
+end
+}
 
-SuiteTerme -> ;
+#ast_inh {
+do
+   SuiteTerme1^gauche := SuiteTerme^factory.createBinaryExpression(
+      SuiteTerme^gauche,  
+      Additif^bin_op,  
+      Terme^ast);  
+end 
+}
 
+#ast_syn {
+do 
+   SuiteTerme^ast := SuiteTerme1^ast; 
+end 
+}
 
-Additif -> addition ;  
+SuiteTerme -> #ast ;
+#ast {
+do
+   SuiteTerme^ast := SuiteTerme^gauche;
+end
+}
 
-Additif -> soustraction ;  
+Additif -> addition #ast;  
+#ast { 
+do  
+   Additif^bin_op := BinaryOperator.Add;  
+end  
+}
 
-Additif -> ou ;  
+Additif -> soustraction #ast;  
+#ast {  
+do  
+   Additif^bin_op := BinaryOperator.Substract;   
+end  
+}
+   
+Additif -> ou #ast;  
+#ast {  
+do  
+   Additif^bin_op := BinaryOperator.Or;   
+end  
+}
+  
+Terme -> #tds Facteur #ast_inh SuiteFacteur #ast_syn ;
+#tds {
+do
+	Facteur^tds := Terme^tds;
+	SuiteFacteur^tds := Terme^tds;
+end
+}
+#ast_inh {
+do 
+   SuiteFacteur^gauche := Facteur^ast; 
+end 
+}
 
+#ast_syn {
+do
+   Terme^ast := SuiteFacteur^ast; 
+end
+}
 
-Terme -> Facteur SuiteFacteur ;
+SuiteFacteur -> Multiplicatif #tds Facteur #ast_inh SuiteFacteur #ast_syn ;
+#tds {
+do
+	Facteur^tds := SuiteFacteur^tds;
+	SuiteFacteur1^tds := SuiteFacteur^tds;
+end
+}
 
+#ast_inh {
+do 
+   SuiteFacteur1^gauche := SuiteFacteur^factory.createBinaryExpression(
+      SuiteFacteur^gauche,  
+      Multiplicatif^bin_op,  
+      Facteur^ast);  
+end 
+}
 
-SuiteFacteur -> Multiplicatif Facteur SuiteFacteur ;  
+#ast_syn {
+do 
+   SuiteFacteur^ast := SuiteFacteur1^ast; 
+end 
+}
+ 
+SuiteFacteur -> #ast;  
+#ast {
+do
+   SuiteFacteur^ast := SuiteFacteur^gauche;
+end
+}
 
-SuiteFacteur -> ;  
+Multiplicatif -> multiplication #ast; 
+#ast {
+do 
+   Multiplicatif^bin_op := BinaryOperator.Multiply; 
+end 
+}
 
-
-Multiplicatif -> multiplication ; 
-
-Multiplicatif -> division ; 
-
-Multiplicatif -> modulo ; 
-
-Multiplicatif -> et ; 
+Multiplicatif -> division #ast; 
+#ast { 
+do 
+   Multiplicatif^bin_op := BinaryOperator.Divide;  
+end 
+}
+ 
+Multiplicatif -> modulo #ast; 
+#ast {  
+do 
+   Multiplicatif^bin_op := BinaryOperator.Modulo;   
+end 
+}
+  
+Multiplicatif -> et #ast; 
+#ast {  
+do 
+   Multiplicatif^bin_op := BinaryOperator.And;   
+end 
+}
 
   
 Facteur -> accolade_ouvrante #tds Expressions accolade_fermante #ast ;
@@ -525,14 +625,34 @@ end
 }
 
 
-Facteur -> Valeur ;
+Facteur -> Valeur #ast;
+#ast {
+do
+   Facteur^ast := Valeur^ast;
+end
+}
 
  
-Valeur -> entier ;
+Valeur -> entier #ast;
+#ast {
+do
+    Valeur^ast := Valeur^factory.createIntegerValue(entier^txt); 
+end
+}
 
-Valeur -> vrai ;
+Valeur -> vrai #ast;
+#ast {
+do
+    Valeur^ast := Valeur^factory.createBooleanValue(true);  
+end
+}
 
-Valeur -> faux ;
+Valeur -> faux #ast;
+#ast {
+do
+    Valeur^ast := Valeur^factory.createBooleanValue(false);  
+end
+}
 
 Valeur -> chaine ;
 
@@ -547,7 +667,13 @@ AppelOuAcces -> Acces ;
 AppelOuAcces -> Appel ;
 
 
-Acces -> ;
+Acces -> #ast ;
+
+#ast { 
+do  
+   Acces^ast := Acces^support;  
+end  
+}
 
 Acces -> crochet_ouvrant #tds Expression crochet_fermant #inh Acces #ast;
 
