@@ -32,6 +32,8 @@ public class BlockImpl implements Block {
 	 */
 	protected Optional<Block> context;
 	
+	private int memAllouee = 0;
+	
 	/**
 	 * Constructor for a block contained in a _context block.
 	 * @param _context Englobing block.
@@ -108,6 +110,8 @@ public class BlockImpl implements Block {
 			local += _instr.allocateMemory(_register, local);
 		}
 		
+		this.memAllouee = local - _offset;
+		
 		return local - _offset;
 	}
 
@@ -120,6 +124,7 @@ public class BlockImpl implements Block {
 		for (Instruction i : instructions) {
 			res.append(i.getCode(_factory));
 		}
+		if (memAllouee != 0) res.add(_factory.createPop(0, memAllouee));
 		
 		return res;
 	}
