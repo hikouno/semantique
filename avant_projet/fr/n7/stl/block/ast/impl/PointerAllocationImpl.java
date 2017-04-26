@@ -20,7 +20,7 @@ public class PointerAllocationImpl implements Expression {
 	
 	/**
 	 * Construction for the implementation of a pointer content access expression Abstract Syntax Tree node.
-	 * @param _pointer Abstract Syntax Tree for the pointer expression in a pointer content access expression.
+	 * @param _type Abstract Syntax Tree for the pointer expression in a pointer content access expression.
 	 */
 	public PointerAllocationImpl(Type _type) {
 		this.type = _type;
