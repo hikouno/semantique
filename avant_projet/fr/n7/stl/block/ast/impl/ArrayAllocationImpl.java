@@ -21,7 +21,7 @@ public class ArrayAllocationImpl implements Expression {
 	
 	/**
 	 * Construction for the implementation of a pointer content access expression Abstract Syntax Tree node.
-	 * @param _pointer Abstract Syntax Tree for the pointer expression in a pointer content access expression.
+	 * @param _type Abstract Syntax Tree for the pointer expression in a pointer content access expression.
 	 */
 	public ArrayAllocationImpl(Type _type, Expression _expr) {
 		this.type = _type;
