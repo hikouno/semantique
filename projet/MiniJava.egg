@@ -33,14 +33,22 @@ syn expressions : LinkedList<Expression> for Expressions, SuiteExpressions;
 
 inh type : Type for SuiteNouveau;
 
-syn ast		: Block for Programme, Bloc ; 
+--GESTION DES TYPES
+
+inh calcul_profondeur : Integer for SuiteTypeAtomique;
+syn profondeur_remontee : Integer for SuiteTypeAtomique;
+
+syn ast : Type for Type, TypeAtomique;
+
+--
+
+syn ast		: Block for Programme, Bloc; 
 syn ast		: Expression for Expression, Condition, SuiteCondition,
     Terme, SuiteTerme, Facteur, SuiteFacteur, Valeur, SuiteNouveau;
 
-syn ast		: Type for Type;
-syn instr	: Instruction for Instruction ;
+syn instr	: Instruction for Instruction;
 
-syn champ	: FieldDeclaration for Champ ;
+syn champ	: FieldDeclaration for Champ;
 syn champs	: LinkedList<FieldDeclaration> for Champs;
 
 syn bin_op	: BinaryOperator for Additif, Multiplicatif, Comparatif;
@@ -272,25 +280,84 @@ end
 }
 
 
-Type -> TypeAtomique SuiteTypeAtomique ;
+Type -> TypeAtomique #prof SuiteTypeAtomique #ast ;
+#prof {
+do
+    SuiteTypeAtomique^calcul_profondeur := 0;
+end
+}
+
+#ast {
+do
+    Type^ast := Type^factory.makeTableType(TypeAtomique^ast,
+                                SuiteTypeAtomique^profondeur_remontee); --A CODER !!!
+end
+}
 
 
-TypeAtomique -> type_bool  ;
+TypeAtomique -> type_bool #ast ;
+#ast {
+do
+    TypeAtomique^ast := Type^factory.createBooleanType();
+end
+}
 
-TypeAtomique -> type_int   ;  
+TypeAtomique -> type_int #ast ;
+#ast {
+do
+    TypeAtomique^ast := Type^factory.createIntegerType();
+end
+} 
  
-TypeAtomique -> type_char  ;  
+TypeAtomique -> type_char #ast ;
+#ast {
+do
+    TypeAtomique^ast := Type^factory.createCharType(); --A CODER !!!
+end
+}
  
-TypeAtomique -> type_float  ;
+TypeAtomique -> type_float #ast ;
+#ast {
+do
+    TypeAtomique^ast :=  Type^factory.createFloatType(); --A CODER !!!
+end
+}
 
-TypeAtomique -> type_String ;
+TypeAtomique -> type_String #ast ;
+#ast {
+do
+    TypeAtomique^ast := Type^factory.createStringType(); --A CODER !!!
+end
+}
  
-TypeAtomique -> identificateur_type InstanceGenericite  ; 
+TypeAtomique -> identificateur_type InstanceGenericite #ast ;
+#ast {
+do
+    TypeAtomique^ast := ; --A CODER !!! mdr
+end
+}
 
 
-SuiteTypeAtomique -> crochet_ouvrant crochet_fermant SuiteTypeAtomique ;
+SuiteTypeAtomique -> crochet_ouvrant crochet_fermant #calcul_prof SuiteTypeAtomique #remonte_prof ;
+#calcul_prof {
+do
+    SuiteTypeAtomique1^calcul_profondeur := SuiteTypeAtomique^calcul_profondeur + 1;
+end
+}
 
-SuiteTypeAtomique -> ;
+#remonte_prof {
+do
+    SuiteTypeAtomique^profondeur_remontee := SuiteTypeAtomique1^profondeur_remontee;
+end
+}
+
+
+SuiteTypeAtomique -> #remonte_prof ;
+#remonte_prof {
+do
+    SuiteTypeAtomique^profondeur_remontee := SuiteTypeAtomique^calcul_profondeur;
+end
+}
 
 
 Instructions -> ;
