@@ -28,7 +28,7 @@ public class Main{
 			prq.acceptProblem(problem );
 			
 		  prq.endReporting();
-		  System.out.println("AST :"+bloc.get_ast());
+		  System.out.println("AST :\n"+bloc.get_ast());
 		  
 		  /*if (bloc.get_ast().checkType()) {
 			System.out.println( "Correctement typé." );

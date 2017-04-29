@@ -3,6 +3,8 @@
  */
 package fr.n7.stl.block.ast;
 
+import java.util.LinkedList;
+
 /**
  * Factory to create nodes for programs, structural elements.
  *
@@ -14,7 +16,7 @@ public interface ProgramFactory {
 	 * @param princ La classe principale.
 	 * @return Abstract Syntax Tree node for the Program type.
 	 */
-	public Program createProgram(ClassePrincipale princ);
+	public Program createProgram(ClassePrincipale princ, LinkedList<Classe> classes);
 	
 	/**
 	 * Create an Abstract Syntax Tree node for the ClassePrincipale type.
@@ -23,5 +25,11 @@ public interface ProgramFactory {
 	 * @return Abstract Syntax Tree node for the ClassePrincipale type.
 	 */
 	public ClassePrincipale createPrincipale(String nom, Block bloc);
+	
+	/**
+	 * Create an Abstract Syntax Tree node for the Classe type.
+	 * @return Abstract Syntax Tree node for the Classe type.
+	 */
+	public Classe createClasse();
 
 }

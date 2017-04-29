@@ -3,42 +3,40 @@
  */
 package fr.n7.stl.block.ast.impl;
 
+import fr.n7.stl.block.ast.Method;
+import fr.n7.stl.block.ast.Method.DroitAcces;
+import fr.n7.stl.block.ast.Block;
+import fr.n7.stl.block.ast.Type;
+
+import java.util.Optional;
 import java.util.LinkedList;
 
-import fr.n7.stl.block.ast.Program;
-import fr.n7.stl.block.ast.ClassePrincipale;
-import fr.n7.stl.block.ast.Classe;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
 
 /**
- * Un programme MiniJava.
+ * A class method.
  *
  */
-public class ProgramImpl implements Program {
+public class MethodImpl implements Method {
 
-	/**
-	 * Interfaces contained in the program.
-	 */
-	//protected List<Interfaces> interfaces;
+
+	protected String name;
+	protected LinkedList<Argument> args;
+	protected Block corps;
+	protected DroitAcces auth;
 	
-	/**
-	 * Classes contained in the program.
-	 */
-	protected LinkedList<Classe> classes;
+	protected Optional<Type> retour;
 	
-	/**
-	 * Classe principale.
-	 */
-	protected ClassePrincipale principale;
 	
-	/**
-	 * Constructor for a MiniJava program.
-	 */
-	public ProgramImpl(ClassePrincipale principale, LinkedList<Classe> classes) {
-		this.principale = principale;
-		this.classes = classes;
+	public MethodImpl(String name, LinkedList<Argument> args, Block body, DroitAcces auth, Optional<Type> retour) {
+		this.name = name;
+		this.args = args;
+		this.corps = body;
+		this.auth = auth;
+		
+		this.retour = retour;
 	}
 	
 	/* (non-Javadoc)
@@ -46,12 +44,16 @@ public class ProgramImpl implements Program {
 	 */
 	@Override
 	public String toString() {
-		String text = "";
-		for (Classe classe : this.classes) {
-			text += classe + "\n";
+		
+		String text = (auth == DroitAcces.PRIVATE) ? "private " : ( (auth == DroitAcces.PUBLIC) ? "public " : "protected " ) +
+				this.name + " (";
+		
+		for (int i = 0; i < args.size(); i++) {
+			text += arg + (i != args.size() - 1) ? ", " : "";
 		}
 		
-		text += this.principale;
+		text += ")\n" + this.corps;
+		
 		return text;
 	}
 

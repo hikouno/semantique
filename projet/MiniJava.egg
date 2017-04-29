@@ -46,9 +46,16 @@ syn ast : Type for Type, TypeAtomique;
 
 --
 
+--PROGRAMME ASTS
+
 syn ast     : Program for Programme;
 syn ast     : ClassePrincipale for Principale;
 syn bloc    : Block for MethodePrincipale;
+
+syn ast     : Classe for Classe;
+syn classes : LinkedList<Classe> for Classes;
+
+--
 
 syn ast		: Block for Bloc;
 syn ast		: Expression for Expression, Condition, SuiteCondition,
@@ -133,7 +140,7 @@ local
     prg : ProgramFactoryImpl;
 do
     prg := new ProgramFactoryImpl();
-    Programme^ast := prg.createProgram(Principale^ast);
+    Programme^ast := prg.createProgram(Principale^ast, Classes^classes);
 end
 }
 
@@ -226,20 +233,41 @@ end
 }
 
 
-Classes -> #tds Classe Classes ;
+Classes -> #tds Classe Classes #classes ;
 #tds {
 do
     Classe^tds := new SymbolTable();
 end
 }
 
-Classes -> ;
+#classes {
+do
+    Classes^classes := Classes1^classes;
+    Classes^classes.add(Classe^ast);
+end
+}
+
+Classes -> #classes ;
+#classes {
+do
+    Classes^classes := new LinkedList<Classe>();
+end
+}
 
 
-Classe -> classe  identificateur_type Genericite HeritageClasse ImplantationInterface accolade_ouvrante #tds ElementsClasse accolade_fermante ;
+Classe -> classe  identificateur_type Genericite HeritageClasse ImplantationInterface accolade_ouvrante #tds ElementsClasse accolade_fermante #ast ;
 #tds {
 do
     ElementsClasse^tds := Classe^tds;
+end
+}
+
+#ast {
+local
+    prg : ProgramFactoryImpl;
+do
+    prg := new ProgramFactoryImpl();
+    Classe^ast := prg.createClasse();
 end
 }
 

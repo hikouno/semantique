@@ -3,9 +3,12 @@
  */
 package fr.n7.stl.block.ast.impl;
 
+import java.util.LinkedList;
+
 import fr.n7.stl.block.ast.ProgramFactory;
 import fr.n7.stl.block.ast.Program;
 import fr.n7.stl.block.ast.ClassePrincipale;
+import fr.n7.stl.block.ast.Classe;
 import fr.n7.stl.block.ast.Block;
 
 /**
@@ -19,8 +22,8 @@ public class ProgramFactoryImpl implements ProgramFactory {
 	 * @param princ La classe principale.
 	 * @return Abstract Syntax Tree node for the Program type.
 	 */
-	public Program createProgram(ClassePrincipale princ) {
-	    return new ProgramImpl(princ);
+	public Program createProgram(ClassePrincipale princ, LinkedList<Classe> classes) {
+	    return new ProgramImpl(princ, classes);
 	}
 	
 	/**
@@ -31,6 +34,14 @@ public class ProgramFactoryImpl implements ProgramFactory {
 	 */
 	public ClassePrincipale createPrincipale(String nom, Block bloc) {
 	    return new ClassePrincipaleImpl(nom, bloc);
+	}
+	
+	/**
+	 * Create an Abstract Syntax Tree node for the Classe type.
+	 * @return Abstract Syntax Tree node for the Classe type.
+	 */
+	public Classe createClasse() {
+	    return new ClasseImpl();
 	}
 
 }
