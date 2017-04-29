@@ -280,7 +280,7 @@ end
 }
 
 
-Type -> TypeAtomique #prof SuiteTypeAtomique #ast ;
+Type -> TypeAtomique #calcul_prof SuiteTypeAtomique #ast ;
 #prof {
 do
     SuiteTypeAtomique^calcul_profondeur := 0;
