@@ -46,7 +46,11 @@ syn ast : Type for Type, TypeAtomique;
 
 --
 
-syn ast		: Block for Programme, Bloc; 
+syn ast     : Program for Programme;
+syn ast     : ClassePrincipale for Principale;
+syn bloc    : Block for MethodePrincipale;
+
+syn ast		: Block for Bloc;
 syn ast		: Expression for Expression, Condition, SuiteCondition,
     Terme, SuiteTerme, Facteur, SuiteFacteur, Valeur, SuiteNouveau;
 
@@ -125,8 +129,11 @@ end
 }
 
 #ast {
+local
+    prg : ProgramFactoryImpl;
 do
-    Programme^ast := null; --BON, A CHANGER AHAH
+    prg := new ProgramFactoryImpl();
+    Programme^ast := prg.createProgram(Principale^ast);
 end
 }
 
@@ -245,19 +252,34 @@ ImplantationInterface -> implantation identificateur_type InstanceGenericite Sui
 ImplantationInterface -> ;
 
 
-Principale -> public classe identificateur_type accolade_ouvrante #tds MethodePrincipale accolade_fermante ;
+Principale -> public classe identificateur_type accolade_ouvrante #tds MethodePrincipale accolade_fermante #ast ;
 #tds {
 do
     MethodePrincipale^tds := Principale^tds;
 end
 }
 
+#ast {
+local
+    prg : ProgramFactoryImpl;
+do
+    prg := new ProgramFactoryImpl();
+    Principale^ast := prg.createPrincipale(identificateur_type^txt, MethodePrincipale^bloc);
+end
+}
 
-MethodePrincipale -> public statique vide principale parenthese_ouvrante type_String crochet_ouvrant crochet_fermant identificateur parenthese_fermante #tds Bloc ;
+
+MethodePrincipale -> public statique vide principale parenthese_ouvrante type_String crochet_ouvrant crochet_fermant identificateur parenthese_fermante #tds Bloc #ast ;
 #tds {
 do
     Bloc^tds := new SymbolTable(MethodePrincipale^tds);
     Bloc^factory := new BlockFactoryImpl();
+end
+}
+
+#ast {
+do
+    MethodePrincipale^bloc := Bloc^ast;
 end
 }
 
