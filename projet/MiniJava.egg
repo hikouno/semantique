@@ -362,7 +362,7 @@ end
 
 Instructions -> ;
 
-Instructions -> #inh Instruction #instr Instructions ;
+Instructions -> #inh Instruction Instructions #instr ;
 #inh {
 do
     Instruction^factory := new BlockFactoryImpl();
