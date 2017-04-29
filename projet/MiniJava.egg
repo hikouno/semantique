@@ -312,21 +312,21 @@ end
 TypeAtomique -> type_char #ast ;
 #ast {
 do
-    TypeAtomique^ast := Type^factory.createCharType(); --A CODER !!!
+    TypeAtomique^ast := Type^factory.createCharType(); --A CODER ?
 end
 }
  
 TypeAtomique -> type_float #ast ;
 #ast {
 do
-    TypeAtomique^ast :=  Type^factory.createFloatType(); --A CODER !!!
+    TypeAtomique^ast :=  Type^factory.createFloatingType(); --A CODER ?
 end
 }
 
 TypeAtomique -> type_String #ast ;
 #ast {
 do
-    TypeAtomique^ast := Type^factory.createStringType(); --A CODER !!!
+    TypeAtomique^ast := Type^factory.createStringType(); --A CODER ?
 end
 }
  
