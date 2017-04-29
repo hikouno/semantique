@@ -1181,7 +1181,7 @@ do
       with VariableDeclaration then AppelOuAcces^support := Facteur^factory.createVariableUse(d);
       end
    else
-      error(BLOC_undefined_ident, identificateur^txt);
+      error(MiniJava_undefined_ident, identificateur^txt);
    end
 end
 }
