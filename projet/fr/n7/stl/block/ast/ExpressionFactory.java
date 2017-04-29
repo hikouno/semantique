@@ -101,7 +101,7 @@ public interface ExpressionFactory {
 	 * @param _index Abstract Syntax Tree node for the index in the array.
 	 * @return Abstract Syntax Tree node for the access of the _index cell in the _array.
 	 */
-	//public Expression createArrayAccess(Expression _array, Expression _index);
+	public Expression createArrayAccess(Expression _array, Expression _index);
 	
 	/**
 	 * Create a node for an assignment to an element in an array expression in the Abstract Syntax Tree.
@@ -109,7 +109,7 @@ public interface ExpressionFactory {
 	 * @param _index Abstract Syntax Tree node for the index in the array.
 	 * @return Abstract Syntax Tree node for the access of the _index cell in the _array.
 	 */
-	//public Assignable createArrayAssignment(Assignable _array, Expression _index);
+	public Assignable createArrayAssignment(Assignable _array, Expression _index);
 	
 	/**
 	 * Create a node for an access to a field in a record expression in the Abstract Syntax Tree.

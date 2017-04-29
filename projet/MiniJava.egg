@@ -1238,8 +1238,7 @@ end
 
 #inh {
 do
-    --Acces1^support := Acces^factory.createArrayAccess(Acces^support,Expression^ast);
-    Acces1^support := null;
+    Acces1^support := Acces^factory.createArrayAccess(Acces^support,Expression^ast);
 end
 }
 

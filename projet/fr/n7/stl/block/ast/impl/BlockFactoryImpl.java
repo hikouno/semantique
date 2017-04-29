@@ -201,11 +201,11 @@ public class BlockFactoryImpl implements BlockFactory {
 
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.ExpressionFactory#createArrayAccess(fr.n7.stl.block.ast.Expression, fr.n7.stl.block.ast.Expression)
-	 *
+	 */
 	@Override
 	public Expression createArrayAccess(Expression _array, Expression _index) {
 		return new ArrayAccessImpl(_array,_index);
-	} */
+	}
 	
 	/*@Override
 	public Expression createArrayAllocation(Type _type, Expression _expr) {
@@ -214,11 +214,11 @@ public class BlockFactoryImpl implements BlockFactory {
 	
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.ExpressionFactory#createArrayAssignment(fr.n7.stl.block.ast.Assignable, fr.n7.stl.block.ast.Expression)
-	 *
+	 */
 	@Override
 	public Assignable createArrayAssignment(Assignable _array, Expression _index) {
 		return new ArrayAssignmentImpl(_array,_index);
-	} */
+	}
 
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.ExpressionFactory#createFieldAccess(fr.n7.stl.block.ast.Expression, fr.n7.stl.block.ast.FieldDeclaration)
@@ -319,11 +319,11 @@ public class BlockFactoryImpl implements BlockFactory {
 
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.TypeFactory#createArrayType(fr.n7.stl.block.ast.Type)
-	 *
+	 */
 	@Override
 	public Type createArrayType(Type _element) {
 		return new ArrayTypeImpl(_element);
-	} */
+	}
 
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.TypeFactory#createPointerType(fr.n7.stl.block.ast.Type)

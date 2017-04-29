@@ -53,7 +53,7 @@ public interface TypeFactory {
 	 * @param _element Abstract Syntax Tree for the type of the elements in the array type.
 	 * @return Abstract Syntax Tree node for an array type.
 	 */
-	//public Type createArrayType(Type _element);
+	public Type createArrayType(Type _element);
 	
 	/**
 	 * Create an Abstract Syntax Tree node for a pointer type.
