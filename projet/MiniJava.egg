@@ -97,7 +97,7 @@ sugar  type_float				is    "float";
 sugar  type_char				is    "char";        
 sugar  type_String				is    "String";        
 sugar vide					is    "void";     
-sugar nul						is    "null";     
+sugar null						is    "null";     
 sugar  choix					is    "\?";         
 sugar  deux_points				is    ":";          
 sugar  interface				is    "interface";     
@@ -462,8 +462,10 @@ end
 
 #ast {
 do
-    Type^ast := Type^factory.makeTableType(TypeAtomique^ast,
-                                SuiteTypeAtomique^profondeur_remontee); --A CODER !!!
+    --Type^ast := Type^factory.makeTableType(TypeAtomique^ast,
+    --                            SuiteTypeAtomique^profondeur_remontee); --A CODER !!!
+    
+    Type^ast := null;
 end
 }
 
@@ -564,7 +566,7 @@ local
 	d : VariableDeclaration;
 do
 	if Instruction^tds.contains(identificateur^txt) then
-		error(Error);
+		error(MiniJava_already_defined, identificateur^txt);
 	else
 		d := Instruction^factory.createVariableDeclaration(identificateur^txt, Type^ast, Expression^ast);
 		
@@ -620,10 +622,10 @@ do
         d := o.get();
         match d
         with VariableDeclaration then SuiteAffectable^support := Affectable^factory.createVariableAssignment( d );
-        with ConstantDeclaration then error(BLOC_not_a_variable, identificateur^txt);
+        with ConstantDeclaration then error(MiniJava_not_a_variable, identificateur^txt);
         end
     else
-        error(BLOC_undefined_ident, identificateur^txt);
+        error(MiniJava_undefined_ident, identificateur^txt);
     end
 end
 }
@@ -649,25 +651,25 @@ end
 --end
 --}
 
-SuiteAffectable -> crochet_ouvrant #tds Expression crochet_fermant #inh SuiteAffectable #ast ;
-#tds {
-do
-    Expression^tds := SuiteAffectable^tds;
-    SuiteAffectable1^tds := SuiteAffectable^tds;
-end
-}
+--SuiteAffectable -> crochet_ouvrant #tds Expression crochet_fermant #inh SuiteAffectable #ast ;
+--#tds {
+--do
+--    Expression^tds := SuiteAffectable^tds;
+--    SuiteAffectable1^tds := SuiteAffectable^tds;
+--end
+--}
 
-#inh {
-do
-    SuiteAffectable1^support := SuiteAffectable^factory.createArrayAssignment(SuiteAffectable^support,Expression^ast);  
-end
-}
+--#inh {
+--do
+--    SuiteAffectable1^support := SuiteAffectable^factory.createArrayAssignment(SuiteAffectable^support,Expression^ast);  
+--end
+--}
 
-#ast {
-do
-    SuiteAffectable^ast := SuiteAffectable1^ast;   
-end
-}
+--#ast {
+--do
+--    SuiteAffectable^ast := SuiteAffectable1^ast;   
+--end
+--}
 
 
 Instruction -> si parenthese_ouvrante #tds Expression parenthese_fermante Bloc SuiteConditionnelle #instr ;
@@ -979,18 +981,18 @@ end
 }
 
   
-Facteur -> accolade_ouvrante #tds Expressions accolade_fermante #ast ;
-#tds {
-do
-    Expressions^tds := Facteur^tds;
-end
-}
+--Facteur -> accolade_ouvrante #tds Expressions accolade_fermante #ast ;
+--#tds {
+--do
+--    Expressions^tds := Facteur^tds;
+--end
+--}
 
-#ast {
-do
-    Facteur^ast := Facteur^factory.createSequence( Expressions^expressions );
-end
-}
+--#ast {
+--do
+--    Facteur^ast := Facteur^factory.createSequence( Expressions^expressions );
+--end
+--}
 
 
 Expressions -> #tds Expression SuiteExpressions #ast ;
@@ -1089,14 +1091,16 @@ end
 
 #ast {
 do  
-    SuiteNouveau^ast := SuiteNouveau^factory.createArrayAllocation(SuiteNouveau^type,Expression^ast);  
+    --SuiteNouveau^ast := SuiteNouveau^factory.createArrayAllocation(SuiteNouveau^type,Expression^ast);
+    SuiteNouveau^ast := null;
 end  
 }
 
 SuiteNouveau -> #ast ; 
 #ast {
 do 
-    SuiteNouveau^ast := SuiteNouveau^factory.createPointerAllocation(SuiteNouveau^type); 
+    --SuiteNouveau^ast := SuiteNouveau^factory.createPointerAllocation(SuiteNouveau^type);
+    SuiteNouveau^ast := null;
 end 
 }
 
@@ -1193,7 +1197,8 @@ end
 
 #inh {
 do
-    Acces1^support := Acces^factory.createArrayAccess(Acces^support,Expression^ast);
+    --Acces1^support := Acces^factory.createArrayAccess(Acces^support,Expression^ast);
+    Acces1^support := null;
 end
 }
 

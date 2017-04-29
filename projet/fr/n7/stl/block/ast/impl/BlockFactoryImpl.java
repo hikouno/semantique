@@ -10,7 +10,7 @@ import fr.n7.stl.block.ast.Block;
 import fr.n7.stl.block.ast.BlockFactory;
 import fr.n7.stl.block.ast.BooleanValue;
 //import fr.n7.stl.block.ast.Sequence;
-//import fr.n7.stl.block.ast.ConstantDeclaration;
+import fr.n7.stl.block.ast.ConstantDeclaration;
 import fr.n7.stl.block.ast.Expression;
 //import fr.n7.stl.block.ast.FieldDeclaration;
 //import fr.n7.stl.block.ast.FunctionCall;
@@ -303,11 +303,11 @@ public class BlockFactoryImpl implements BlockFactory {
 
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.InstructionFactory#createConstantDeclaration(java.lang.String, fr.n7.stl.block.ast.Type, fr.n7.stl.block.ast.Expression)
-	 *
+	 */
 	@Override
 	public ConstantDeclaration createConstantDeclaration(String _name, Type _type, Expression _value) {
 		return new ConstantDeclarationImpl(_name,_type,_value);
-	} */
+	}
 
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.InstructionFactory#createTypeDeclaration(java.lang.String, fr.n7.stl.block.ast.Type)
@@ -363,7 +363,7 @@ public class BlockFactoryImpl implements BlockFactory {
 	@Override
 	public Sequence createSequence() {
 		return new SequenceImpl();
-	} */
+	}*/
 
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.ExpressionFactory#createCollection(java.lang.Iterable)
@@ -371,7 +371,7 @@ public class BlockFactoryImpl implements BlockFactory {
 	@Override
 	public Sequence createSequence(Iterable<Expression> _values) {
 		return new SequenceImpl(_values);
-	} */
+	}*/
 
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.TypeFactory#createNamedType(fr.n7.stl.block.ast.TypeDeclaration)
