@@ -15,23 +15,23 @@ inh factory	: BlockFactory for Bloc, Instruction,
                     SuiteConditionnelle, Instructions, Expression, Condition,
                     SuiteCondition, Terme, SuiteTerme, Facteur, SuiteFacteur,
                     Type, TypeAtomique, Valeur, Affectable, SuiteAffectable,
-                    Acces, SuiteNouveau;
+                    AppelOuAcces, Acces, SuiteNouveau;
 
 inh tds : SymbolTable for Bloc, Instructions, Instruction, Expression, SuiteConditionnelle,
                     Condition, SuiteCondition, Terme, SuiteTerme, Facteur, SuiteFacteur, Type,
                     Affectable, SuiteAffectable, Expressions, SuiteExpressions,
-                    Acces, SuiteNouveau, Parametres, Parametre, SuiteParametres,
+                    AppelOuAcces, Acces, SuiteNouveau, Parametres, Parametre, SuiteParametres,
                     Principale, MethodePrincipale,  Interface, ElementsInterface,
                     ElementInterface, Signature, Classe, ElementsClasse, ElementClasse,
-                    Constructeur, AttributOuMethode, SuiteAttributOuMethode; --Appel, AppelOuAcces
+                    Constructeur, AttributOuMethode, SuiteAttributOuMethode; --Appel
 
 inh blocParent	: Block for Instructions;
 
 inh support : Assignable for SuiteAffectable;
 syn ast 	: Assignable for SuiteAffectable, Affectable;
 
-inh support : Expression for Acces;
-syn ast		: Expression for Acces; --, Appel, AppelOuAcces;
+inh support : Expression for AppelOuAcces, Acces;
+syn ast		: Expression for AppelOuAcces, Acces; --, Appel
 
 syn expressions : LinkedList<Expression> for Expressions, SuiteExpressions;
 
@@ -487,7 +487,7 @@ do
     --Type^ast := Type^factory.makeTableType(TypeAtomique^ast,
     --                            SuiteTypeAtomique^profondeur_remontee); --A CODER !!!
     
-    Type^ast := null;
+    Type^ast := TypeAtomique^ast;
 end
 }
 
@@ -559,7 +559,7 @@ end
 
 Instructions -> ;
 
-Instructions -> #inh Instruction Instructions #instr ;
+Instructions -> #inh Instruction #instr Instructions ;
 #inh {
 do
     Instruction^factory := new BlockFactoryImpl();
@@ -1161,32 +1161,51 @@ end
 --Valeur -> caractere ;
 
 
---Facteur -> identificateur #tds AppelOuAcces #ast;
---#tds {
---do
-    --AppelOuAcces^tds := Facteur^tds;
---end
---}
+Facteur -> identificateur #tds #inh AppelOuAcces #ast;
+#tds {
+do
+    AppelOuAcces^tds := Facteur^tds;
+end
+}
 
---#ast {
---do
-    --Facteur^ast := AppelOuAcces^ast;
---end
---}
+#inh {
+local
+   f : Optional<Declaration>;
+   d : Declaration;
+do
+   if (Facteur^tds.knows(identificateur^txt)) then
+      f := Facteur^tds.get(identificateur^txt);
+      d := f.get();
+      match d
+      with ConstantDeclaration then AppelOuAcces^support := d.getValue();
+      with VariableDeclaration then AppelOuAcces^support := Facteur^factory.createVariableUse(d);
+      end
+   else
+      error(BLOC_undefined_ident, identificateur^txt);
+   end
+end
+}
+
+#ast {
+do
+    Facteur^ast := AppelOuAcces^ast;
+end
+}
 
 
---AppelOuAcces -> #tds Acces #ast ;
---#tds {
---do
---    Acces^tds := AppelOuAcces^tds;
---end
---}
+AppelOuAcces -> #tds Acces #ast ;
+#tds {
+do
+    Acces^tds := AppelOuAcces^tds;
+    Acces^support := AppelOuAcces^support;
+end
+}
 
---#ast {
---do
---    AppelOuAcces^ast := Acces^ast;
---end
---}
+#ast {
+do
+    AppelOuAcces^ast := Acces^ast;
+end
+}
 
 --AppelOuAcces -> #tds Appel #ast ;
 --#tds {

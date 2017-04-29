@@ -82,7 +82,7 @@ public class BlockImpl implements Block {
 	public String toString() {
 		String _local = "";
 		for (Instruction _instruction : this.instructions) {
-			_local += _instruction;
+			_local += "    " + _instruction;
 		}
 		return "{\n" + _local + "}\n" ;
 	}

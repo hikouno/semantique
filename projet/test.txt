@@ -7,6 +7,10 @@ public class Test {
         
         print 1;
         
+        int j = 2;
+        int i = 4;
+        
+        j = i * 2 + 5;
     }
 
 }
