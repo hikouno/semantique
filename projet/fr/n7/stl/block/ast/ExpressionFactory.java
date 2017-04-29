@@ -63,28 +63,28 @@ public interface ExpressionFactory {
 	 * @param _right Abstract Syntax Tree node for the right part of the couple.
 	 * @return Abstract Syntax Tree node for a couple containing the _left and _right parts.
 	 */
-	public Expression createCouple(Expression _left, Expression _right);
+	//public Expression createCouple(Expression _left, Expression _right);
 	
 	/**
 	 * Create a node for an access to the first value of a couple expression in the Abstract Syntax Tree.
 	 * @param _couple Abstract Syntax Tree node for the couple.
 	 * @return Abstract Syntax Tree node for the left part of the _couple.
 	 */
-	public Expression createFirst(Expression _couple);
+	//public Expression createFirst(Expression _couple);
 	
 	/**
 	 * Create a node for an access to the first value of a couple expression in the Abstract Syntax Tree.
 	 * @param _couple Abstract Syntax Tree node for the couple.
 	 * @return Abstract Syntax Tree node for the right part of the _couple.
 	 */
-	public Expression createSecond(Expression _couple);
+	//public Expression createSecond(Expression _couple);
 	
 	/**
 	 * Create a node for a function call expression in the Abstract Syntax Tree.
 	 * @param _called Abstract Syntax Tree node for the called function.
 	 * @return Abstract Syntax Tree node for the call of the _called function.
 	 */
-	public FunctionCall createFunctionCall(Expression _called);
+	//public FunctionCall createFunctionCall(Expression _called);
 	
 	
 	/**
@@ -93,7 +93,7 @@ public interface ExpressionFactory {
 	 * @param _expr Size
 	 * @return Abstract Syntax Tree node for the access of the content of the _pointer.
 	 */
-	public Expression createArrayAllocation(Type _type, Expression _expr);
+	//public Expression createArrayAllocation(Type _type, Expression _expr);
 	
 	/**
 	 * Create a node for an access to an element in an array expression in the Abstract Syntax Tree.
@@ -101,7 +101,7 @@ public interface ExpressionFactory {
 	 * @param _index Abstract Syntax Tree node for the index in the array.
 	 * @return Abstract Syntax Tree node for the access of the _index cell in the _array.
 	 */
-	public Expression createArrayAccess(Expression _array, Expression _index);
+	//public Expression createArrayAccess(Expression _array, Expression _index);
 	
 	/**
 	 * Create a node for an assignment to an element in an array expression in the Abstract Syntax Tree.
@@ -109,7 +109,7 @@ public interface ExpressionFactory {
 	 * @param _index Abstract Syntax Tree node for the index in the array.
 	 * @return Abstract Syntax Tree node for the access of the _index cell in the _array.
 	 */
-	public Assignable createArrayAssignment(Assignable _array, Expression _index);
+	//public Assignable createArrayAssignment(Assignable _array, Expression _index);
 	
 	/**
 	 * Create a node for an access to a field in a record expression in the Abstract Syntax Tree.
@@ -118,7 +118,7 @@ public interface ExpressionFactory {
 	 * @param _field Abstract Syntax Tree node for the field in the record.
 	 * @return Abstract Syntax Tree node for the access of the _field in the _record.
 	 */
-	public Expression createFieldAccess(Expression _record, FieldDeclaration _field);
+	//public Expression createFieldAccess(Expression _record, FieldDeclaration _field);
 	
 	/**
 	 * Create a node for an assignment to a field in a record expression in the Abstract Syntax Tree.
@@ -127,7 +127,7 @@ public interface ExpressionFactory {
 	 * @param _field Abstract Syntax Tree node for the field in the record.
 	 * @return Abstract Syntax Tree node for the access of the _field in the _record.
 	 */
-	public Assignable createFieldAssignment(Assignable _record, FieldDeclaration _field);
+	//public Assignable createFieldAssignment(Assignable _record, FieldDeclaration _field);
 
 	/**
 	 * Create a node for an access to a field in a record expression in the Abstract Syntax Tree.
@@ -136,7 +136,7 @@ public interface ExpressionFactory {
 	 * @param _name Name of the field in the record.
 	 * @return Abstract Syntax Tree node for the access of the _name in the _record.
 	 */
-	public Expression createFieldAccess(Expression _record, String _name);
+	//public Expression createFieldAccess(Expression _record, String _name);
 
 	/**
 	 * Create a node for an assignment to a field in a record expression in the Abstract Syntax Tree.
@@ -145,35 +145,35 @@ public interface ExpressionFactory {
 	 * @param _name Name of the field in the record.
 	 * @return Abstract Syntax Tree node for the access of the _name in the _record.
 	 */
-	public Assignable createFieldAssignment(Assignable _record, String _name);
+	//public Assignable createFieldAssignment(Assignable _record, String _name);
 
 	/**
 	 * Create a node for an access to the address value in an expression in the Abstract Syntax Tree.
 	 * @param _expr Abstract Syntax Tree node for the pointer.
 	 * @return Abstract Syntax Tree node for the access of the content of the _pointer.
 	 */
-	public Expression createAddressAccess(Expression _expr);
+	//public Expression createAddressAccess(Expression _expr);
 	
 	/**
 	 * Create a pointer allocation.
 	 * @param _type Type
 	 * @return Abstract Syntax Tree node for the access of the content of the _pointer.
 	 */
-	public Expression createPointerAllocation(Type _type);
+	//public Expression createPointerAllocation(Type _type);
 	
 	/**
 	 * Create a node for an access to the pointed value in an expression in the Abstract Syntax Tree.
 	 * @param _pointer Abstract Syntax Tree node for the pointer.
 	 * @return Abstract Syntax Tree node for the access of the content of the _pointer.
 	 */
-	public Expression createPointerAccess(Expression _pointer);
+	//public Expression createPointerAccess(Expression _pointer);
 	
 	/**
 	 * Create a node for an assignment to the pointed value in an expression in the Abstract Syntax Tree.
 	 * @param _pointer Abstract Syntax Tree node for the pointer.
 	 * @return Abstract Syntax Tree node for the access of the content of the _pointer.
 	 */
-	public Assignable createPointerAssignment(Assignable _pointer);
+	//public Assignable createPointerAssignment(Assignable _pointer);
 		
 	/**
 	 * Create a node for a type conversion of an expression in the Abstract Syntax Tree.
@@ -181,18 +181,18 @@ public interface ExpressionFactory {
 	 * @param _type Abstract Syntax Tree for the type toward which the expression value is converted.
 	 * @return Abstract Syntax Tree node for the conversion of the value of a target expression to a type.
 	 */
-	public Expression createTypeConversion(Expression _target, Type _type);
+	//public Expression createTypeConversion(Expression _target, Type _type);
 
 	/**
 	 * Create a node for a sequence of expressions in the Abstract Syntax Tree.
 	 * @return Abstract Syntax Tree node for the creation of a sequence of values.
 	 */
-	public Sequence createSequence();
+	//public Sequence createSequence();
 
 	/**
 	 * Create a node for a sequence of expressions in the Abstract Syntax Tree.
 	 * @param _values Abstract Syntax Tree nodes for the values in the collection.
 	 * @return Abstract Syntax Tree node for the creation of a collection of values.
 	 */
-	public Sequence createSequence(Iterable<Expression> _values);
+	//public Sequence createSequence(Iterable<Expression> _values);
 }

@@ -51,7 +51,7 @@ public interface InstructionFactory {
 	 * @param _value Abstract Syntax Tree for the initial value of the declared constant.
 	 * @return A Constant Declaration node in the Abstract Syntax Tree.
 	 */
-	public ConstantDeclaration createConstantDeclaration(String _name, Type _type, Expression _value);
+	//public ConstantDeclaration createConstantDeclaration(String _name, Type _type, Expression _value);
 	
 	/**
 	 * Create a variable declaration node in the Abstract Syntax Tree.
@@ -68,7 +68,7 @@ public interface InstructionFactory {
 	 * @param _type Abstract Syntax Tree for the type associated to the name.
 	 * @return A Type Declaration node in the Abstract Syntax Tree.
 	 */
-	public TypeDeclaration createTypeDeclaration( String _name, Type _type);
+	//public TypeDeclaration createTypeDeclaration( String _name, Type _type);
 
 	/**
 	 * Create an assignment node in the Abstract Syntax Tree.
