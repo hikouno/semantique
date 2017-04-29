@@ -12,14 +12,13 @@ option k=2;
 
 inh gauche	: Expression for SuiteCondition, SuiteTerme, SuiteFacteur;
 inh factory	: BlockFactory for Bloc, Instruction,
-			  		   SuiteConditionnelle, Instructions, Expression, Condition,
-				   SuiteCondition, Terme, SuiteTerme, Facteur, SuiteFacteur,
-				   Type, Valeur, Champ, Affectable, SuiteAffectable, Acces, SuiteNouveau,
-				   NomEtendu, SuiteNomEtendu;  
+                    SuiteConditionnelle, Instructions, Expression, Condition,
+                    SuiteCondition, Terme, SuiteTerme, Facteur, SuiteFacteur,
+                    Type, Valeur, Champ, Affectable, SuiteAffectable, Acces, SuiteNouveau;
 
 inh tds : SymbolTable for Bloc, Instructions, Instruction, Expression, SuiteConditionnelle,
-					Condition, SuiteCondition, Terme, SuiteTerme, Facteur, SuiteFacteur, Type,
-					Champs, Champ, Affectable, SuiteAffectable, Expressions, SuiteExpressions,
+                    Condition, SuiteCondition, Terme, SuiteTerme, Facteur, SuiteFacteur, Type,
+                    Champs, Champ, Affectable, SuiteAffectable, Expressions, SuiteExpressions,
                     Appel, Acces, AppelOuAcces, SuiteNouveau;
 
 inh blocParent	: Block for Instructions;
@@ -32,13 +31,11 @@ syn ast		: Expression for Acces;
 
 syn expressions : LinkedList<Expression> for Expressions, SuiteExpressions;
 
-inh type : Type for SuiteNouveau, NomEtendu, SuiteNomEtendu;
-
-syn nom : String for NomEtendu;
+inh type : Type for SuiteNouveau;
 
 syn ast		: Block for Programme, Bloc ; 
 syn ast		: Expression for Expression, Condition, SuiteCondition, Terme, SuiteTerme, Facteur, SuiteFacteur, Valeur, SuiteNouveau;
-syn ast		: Type for Type, NomEtendu, SuiteNomEtendu;
+syn ast		: Type for Type;
 syn champ	: FieldDeclaration for Champ ;
 syn champs	: LinkedList<FieldDeclaration> for Champs;
 syn instr	: Instruction for Instruction ;
