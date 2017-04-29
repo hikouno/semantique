@@ -260,13 +260,13 @@ SuiteParametres -> virgule Parametre SuiteParametres ;
 Bloc -> accolade_ouvrante #ast Instructions accolade_fermante  ;
 #ast {
 local
-	b : Block;
+    b : Block;
 do
-	b := Bloc^factory.createBlock();
-	Bloc^ast := b;
-	
-	Instructions^blocParent := b;
-	Instructions^tds := new SymbolTable(Bloc^tds);
+    b := Bloc^factory.createBlock();
+    Bloc^ast := b;
+    
+    Instructions^blocParent := b;
+    Instructions^tds := new SymbolTable(Bloc^tds);
 end
 }
 
@@ -297,16 +297,16 @@ Instructions -> ;
 Instructions -> #inh Instruction #instr Instructions ;
 #inh {
 do
-	Instruction^factory := new BlockFactoryImpl();
-	
-	Instruction^tds := Instructions^tds;
-	Instructions1^tds := Instructions^tds;
+    Instruction^factory := new BlockFactoryImpl();
+    
+    Instruction^tds := Instructions^tds;
+    Instructions1^tds := Instructions^tds;
 end
 }
 
 #instr {
 do
-	Instructions^blocParent.add(Instruction^instr);
+    Instructions^blocParent.add(Instruction^instr);
 end
 }
 
@@ -317,14 +317,14 @@ Instruction -> Type identificateur affectation Expression point_virgule ;
 Instruction -> #tds Affectable affectation Expression #instr point_virgule ;
 #tds {
 do
-	Affectable^tds := Instruction^tds;
-	Expression^tds := Instruction^tds;
+    Affectable^tds := Instruction^tds;
+    Expression^tds := Instruction^tds;
 end
 }
 
 #instr {
 do
-	Instruction^instr := Instruction^factory.createAssignment(Affectable^ast, Expression^ast);
+    Instruction^instr := Instruction^factory.createAssignment(Affectable^ast, Expression^ast);
 end
 }
 
@@ -332,44 +332,44 @@ Affectable -> parenthese_ouvrante #tds Affectable parenthese_fermante #ast ;
 
 #tds {
 do
-	Affectable1^tds := Affectable^tds;
+    Affectable1^tds := Affectable^tds;
 end
 }
 
 #ast {
 do
-   Affectable^ast := Affectable1^ast;
+    Affectable^ast := Affectable1^ast;
 end
 }
 
 Affectable -> identificateur #tds #inh SuiteAffectable #ast ;
 #tds {
 do
-   SuiteAffectable^tds := Affectable^tds;
+    SuiteAffectable^tds := Affectable^tds;
 end
 }
 
 #inh {
 local
-   o : Optional<Declaration>;
-   d : Declaration;
+    o : Optional<Declaration>;
+    d : Declaration;
 do
-   if (Affectable^tds.knows(identificateur^txt)) then
-	  o := Affectable^tds.get(identificateur^txt);
-	  d := o.get();
-	  match d
-	  with VariableDeclaration then SuiteAffectable^support := Affectable^factory.createVariableAssignment( d );
-	  with ConstantDeclaration then error(BLOC_not_a_variable, identificateur^txt);
-	  end
-   else
-	  error(BLOC_undefined_ident, identificateur^txt);
-   end
+    if (Affectable^tds.knows(identificateur^txt)) then
+        o := Affectable^tds.get(identificateur^txt);
+        d := o.get();
+        match d
+        with VariableDeclaration then SuiteAffectable^support := Affectable^factory.createVariableAssignment( d );
+        with ConstantDeclaration then error(BLOC_not_a_variable, identificateur^txt);
+        end
+    else
+        error(BLOC_undefined_ident, identificateur^txt);
+    end
 end
 }
 
 #ast {
 do
-   Affectable^ast := SuiteAffectable^ast;
+    Affectable^ast := SuiteAffectable^ast;
 end
 }
 
@@ -377,7 +377,7 @@ end
 SuiteAffectable -> #ast ;
 #ast { 
 do  
-   SuiteAffectable^ast := SuiteAffectable^support;  
+    SuiteAffectable^ast := SuiteAffectable^support;  
 end  
 }
 
@@ -387,14 +387,14 @@ SuiteAffectable -> crochet_ouvrant #tds Expression crochet_fermant #inh SuiteAff
 
 #tds {
 do
-   Expression^tds := SuiteAffectable^tds;
-   SuiteAffectable1^tds := SuiteAffectable^tds;
+    Expression^tds := SuiteAffectable^tds;
+    SuiteAffectable1^tds := SuiteAffectable^tds;
 end
 }
 
 #inh {
 do
-   SuiteAffectable1^support := SuiteAffectable^factory.createArrayAssignment(SuiteAffectable^support,Expression^ast);  
+    SuiteAffectable1^support := SuiteAffectable^factory.createArrayAssignment(SuiteAffectable^support,Expression^ast);  
 end
 }
 
@@ -409,24 +409,24 @@ end
 Instruction -> si parenthese_ouvrante #tds Expression parenthese_fermante Bloc SuiteConditionnelle #instr ;
 #tds {
 do
-	Expression^tds := Instruction^tds;
-	SuiteConditionnelle^tds := Instruction^tds;
-	
-	Bloc^tds := new SymbolTable(Instruction^tds);
+    Expression^tds := Instruction^tds;
+    SuiteConditionnelle^tds := Instruction^tds;
+    
+    Bloc^tds := new SymbolTable(Instruction^tds);
 end
 }
 
 #instr {
 local
-	sc_bloc : Block;
+    sc_bloc : Block;
 do
-	sc_bloc := SuiteConditionnelle^suite_cond_bloc;
-	
-	if sc_bloc = null then
-		Instruction^instr := Instruction^factory.createConditional(Expression^ast, Bloc^ast);
-	else
-		Instruction^instr := Instruction^factory.createConditional(Expression^ast, Bloc^ast, sc_bloc);
-	end
+    sc_bloc := SuiteConditionnelle^suite_cond_bloc;
+    
+    if sc_bloc = null then
+        Instruction^instr := Instruction^factory.createConditional(Expression^ast, Bloc^ast);
+    else
+        Instruction^instr := Instruction^factory.createConditional(Expression^ast, Bloc^ast, sc_bloc);
+    end
 end
 }
 
@@ -434,34 +434,34 @@ end
 SuiteConditionnelle -> #suite_cond_bloc ;
 #suite_cond_bloc {
 do
-	SuiteConditionnelle^suite_cond_bloc := null;
+    SuiteConditionnelle^suite_cond_bloc := null;
 end
 }
 
 SuiteConditionnelle -> sinon #tds Bloc #suite_cond_bloc ;
 #tds {
 do
-	Bloc^tds := new SymbolTable(SuiteConditionnelle^tds);
+    Bloc^tds := new SymbolTable(SuiteConditionnelle^tds);
 end
 }
 
 #suite_cond_bloc {
 do
-	SuiteConditionnelle^suite_cond_bloc := Bloc^ast;
+    SuiteConditionnelle^suite_cond_bloc := Bloc^ast;
 end
 }
 
 Instruction -> tant_que parenthese_ouvrante #tds Expression parenthese_fermante Bloc #instr ;
 #tds {
 do
-	Expression^tds := Instruction^tds;
-	Bloc^tds := new SymbolTable(Instruction^tds);
+    Expression^tds := Instruction^tds;
+    Bloc^tds := new SymbolTable(Instruction^tds);
 end
 }
 
 #instr {
 do
-	Instruction^instr := Instruction^factory.createRepetition(Expression^ast, Bloc^ast);
+    Instruction^instr := Instruction^factory.createRepetition(Expression^ast, Bloc^ast);
 end
 }
 
@@ -469,7 +469,7 @@ end
 Instruction -> afficher Expression point_virgule #instr ;
 #instr {
 do
-	Instruction^instr := Instruction^factory.createPrinter(Expression^ast);
+    Instruction^instr := Instruction^factory.createPrinter(Expression^ast);
 end
 }
 
@@ -479,8 +479,8 @@ Instruction -> retour Expression point_virgule ;
 Expression -> #tds Condition #inh SuiteCondition #ast ;
 #tds {
 do
-	Condition^tds := Expression^tds;
-	SuiteCondition^tds := Expression^tds;
+    Condition^tds := Expression^tds;
+    SuiteCondition^tds := Expression^tds;
 end
 }
 
@@ -492,7 +492,7 @@ end
 
 #ast {
 do
-	Expression^ast := SuiteCondition^ast;
+    Expression^ast := SuiteCondition^ast;
 end 
 }
 
@@ -506,11 +506,11 @@ end
 
 #ast {
 do
-	SuiteCondition^ast :=
-	SuiteCondition^factory.createBinaryExpression(
-	SuiteCondition^gauche,
-	Comparatif^bin_op,
-	Condition^ast);
+    SuiteCondition^ast :=
+    SuiteCondition^factory.createBinaryExpression(
+        SuiteCondition^gauche,
+        Comparatif^bin_op,
+        Condition^ast);
 end 
 }
 
