@@ -28,7 +28,7 @@ inh support : Assignable for SuiteAffectable;
 syn ast 	: Assignable for SuiteAffectable, Affectable;
 
 inh support : Expression for Acces;
-syn ast		: Expression for Acces;
+syn ast		: Expression for Acces, Appel, AppelOuAcces;
 
 syn expressions : LinkedList<Expression> for Expressions, SuiteExpressions;
 
@@ -279,7 +279,7 @@ end
 
 
 Type -> TypeAtomique #calcul_prof SuiteTypeAtomique #ast ;
-#prof {
+#calcul_prof {
 do
     SuiteTypeAtomique^calcul_profondeur := 0;
 end
@@ -960,25 +960,43 @@ end
 --Valeur -> caractere ;
 
 
-Facteur -> identificateur #tds AppelOuAcces ;
+Facteur -> identificateur #tds AppelOuAcces #ast;
 #tds {
 do
     AppelOuAcces^tds := Facteur^tds;
 end
 }
 
+#ast {
+do
+    Facteur^ast := AppelOuAcces^ast;
+end
+}
 
-AppelOuAcces -> #tds Acces ;
+
+AppelOuAcces -> #tds Acces #ast ;
 #tds {
 do
     Acces^tds := AppelOuAcces^tds;
 end
 }
 
-AppelOuAcces -> #tds Appel ;
+#ast {
+do
+    AppelOuAcces^ast := Acces^ast;
+end
+}
+
+AppelOuAcces -> #tds Appel #ast ;
 #tds {
 do
     Appel^tds := AppelOuAcces^tds;
+end
+}
+
+#ast {
+do
+    AppelOuAcces^ast := Appel^ast;
 end
 }
 
@@ -1011,24 +1029,42 @@ end
 }
 
 
-Acces -> point identificateur #tds AppelOuAcces ;
+Acces -> point identificateur #tds AppelOuAcces #ast ;
 #tds {
 do
     AppelOuAcces^tds := Acces^tds;
 end
 }
 
-Appel -> parenthese_ouvrante parenthese_fermante #tds Acces ;
+#ast {
+do
+    Acces^ast := AppelOuAcces^ast;
+end
+}
+
+Appel -> parenthese_ouvrante parenthese_fermante #tds #inh Acces #ast ;
 #tds {
 do
     Acces^tds := Appel^tds;
 end
 }
+
+#ast {
+do
+    Appel^ast := Acces^ast;
+end
+}
  
-Appel -> parenthese_ouvrante Expressions parenthese_fermante #tds Acces ;
+Appel -> parenthese_ouvrante Expressions parenthese_fermante #tds Acces #ast ;
 #tds {
 do
     Acces^tds := Appel^tds;
+end
+}
+
+#ast {
+do
+    Appel^ast := Acces^ast;
 end
 }
  
