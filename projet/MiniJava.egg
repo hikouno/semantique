@@ -164,11 +164,22 @@ end
 ElementsInterface -> ;
 
 
-ElementInterface -> final statique #tds Type identificateur affectation Expression point_virgule ;
+ElementInterface -> final statique #tds #inh Type identificateur affectation Expression point_virgule ;
 #tds {
 do
     Type^tds := ElementInterface^tds;
     Expression^tds := ElementInterface^tds;
+end
+}
+
+#inh {
+local
+    fac : BlockFactoryImpl;
+do
+    fac := new BlockFactoryImpl();
+    
+    Type^factory := fac;
+    Expression^factory := fac;
 end
 }
 
@@ -187,10 +198,17 @@ do
 end
 }
  
-Signature -> Type identificateur parenthese_ouvrante #tds Parametres parenthese_fermante ;
+Signature -> #tds #inh Type identificateur parenthese_ouvrante Parametres parenthese_fermante ;
 #tds {
 do
+    Type^tds := Signature^tds;
     Parametres^tds := Signature^tds;
+end
+}
+
+#inh {
+do
+    Type^factory := new BlockFactoryImpl();
 end
 }
 
@@ -233,6 +251,7 @@ MethodePrincipale -> public statique vide principale parenthese_ouvrante type_St
 #tds {
 do
     Bloc^tds := new SymbolTable(MethodePrincipale^tds);
+    Bloc^factory := new BlockFactoryImpl();
 end
 }
 
@@ -322,7 +341,7 @@ end
 }
    
 
-AttributOuMethode -> #tds Type identificateur SuiteAttributOuMethode;
+AttributOuMethode -> #tds #inh Type identificateur SuiteAttributOuMethode;
 #tds {
 do
     Type^tds := AttributOuMethode^tds;
@@ -330,7 +349,13 @@ do
 end
 }
 
-AttributOuMethode -> vide identificateur parenthese_ouvrante #tds Parametres parenthese_fermante Bloc ;
+#inh {
+do
+    Type^factory := new BlockFactoryImpl();
+end
+}
+
+AttributOuMethode -> vide identificateur parenthese_ouvrante #tds Parametres parenthese_fermante #inh Bloc ;
 #tds {
 do
     Parametres^tds := AttributOuMethode^tds;
@@ -338,10 +363,16 @@ do
 end
 }
 
+#inh {
+do
+    Bloc^factory := new BlockFactoryImpl();
+end
+}
+
 
 SuiteAttributOuMethode -> point_virgule ;
 
-SuiteAttributOuMethode -> parenthese_ouvrante #tds Parametres parenthese_fermante Bloc ;
+SuiteAttributOuMethode -> parenthese_ouvrante #tds Parametres parenthese_fermante #inh Bloc ;
 #tds {
 do
     Parametres^tds := SuiteAttributOuMethode^tds;
@@ -349,12 +380,24 @@ do
 end
 }
 
+#inh {
+do
+    Bloc^factory := new BlockFactoryImpl();
+end
+}
 
-Constructeur -> identificateur_type parenthese_ouvrante #tds Parametres parenthese_fermante Bloc ;
+
+Constructeur -> identificateur_type parenthese_ouvrante #tds Parametres parenthese_fermante #inh Bloc ;
 #tds {
 do
     Parametres^tds := Constructeur^tds;
     Bloc^tds := new SymbolTable(Constructeur^tds);
+end
+}
+
+#inh {
+do
+    Bloc^factory := new BlockFactoryImpl();
 end
 }
 
@@ -374,6 +417,7 @@ Parametre -> #tds Type identificateur ;
 #tds {
 do
     Type^tds := Parametre^tds;
+    Type^factory := new BlockFactoryImpl();
 end
 }
 
