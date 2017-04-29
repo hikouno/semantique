@@ -117,10 +117,16 @@ term   identificateur			is    "[a-z_][a-zA-Z0-9_]*";
 term   identificateur_type		is    "[A-Z][a-zA-Z0-9_]*"; 
 
 
-Programme -> Interfaces Classes #tds Principale ;
+Programme -> Interfaces Classes #tds Principale #ast ;
 #tds {
 do
     Principale^tds := new SymbolTable();
+end
+}
+
+#ast {
+do
+    Programme^ast := null; --BON, A CHANGER AHAH
 end
 }
 
