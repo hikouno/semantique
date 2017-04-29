@@ -34,11 +34,14 @@ syn expressions : LinkedList<Expression> for Expressions, SuiteExpressions;
 inh type : Type for SuiteNouveau;
 
 syn ast		: Block for Programme, Bloc ; 
-syn ast		: Expression for Expression, Condition, SuiteCondition, Terme, SuiteTerme, Facteur, SuiteFacteur, Valeur, SuiteNouveau;
+syn ast		: Expression for Expression, Condition, SuiteCondition,
+    Terme, SuiteTerme, Facteur, SuiteFacteur, Valeur, SuiteNouveau;
+
 syn ast		: Type for Type;
+syn instr	: Instruction for Instruction ;
+
 syn champ	: FieldDeclaration for Champ ;
 syn champs	: LinkedList<FieldDeclaration> for Champs;
-syn instr	: Instruction for Instruction ;
 
 syn bin_op	: BinaryOperator for Additif, Multiplicatif, Comparatif;
 
