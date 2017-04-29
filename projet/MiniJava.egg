@@ -20,7 +20,10 @@ inh factory	: BlockFactory for Bloc, Instruction,
 inh tds : SymbolTable for Bloc, Instructions, Instruction, Expression, SuiteConditionnelle,
                     Condition, SuiteCondition, Terme, SuiteTerme, Facteur, SuiteFacteur, Type,
                     Affectable, SuiteAffectable, Expressions, SuiteExpressions,
-                    Acces, SuiteNouveau; --Appel, AppelOuAcces
+                    Acces, SuiteNouveau, Parametres, Parametre, SuiteParametres,
+                    Principale, MethodePrincipale,  Interface, ElementsInterface,
+                    ElementInterface, Signature, Classe, ElementsClasse, ElementClasse,
+                    Constructeur, AttributOuMethode, SuiteAttributOuMethode; --Appel, AppelOuAcces
 
 inh blocParent	: Block for Instructions;
 
@@ -114,15 +117,30 @@ term   identificateur			is    "[a-z_][a-zA-Z0-9_]*";
 term   identificateur_type		is    "[A-Z][a-zA-Z0-9_]*"; 
 
 
-Programme -> Interfaces Classes Principale ;
+Programme -> Interfaces Classes #tds Principale ;
+#tds {
+do
+    Principale^tds := new SymbolTable();
+end
+}
 
 
-Interfaces -> Interface Interfaces ;
+Interfaces -> #tds Interface Interfaces ;
+#tds {
+do
+    Interface^tds := new SymbolTable();
+end
+}
 
 Interfaces -> ;
 
 
-Interface -> interface identificateur_type Genericite HeritageInterface accolade_ouvrante ElementsInterface accolade_fermante ;
+Interface -> interface identificateur_type Genericite HeritageInterface accolade_ouvrante #tds ElementsInterface accolade_fermante ;
+#tds {
+do
+    ElementsInterface^tds := Interface^tds;
+end
+}
 
 
 HeritageInterface -> extension identificateur_type InstanceGenericite SuiteHeritageInterface ;
@@ -135,28 +153,64 @@ SuiteHeritageInterface -> virgule identificateur_type InstanceGenericite SuiteHe
 SuiteHeritageInterface -> ;
 
 
-ElementsInterface -> ElementInterface ElementsInterface ;
+ElementsInterface -> #tds ElementInterface ElementsInterface ;
+#tds {
+do
+    ElementInterface^tds := ElementsInterface^tds;
+    ElementsInterface1^tds := ElementsInterface^tds;
+end
+}
 
 ElementsInterface -> ;
 
 
-ElementInterface -> final statique Type identificateur affectation Expression point_virgule ;
+ElementInterface -> final statique #tds Type identificateur affectation Expression point_virgule ;
+#tds {
+do
+    Type^tds := ElementInterface^tds;
+    Expression^tds := ElementInterface^tds;
+end
+}
 
-ElementInterface -> Signature point_virgule ;
+ElementInterface -> #tds Signature point_virgule ;
+#tds {
+do
+    Signature^tds := ElementInterface^tds;
+end
+}
 
 
-Signature -> vide identificateur parenthese_ouvrante Parametres parenthese_fermante ;  
+Signature -> vide identificateur parenthese_ouvrante #tds Parametres parenthese_fermante ;
+#tds {
+do
+    Parametres^tds := Signature^tds;
+end
+}
  
-Signature -> Type identificateur parenthese_ouvrante Parametres parenthese_fermante ;  
+Signature -> Type identificateur parenthese_ouvrante #tds Parametres parenthese_fermante ;
+#tds {
+do
+    Parametres^tds := Signature^tds;
+end
+}
 
 
-Classes -> Classe Classes ;
+Classes -> #tds Classe Classes ;
+#tds {
+do
+    Classe^tds := new SymbolTable();
+end
+}
 
 Classes -> ;
 
 
-Classe -> classe  identificateur_type Genericite HeritageClasse ImplantationInterface accolade_ouvrante ElementsClasse accolade_fermante ;
-
+Classe -> classe  identificateur_type Genericite HeritageClasse ImplantationInterface accolade_ouvrante #tds ElementsClasse accolade_fermante ;
+#tds {
+do
+    ElementsClasse^tds := Classe^tds;
+end
+}
 
 HeritageClasse -> extension identificateur_type InstanceGenericite ;
 
@@ -167,10 +221,20 @@ ImplantationInterface -> implantation identificateur_type InstanceGenericite Sui
 ImplantationInterface -> ;
 
 
-Principale -> public classe identificateur_type accolade_ouvrante MethodePrincipale accolade_fermante ;
+Principale -> public classe identificateur_type accolade_ouvrante #tds MethodePrincipale accolade_fermante ;
+#tds {
+do
+    MethodePrincipale^tds := Principale^tds;
+end
+}
 
 
-MethodePrincipale -> public statique vide principale parenthese_ouvrante type_String crochet_ouvrant crochet_fermant identificateur parenthese_fermante Bloc ;
+MethodePrincipale -> public statique vide principale parenthese_ouvrante type_String crochet_ouvrant crochet_fermant identificateur parenthese_fermante #tds Bloc ;
+#tds {
+do
+    Bloc^tds := new SymbolTable(MethodePrincipale^tds);
+end
+}
 
 
 Genericite -> inferieur ParametresGenericite superieur ;
@@ -218,7 +282,13 @@ ArgumentGenericite -> identificateur_type InstanceGenericite ;
 ArgumentGenericite -> type_String ;
 
 
-ElementsClasse -> DroitAcces ElementClasse ElementsClasse ;
+ElementsClasse -> DroitAcces #tds ElementClasse ElementsClasse ;
+#tds {
+do
+    ElementClasse^tds := ElementsClasse^tds;
+    ElementsClasse1^tds := ElementsClasse^tds;
+end
+}
   
 ElementsClasse -> ;  
  
@@ -230,38 +300,93 @@ DroitAcces -> protege ;
 DroitAcces -> prive ;  
  
 
-ElementClasse -> statique AttributOuMethode ;  
+ElementClasse -> statique #tds AttributOuMethode ;
+#tds {
+do
+    AttributOuMethode^tds := ElementClasse^tds;
+end
+}
  
-ElementClasse -> AttributOuMethode ;
+ElementClasse -> #tds AttributOuMethode ;
+#tds {
+do
+    AttributOuMethode^tds := ElementClasse^tds;
+end
+}
  
-ElementClasse -> Constructeur ;  
+ElementClasse -> #tds Constructeur ;
+#tds {
+do
+    Constructeur^tds := ElementClasse^tds;
+end
+}
    
 
-AttributOuMethode -> Type identificateur SuiteAttributOuMethode;
+AttributOuMethode -> #tds Type identificateur SuiteAttributOuMethode;
+#tds {
+do
+    Type^tds := AttributOuMethode^tds;
+    SuiteAttributOuMethode^tds := AttributOuMethode^tds;
+end
+}
 
-AttributOuMethode -> vide identificateur parenthese_ouvrante Parametres parenthese_fermante Bloc ;
+AttributOuMethode -> vide identificateur parenthese_ouvrante #tds Parametres parenthese_fermante Bloc ;
+#tds {
+do
+    Parametres^tds := AttributOuMethode^tds;
+    Bloc^tds := new SymbolTable(AttributOuMethode^tds);
+end
+}
 
 
 SuiteAttributOuMethode -> point_virgule ;
 
-SuiteAttributOuMethode -> parenthese_ouvrante Parametres parenthese_fermante Bloc ;
+SuiteAttributOuMethode -> parenthese_ouvrante #tds Parametres parenthese_fermante Bloc ;
+#tds {
+do
+    Parametres^tds := SuiteAttributOuMethode^tds;
+    Bloc^tds := new SymbolTable(SuiteAttributOuMethode^tds);
+end
+}
 
 
-Constructeur -> identificateur_type parenthese_ouvrante Parametres parenthese_fermante Bloc ;
- 
+Constructeur -> identificateur_type parenthese_ouvrante #tds Parametres parenthese_fermante Bloc ;
+#tds {
+do
+    Parametres^tds := Constructeur^tds;
+    Bloc^tds := new SymbolTable(Constructeur^tds);
+end
+}
 
 
 Parametres -> ;
 
-Parametres -> Parametre SuiteParametres ;
+Parametres -> #tds Parametre SuiteParametres ;
+#tds {
+do
+    Parametre^tds := Parametres^tds;
+    SuiteParametres^tds := Parametres^tds;
+end
+}
 
 
-Parametre -> Type identificateur ;
+Parametre -> #tds Type identificateur ;
+#tds {
+do
+    Type^tds := Parametre^tds;
+end
+}
 
 
 SuiteParametres -> ;
 
-SuiteParametres -> virgule Parametre SuiteParametres ;
+SuiteParametres -> virgule #tds Parametre SuiteParametres ;
+#tds {
+do
+    Parametre^tds := SuiteParametres^tds;
+    SuiteParametres1^tds := SuiteParametres^tds;
+end
+}
 
 
 Bloc -> accolade_ouvrante #ast Instructions accolade_fermante  ;
