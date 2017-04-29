@@ -257,7 +257,18 @@ SuiteParametres -> ;
 SuiteParametres -> virgule Parametre SuiteParametres ;
 
 
-Bloc -> accolade_ouvrante  Instructions accolade_fermante  ;
+Bloc -> accolade_ouvrante #ast Instructions accolade_fermante  ;
+#ast {
+local
+	b : Block;
+do
+	b := Bloc^factory.createBlock();
+	Bloc^ast := b;
+	
+	Instructions^blocParent := b;
+	Instructions^tds := new SymbolTable(Bloc^tds);
+end
+}
 
 
 Type -> TypeAtomique SuiteTypeAtomique ;
@@ -283,14 +294,39 @@ SuiteTypeAtomique -> ;
 
 Instructions -> ;
 
-Instructions -> Instruction Instructions ;
+Instructions -> #inh Instruction #instr Instructions ;
+#inh {
+do
+	Instruction^factory := new BlockFactoryImpl();
+	
+    Instruction^tds := Instructions^tds;
+	Instructions1^tds := Instructions^tds;
+end
+}
+
+#instr {
+do
+	Instructions^blocParent.add(Instruction^instr);
+end
+}
 
 
 Instruction -> Type identificateur affectation Expression point_virgule ;
 
 
-Instruction -> Affectable affectation Expression point_virgule ;
+Instruction -> #tds Affectable affectation Expression #instr point_virgule ;
+#tds {
+do
+    Affectable^tds := Instruction^tds;
+	Expression^tds := Instruction^tds;
+end
+}
 
+#instr {
+do
+	Instruction^instr := Instruction^factory.createAssignment(Affectable^ast, Expression^ast);
+end
+}
 
 Affectable -> parenthese_ouvrante #tds Affectable parenthese_fermante #ast ;
 
@@ -306,10 +342,44 @@ do
 end
 }
 
-Affectable -> identificateur SuiteAffectable ;
+Affectable -> identificateur #tds #inh SuiteAffectable #ast ;
+#tds {
+do
+   SuiteAffectable^tds := Affectable^tds;
+end
+}
+
+#inh {
+local
+   o : Optional<Declaration>;
+   d : Declaration;
+do
+   if (Affectable^tds.knows(identificateur^txt)) then
+      o := Affectable^tds.get(identificateur^txt);
+      d := o.get();
+      match d
+      with VariableDeclaration then SuiteAffectable^support := Affectable^factory.createVariableAssignment( d );
+      with ConstantDeclaration then error(BLOC_not_a_variable, identificateur^txt);
+      end
+   else
+      error(BLOC_undefined_ident, identificateur^txt);
+   end
+end
+}
+
+#ast {
+do
+   Affectable^ast := SuiteAffectable^ast;
+end
+}
 
 
-SuiteAffectable -> ;
+SuiteAffectable -> #ast ;
+#ast { 
+do  
+   SuiteAffectable^ast := SuiteAffectable^support;  
+end  
+}
 
 SuiteAffectable -> point identificateur AppelOuAcces ;
 
@@ -336,42 +406,184 @@ end
 
 
 
-Instruction -> si parenthese_ouvrante Expression parenthese_fermante Bloc SuiteConditionnelle ;
+Instruction -> si parenthese_ouvrante #tds Expression parenthese_fermante Bloc SuiteConditionnelle #instr ;
+#tds {
+do
+	Expression^tds := Instruction^tds;
+	SuiteConditionnelle^tds := Instruction^tds;
+	
+	Bloc^tds := new SymbolTable(Instruction^tds);
+end
+}
+
+#instr {
+local
+	sc_bloc : Block;
+do
+	sc_bloc := SuiteConditionnelle^suite_cond_bloc;
+	
+	if sc_bloc = null then
+		Instruction^instr := Instruction^factory.createConditional(Expression^ast, Bloc^ast);
+	else
+		Instruction^instr := Instruction^factory.createConditional(Expression^ast, Bloc^ast, sc_bloc);
+	end
+end
+}
 
 
-SuiteConditionnelle -> ;
+SuiteConditionnelle -> #suite_cond_bloc ;
+#suite_cond_bloc {
+do
+	SuiteConditionnelle^suite_cond_bloc := null;
+end
+}
 
-SuiteConditionnelle ->sinon Bloc ;
+SuiteConditionnelle -> sinon #tds Bloc #suite_cond_bloc ;
+#tds {
+do
+	Bloc^tds := new SymbolTable(SuiteConditionnelle^tds);
+end
+}
 
-Instruction -> tant_que parenthese_ouvrante Expression parenthese_fermante Bloc ;
+#suite_cond_bloc {
+do
+	SuiteConditionnelle^suite_cond_bloc := Bloc^ast;
+end
+}
 
-Instruction -> afficher Expression point_virgule ;
+Instruction -> tant_que parenthese_ouvrante #tds Expression parenthese_fermante Bloc #instr ;
+#tds {
+do
+	Expression^tds := Instruction^tds;
+	Bloc^tds := new SymbolTable(Instruction^tds);
+end
+}
+
+#instr {
+do
+	Instruction^instr := Instruction^factory.createRepetition(Expression^ast, Bloc^ast);
+end
+}
+
+
+Instruction -> afficher Expression point_virgule #instr ;
+#instr {
+do
+	Instruction^instr := Instruction^factory.createPrinter(Expression^ast);
+end
+}
 
 Instruction -> retour Expression point_virgule ;
 
 
-Expression -> Condition SuiteCondition ;
+Expression -> #tds Condition #inh SuiteCondition #ast ;
+#tds {
+do
+	Condition^tds := Expression^tds;
+	SuiteCondition^tds := Expression^tds;
+end
+}
+
+#inh {
+do
+   SuiteCondition^gauche := Condition^ast;
+end 
+}
+
+#ast {
+do
+    Expression^ast := SuiteCondition^ast;
+end 
+}
 
 
-SuiteCondition -> Comparatif Condition ;
+SuiteCondition -> #tds Comparatif Condition #ast ;
+#tds {
+do
+	Condition^tds := SuiteCondition^tds;
+end
+}
 
-SuiteCondition -> ;
+#ast {
+do
+	SuiteCondition^ast :=
+	SuiteCondition^factory.createBinaryExpression(
+	SuiteCondition^gauche,
+	Comparatif^bin_op,
+	Condition^ast);
+end 
+}
+
+SuiteCondition -> #ast ;
+#ast {
+do
+   SuiteCondition^ast := SuiteCondition^gauche;
+end 
+}
 
 
-Comparatif -> egalite ;  
+Comparatif -> egalite #texte ;
+#texte {
+do
+   Comparatif^bin_op := BinaryOperator.Equals;
+end
+}
 
-Comparatif -> different ;  
+Comparatif -> different #texte ;
+#texte {  
+do  
+   Comparatif^bin_op := BinaryOperator.Different;   
+end  
+}
 
-Comparatif -> inferieur ;  
+Comparatif -> inferieur #texte ;
+#texte {  
+do  
+   Comparatif^bin_op := BinaryOperator.Lesser;   
+end  
+}
 
-Comparatif -> inferieur_egal ;  
+Comparatif -> inferieur_egal #texte ;
+#texte {  
+do  
+   Comparatif^bin_op := BinaryOperator.LesserOrEqual;   
+end  
+}
 
-Comparatif -> superieur ;  
+Comparatif -> superieur #texte ;
+#texte {   
+do  
+   Comparatif^bin_op := BinaryOperator.Greater;    
+end  
+}
 
-Comparatif -> superieur_egal ;  
+Comparatif -> superieur_egal #texte ;
+#texte {   
+do  
+   Comparatif^bin_op := BinaryOperator.GreaterOrEqual;    
+end  
+}
 
    
-Condition -> Terme SuiteTerme ;
+Condition -> #tds Terme #ast_inh SuiteTerme #ast_syn ;
+#tds {
+do
+	Terme^tds := Condition^tds;
+	SuiteTerme^tds := Condition^tds;
+end
+}
+
+#ast_inh {
+do 
+   SuiteTerme^gauche := Terme^ast; 
+end 
+}
+
+#ast_syn {
+do
+   Condition^ast := SuiteTerme^ast; 
+end
+}
 
 
 SuiteTerme -> Additif #tds Terme #ast_inh SuiteTerme #ast_syn ;
