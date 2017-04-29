@@ -30,6 +30,6 @@ public interface ProgramFactory {
 	 * Create an Abstract Syntax Tree node for the Classe type.
 	 * @return Abstract Syntax Tree node for the Classe type.
 	 */
-	public Classe createClasse();
+	public Classe createClasse(String name);
 
 }

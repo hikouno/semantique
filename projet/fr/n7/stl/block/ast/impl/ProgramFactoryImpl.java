@@ -40,8 +40,8 @@ public class ProgramFactoryImpl implements ProgramFactory {
 	 * Create an Abstract Syntax Tree node for the Classe type.
 	 * @return Abstract Syntax Tree node for the Classe type.
 	 */
-	public Classe createClasse() {
-	    return new ClasseImpl();
+	public Classe createClasse(String name) {
+	    return new ClasseImpl(name);
 	}
 
 }

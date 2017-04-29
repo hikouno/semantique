@@ -267,7 +267,7 @@ local
     prg : ProgramFactoryImpl;
 do
     prg := new ProgramFactoryImpl();
-    Classe^ast := prg.createClasse();
+    Classe^ast := prg.createClasse(identificateur_type^txt);
 end
 }
 

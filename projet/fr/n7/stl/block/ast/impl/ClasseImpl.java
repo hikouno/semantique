@@ -19,8 +19,10 @@ import fr.n7.stl.tam.ast.TAMFactory;
 public class ClasseImpl implements Classe {
 
 	
-	public ClasseImpl() {
-		
+	protected String name;
+	
+	public ClasseImpl(String name) {
+		this.name = name;
 	}
 	
 	/* (non-Javadoc)
@@ -29,7 +31,7 @@ public class ClasseImpl implements Classe {
 	@Override
 	public String toString() {
 		
-		return "kikoo\n";
+		return "class "+this.name+"\n";
 	}
 
 	/* (non-Javadoc)
