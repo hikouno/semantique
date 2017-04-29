@@ -20,7 +20,7 @@ inh factory	: BlockFactory for Bloc, Instruction,
 inh tds : SymbolTable for Bloc, Instructions, Instruction, Expression, SuiteConditionnelle,
                     Condition, SuiteCondition, Terme, SuiteTerme, Facteur, SuiteFacteur, Type,
                     Affectable, SuiteAffectable, Expressions, SuiteExpressions,
-                    Appel, Acces, AppelOuAcces, SuiteNouveau;
+                    Acces, SuiteNouveau; --Appel, AppelOuAcces
 
 inh blocParent	: Block for Instructions;
 
@@ -28,7 +28,7 @@ inh support : Assignable for SuiteAffectable;
 syn ast 	: Assignable for SuiteAffectable, Affectable;
 
 inh support : Expression for Acces;
-syn ast		: Expression for Acces, Appel, AppelOuAcces;
+syn ast		: Expression for Acces; --, Appel, AppelOuAcces;
 
 syn expressions : LinkedList<Expression> for Expressions, SuiteExpressions;
 
@@ -467,12 +467,12 @@ do
 end  
 }
 
-SuiteAffectable -> point identificateur #tds AppelOuAcces ;
-#tds {
-do
-    AppelOuAcces^tds := SuiteAffectable^tds;
-end
-}
+--SuiteAffectable -> point identificateur #tds AppelOuAcces ;
+--#tds {
+--do
+--    AppelOuAcces^tds := SuiteAffectable^tds;
+--end
+--}
 
 SuiteAffectable -> crochet_ouvrant #tds Expression crochet_fermant #inh SuiteAffectable #ast ;
 #tds {
@@ -960,45 +960,45 @@ end
 --Valeur -> caractere ;
 
 
-Facteur -> identificateur #tds AppelOuAcces #ast;
-#tds {
-do
-    AppelOuAcces^tds := Facteur^tds;
-end
-}
+--Facteur -> identificateur #tds AppelOuAcces #ast;
+--#tds {
+--do
+    --AppelOuAcces^tds := Facteur^tds;
+--end
+--}
 
-#ast {
-do
-    Facteur^ast := AppelOuAcces^ast;
-end
-}
+--#ast {
+--do
+    --Facteur^ast := AppelOuAcces^ast;
+--end
+--}
 
 
-AppelOuAcces -> #tds Acces #ast ;
-#tds {
-do
-    Acces^tds := AppelOuAcces^tds;
-end
-}
+--AppelOuAcces -> #tds Acces #ast ;
+--#tds {
+--do
+--    Acces^tds := AppelOuAcces^tds;
+--end
+--}
 
-#ast {
-do
-    AppelOuAcces^ast := Acces^ast;
-end
-}
+--#ast {
+--do
+--    AppelOuAcces^ast := Acces^ast;
+--end
+--}
 
-AppelOuAcces -> #tds Appel #ast ;
-#tds {
-do
-    Appel^tds := AppelOuAcces^tds;
-end
-}
+--AppelOuAcces -> #tds Appel #ast ;
+--#tds {
+--do
+--    Appel^tds := AppelOuAcces^tds;
+--end
+--}
 
-#ast {
-do
-    AppelOuAcces^ast := Appel^ast;
-end
-}
+--#ast {
+--do
+--    AppelOuAcces^ast := Appel^ast;
+--end
+--}
 
 
 Acces -> #ast ;
@@ -1029,43 +1029,43 @@ end
 }
 
 
-Acces -> point identificateur #tds AppelOuAcces #ast ;
-#tds {
-do
-    AppelOuAcces^tds := Acces^tds;
-end
-}
+--Acces -> point identificateur #tds AppelOuAcces #ast ;
+--#tds {
+--do
+--    AppelOuAcces^tds := Acces^tds;
+--end
+--}
 
-#ast {
-do
-    Acces^ast := AppelOuAcces^ast;
-end
-}
+--#ast {
+--do
+--    Acces^ast := AppelOuAcces^ast;
+--end
+--}
 
-Appel -> parenthese_ouvrante parenthese_fermante #tds #inh Acces #ast ;
-#tds {
-do
-    Acces^tds := Appel^tds;
-end
-}
+--Appel -> parenthese_ouvrante parenthese_fermante #tds #inh Acces #ast ;
+--#tds {
+--do
+--    Acces^tds := Appel^tds;
+--end
+--}
 
-#ast {
-do
-    Appel^ast := Acces^ast;
-end
-}
+--#ast {
+--do
+--    Appel^ast := Acces^ast;
+--end
+--}
  
-Appel -> parenthese_ouvrante Expressions parenthese_fermante #tds Acces #ast ;
-#tds {
-do
-    Acces^tds := Appel^tds;
-end
-}
+--Appel -> parenthese_ouvrante Expressions parenthese_fermante #tds Acces #ast ;
+--#tds {
+--do
+--    Acces^tds := Appel^tds;
+--end
+--}
 
-#ast {
-do
-    Appel^ast := Acces^ast;
-end
-}
- 
+--#ast {
+--do
+--    Appel^ast := Acces^ast;
+--end
+--}
+
 end
