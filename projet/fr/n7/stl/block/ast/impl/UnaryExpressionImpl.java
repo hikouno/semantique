@@ -4,7 +4,6 @@
 package fr.n7.stl.block.ast.impl;
 
 import fr.n7.stl.block.ast.AtomicType;
-import fr.n7.stl.block.ast.CoupleType;
 import fr.n7.stl.block.ast.Expression;
 import fr.n7.stl.block.ast.Type;
 import fr.n7.stl.block.ast.UnaryOperator;
@@ -68,22 +67,6 @@ public class UnaryExpressionImpl implements Expression {
 						return AtomicType.ErrorType;
 					}
 				}
-				case First: {
-					if (resultType instanceof CoupleType) {
-						return ((CoupleType)resultType).getFirst();
-					} else {
-						Logger.warning("Type error in unary expression : First parameter " + resultType);
-						return AtomicType.ErrorType;
-					}
-				}
-				case Second: {
-					if (resultType instanceof CoupleType) {
-						return ((CoupleType)resultType).getFirst();
-					} else {
-						Logger.warning("Type error in unary expression : Second parameter " + resultType);
-						return AtomicType.ErrorType;
-					}
-				}
 				default : return AtomicType.ErrorType;
 			}
 		}
@@ -95,38 +78,11 @@ public class UnaryExpressionImpl implements Expression {
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
 		
-		if (this.operator != UnaryOperator.First && this.operator != UnaryOperator.Second)
-		{
-			Fragment _code = this.parameter.getCode(_factory);
-			_code.add(TAMFactory.createUnaryOperator(this.operator));
-			
-			System.out.println(_code);
-			return _code;
-		}
-		else
-		{
-			/*if (parameter instanceof FieldAccessImpl) {
-				
-			}  
-			* 
-			* ---OPTIMISATION---
-			* 
-			else if (parameter instanceof VariableUseImpl) {
-				VariableDeclaration declaration = ((VariableUseImpl) parameter).getDeclaration();
-				SequenceImpl seq = (SequenceImpl) declaration.getValue();
-				
-				return (operator == UnaryOperator.First) ? seq.getValues().get(0).getCode(_factory) :
-																	seq.getValues().get(1).getCode(_factory);
-			}*/
-			
-			Fragment _code = this.parameter.getCode(_factory);
-			if (this.operator == UnaryOperator.First)
-				_code.add(_factory.createPop(0,1));
-			else
-				_code.add(_factory.createPop(1,1));
-			
-			return _code;
-		}
+		Fragment _code = this.parameter.getCode(_factory);
+		_code.add(TAMFactory.createUnaryOperator(this.operator));
+		
+		System.out.println(_code);
+		return _code;
 	}
 
 }

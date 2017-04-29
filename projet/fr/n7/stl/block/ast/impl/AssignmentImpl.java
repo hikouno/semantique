@@ -91,13 +91,6 @@ public class AssignmentImpl implements Instruction {
 				res.add(_factory.createStore(declaration.getRegister(), declaration.getOffset(), declaration.getType().length()));
 				return res;
 				
-			} else if (this.assignable instanceof FieldAssignmentImpl) {
-				
-				FieldAssignmentImpl fa = (FieldAssignmentImpl) assignable;
-				
-				Fragment res = value.getCode(_factory);
-				res.add(_factory.createStore(fa.getRegister(), fa.getOffset(), fa.getLength()));
-				return res;
 			}
 			
 			throw new RuntimeException("Affectation non implémentée");

@@ -46,21 +46,21 @@ public interface TypeFactory {
 	 * @param _second Abstract Syntax Tree for the type of the second element of the couple.
 	 * @return Abstract Syntax Tree node for a couple type.
 	 */
-	public Type createCoupleType(Type _first, Type _second);
+	//public Type createCoupleType(Type _first, Type _second);
 	
 	/** 
 	 * Create an Abstract Syntax Tree node for an array type.
 	 * @param _element Abstract Syntax Tree for the type of the elements in the array type.
 	 * @return Abstract Syntax Tree node for an array type.
 	 */
-	public Type createArrayType(Type _element);
+	//public Type createArrayType(Type _element);
 	
 	/**
 	 * Create an Abstract Syntax Tree node for a pointer type.
 	 * @param _element Abstract Syntax Tree for the type of the target element in the pointer type.
 	 * @return Abstract Syntax Tree node for a pointer type.
 	 */
-	public Type createPointerType(Type _element);
+	//public Type createPointerType(Type _element);
 	
 	/**
 	 * Create an Abstract Syntax Tree node for a function type.
@@ -68,14 +68,14 @@ public interface TypeFactory {
 	 * @param _parameters Abstract Syntax Trees for the types of the sequence of parameters in the function type.
 	 * @return Abstract Syntax Tree node for a function type.
 	 */
-	public Type createFunctionType(Type _result, Iterable<Type> _parameters);
+	//public Type createFunctionType(Type _result, Iterable<Type> _parameters);
 	
 	/**
 	 * Create an Abstract Syntax Tree node for a named type (e.g. in a type definition).
 	 * @param _declaration Abstract Syntax Tree for the target type in the named type.
 	 * @return Abstract Syntax Tree node for a named type.
 	 */
-	public Type createNamedType(TypeDeclaration _declaration);
+	//public Type createNamedType(TypeDeclaration _declaration);
 	
 	/**
 	 * Create an Abstract Syntax Tree node for an empty (i.e. without fields) record type.
@@ -83,7 +83,7 @@ public interface TypeFactory {
 	 * @param _name Name of the record type.
 	 * @return Abstract Syntax Tree node for a record type.
 	 */
-	public RecordType createRecordType(String _name);
+	//public RecordType createRecordType(String _name);
 
 	/**
 	 * Create an Abstract Syntax Tree node for record type containing fields.
@@ -91,7 +91,7 @@ public interface TypeFactory {
 	 * @param _fields Abstract Syntax Tree nodes for the fields in the record type.
 	 * @return Abstract Syntax Tree node for a record type.
 	 */
-	public RecordType createRecordType(String _name, Iterable<FieldDeclaration> _fields);
+	//public RecordType createRecordType(String _name, Iterable<FieldDeclaration> _fields);
 	
 	/**
 	 * Create an Abstract Syntax Tree node for a field declaration in a record type.
@@ -99,6 +99,6 @@ public interface TypeFactory {
 	 * @param _type Type of the record field.
 	 * @return  Abstract Syntax Tree node for a field declaration in a record type.
 	 */
-	public FieldDeclaration createFieldDeclaration(String _name, Type _type);
+	//public FieldDeclaration createFieldDeclaration(String _name, Type _type);
 
 }
