@@ -12,10 +12,12 @@ class Poisson {
     
     
     private int mon_attribut;
+    private boolean cinq_nageoires;
 }
 
 class Ordi {
     
+    private boolean pc;
     
     public boolean est_incroyable() {
         int test = 4;

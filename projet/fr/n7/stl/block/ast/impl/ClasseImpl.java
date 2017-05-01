@@ -21,13 +21,19 @@ public class ClasseImpl implements Classe {
 
 	
 	protected String name;
+	protected LinkedList<AttributImpl> attributs;
 	protected LinkedList<MethodImpl> methods;
 	
 	public ClasseImpl(String name) {
 		this.name = name;
+		
+		this.attributs = new LinkedList<AttributImpl>();
 		this.methods = new LinkedList<MethodImpl>();
 	}
 	
+	public void ajouterAttribut(AttributImpl attribut) {
+		this.attributs.add(attribut);
+	}
 	
 	public void ajouterMethode(MethodImpl method) {
 		this.methods.add(method);
@@ -40,9 +46,16 @@ public class ClasseImpl implements Classe {
 	public String toString() {
 		
 		String text = "class "+this.name+" {\n";
-			for (MethodImpl method : methods) {
-				text += method;
-			}
+		
+		for (AttributImpl att : attributs) {
+			text += att + "\n";
+		}
+		
+		text += "\n";
+		
+		for (MethodImpl method : methods) {
+			text += method;
+		}
 		
 		text += "\n}";
 		return text;

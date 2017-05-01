@@ -429,7 +429,7 @@ local
 do
     prg := new ProgramFactoryImpl();
     
-    if AttributOuMethode^methode_corps != null then
+    if AttributOuMethode^methode_corps != null then     --UNE METHODE
         ElementClasse^classe_mere.ajouterMethode(
             prg.createMethode(AttributOuMethode^nom,
                                 AttributOuMethode^methode_arguments,
@@ -437,6 +437,13 @@ do
                                 ElementClasse^droit,
                                 true,
                                 AttributOuMethode^type)
+        );
+    else                                                --UN ATTRIBUT
+        ElementClasse^classe_mere.ajouterAttribut(
+            prg.createAttribut(AttributOuMethode^type.get(),
+                                AttributOuMethode^nom,
+                                ElementClasse^droit,
+                                true)
         );
     end
 end
@@ -455,7 +462,7 @@ local
 do
     prg := new ProgramFactoryImpl();
     
-    if AttributOuMethode^methode_corps != null then
+    if AttributOuMethode^methode_corps != null then     --UNE METHODE
         ElementClasse^classe_mere.ajouterMethode(
             prg.createMethode(AttributOuMethode^nom,
                                 AttributOuMethode^methode_arguments,
@@ -463,6 +470,13 @@ do
                                 ElementClasse^droit,
                                 false,
                                 AttributOuMethode^type)
+        );
+    else                                                --UN ATTRIBUT
+        ElementClasse^classe_mere.ajouterAttribut(
+            prg.createAttribut(AttributOuMethode^type.get(),
+                                AttributOuMethode^nom,
+                                ElementClasse^droit,
+                                false)
         );
     end
 end

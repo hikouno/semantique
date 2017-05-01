@@ -3,6 +3,7 @@
  */
 package fr.n7.stl.block.ast;
 
+import fr.n7.stl.block.ast.impl.AttributImpl;
 import fr.n7.stl.block.ast.impl.MethodImpl;
 
 import fr.n7.stl.tam.ast.Fragment;
@@ -21,11 +22,16 @@ import fr.n7.stl.tam.ast.TAMFactory;
 public interface Classe {
 	
 	/**
+	 * Ajoute un attribut à la classe.
+	 * @param attribut Attribut à ajouter.
+	 */
+	public void ajouterAttribut(AttributImpl attribut);
+	
+	/**
 	 * Ajoute une méthode à la classe.
 	 * @param method Méthode à ajouter.
 	 */
 	public void ajouterMethode(MethodImpl method);
-	
 	
 	/**
 	 * Synthesized Semantics attribute to check that an instruction if well typed.

@@ -6,6 +6,7 @@ package fr.n7.stl.block.ast;
 import java.util.LinkedList;
 import java.util.Optional;
 
+import fr.n7.stl.block.ast.impl.AttributImpl;
 import fr.n7.stl.block.ast.impl.MethodImpl;
 import fr.n7.stl.block.ast.impl.Argument;
 
@@ -36,6 +37,12 @@ public interface ProgramFactory {
 	 * @return Abstract Syntax Tree node for the Classe type.
 	 */
 	public Classe createClasse(String name);
+	
+	/**
+	 * Create an Abstract Syntax Tree node for the Attribut type.
+	 * @return Abstract Syntax Tree node for the Attribut type.
+	 */
+	public AttributImpl createAttribut(Type type, String name, MembreClasse.DroitAcces auth, boolean statique);
 	
 	/**
 	 * Create an Abstract Syntax Tree node for the Method type.

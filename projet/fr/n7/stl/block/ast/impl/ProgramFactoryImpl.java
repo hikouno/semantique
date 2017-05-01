@@ -48,6 +48,14 @@ public class ProgramFactoryImpl implements ProgramFactory {
 	}
 	
 	/**
+	 * Create an Abstract Syntax Tree node for the Attribut type.
+	 * @return Abstract Syntax Tree node for the Attribut type.
+	 */
+	public AttributImpl createAttribut(Type type, String name, DroitAcces auth, boolean statique) {
+	    return new AttributImpl(type, name, auth, statique);
+	}
+	
+	/**
 	 * Create an Abstract Syntax Tree node for the Method type.
 	 * @return Abstract Syntax Tree node for the Method type.
 	 */

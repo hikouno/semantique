@@ -38,7 +38,7 @@ public class AttributImpl extends MembreClasse {
 		String text = (this.auth == DroitAcces.PRIVATE) ? "private " : ( (this.auth == DroitAcces.PUBLIC) ? "public " : "protected " );
 		
 		text += (this.statique) ? "static " : "";
-		text += this.type.toString() + " " + this.name;		
+		text += this.type.toString() + " " + this.name + ";";		
 		
 		return text;
 	}
