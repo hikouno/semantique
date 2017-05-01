@@ -54,9 +54,14 @@ syn ast     : ClassePrincipale for Principale;
 syn bloc    : Block for MethodePrincipale;
 
 --Interfaces
-
 syn ast        : Interface for Interface;
 syn interfaces : LinkedList<Interface> for Interfaces;
+inh interface_mere : Interface for ElementsInterface, ElementInterface;
+
+--Signatures d'interfaces
+syn type : Optional<Type> for Signature;
+syn nom : String for Signature;
+syn args : LinkedList<Argument> for Signature;
 
 --Classes
 syn ast     : Classe for Classe;
@@ -207,6 +212,7 @@ do
     
     --INH
     ElementsInterface^tds := Interface^tds;
+    ElementsInterface^interface_mere := interface;
 end
 }
 
@@ -220,11 +226,18 @@ SuiteHeritageInterface -> virgule identificateur_type InstanceGenericite SuiteHe
 SuiteHeritageInterface -> ;
 
 
-ElementsInterface -> #tds ElementInterface ElementsInterface ;
+ElementsInterface -> #tds #inh ElementInterface ElementsInterface ;
 #tds {
 do
     ElementInterface^tds := ElementsInterface^tds;
     ElementsInterface1^tds := ElementsInterface^tds;
+end
+}
+
+#inh {
+do
+    ElementInterface^interface_mere := ElementsInterface^interface_mere;
+    ElementsInterface1^interface_mere := ElementsInterface^interface_mere;
 end
 }
 
@@ -250,22 +263,38 @@ do
 end
 }
 
-ElementInterface -> #tds Signature point_virgule ;
+ElementInterface -> #tds Signature point_virgule #ast ;
 #tds {
 do
     Signature^tds := ElementInterface^tds;
 end
 }
 
+#ast {
+do
+    ElementInterface^interface_mere.ajouterSignature(Signature^type,
+                                                        Signature^nom,
+                                                        Signature^args);
+end
+}
 
-Signature -> vide identificateur parenthese_ouvrante #tds Parametres parenthese_fermante ;
+
+Signature -> vide identificateur parenthese_ouvrante #tds Parametres parenthese_fermante #ast ;
 #tds {
 do
     Parametres^tds := Signature^tds;
 end
 }
+
+#ast {
+do
+    Signature^type := Optional.empty();
+    Signature^nom := identificateur^txt;
+    Signature^args := Parametres^args;
+end
+}
  
-Signature -> #tds #inh Type identificateur parenthese_ouvrante Parametres parenthese_fermante ;
+Signature -> #tds #inh Type identificateur parenthese_ouvrante Parametres parenthese_fermante #ast ;
 #tds {
 do
     Type^tds := Signature^tds;
@@ -276,6 +305,14 @@ end
 #inh {
 do
     Type^factory := new BlockFactoryImpl();
+end
+}
+
+#ast {
+do
+    Signature^type := Optional.of(Type^ast);
+    Signature^nom := identificateur^txt;
+    Signature^args := Parametres^args;
 end
 }
 
