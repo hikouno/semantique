@@ -148,6 +148,8 @@ local
     prg : ProgramFactoryImpl;
 do
     prg := new ProgramFactoryImpl();
+    
+    Collections.reverse(Classes^classes);
     Programme^ast := prg.createProgram(Principale^ast, Classes^classes);
 end
 }
