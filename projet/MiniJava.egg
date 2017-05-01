@@ -416,10 +416,29 @@ end
 }
  
 
-ElementClasse -> statique #tds AttributOuMethode ;
+ElementClasse -> statique #tds AttributOuMethode #ast ;
 #tds {
 do
     AttributOuMethode^tds := ElementClasse^tds;
+end
+}
+
+#ast {
+local
+    prg : ProgramFactoryImpl;
+do
+    prg := new ProgramFactoryImpl();
+    
+    if AttributOuMethode^methode_corps != null then
+        ElementClasse^classe_mere.ajouterMethode(
+            prg.createMethode(AttributOuMethode^nom,
+                                AttributOuMethode^methode_arguments,
+                                AttributOuMethode^methode_corps,
+                                ElementClasse^droit,
+                                true,
+                                AttributOuMethode^type)
+        );
+    end
 end
 }
  
@@ -442,6 +461,7 @@ do
                                 AttributOuMethode^methode_arguments,
                                 AttributOuMethode^methode_corps,
                                 ElementClasse^droit,
+                                false,
                                 AttributOuMethode^type)
         );
     end

@@ -10,7 +10,7 @@ import fr.n7.stl.block.ast.ProgramFactory;
 import fr.n7.stl.block.ast.Program;
 import fr.n7.stl.block.ast.ClassePrincipale;
 import fr.n7.stl.block.ast.Classe;
-import fr.n7.stl.block.ast.Method;
+import fr.n7.stl.block.ast.MembreClasse.DroitAcces;
 import fr.n7.stl.block.ast.Type;
 import fr.n7.stl.block.ast.Block;
 
@@ -51,8 +51,8 @@ public class ProgramFactoryImpl implements ProgramFactory {
 	 * Create an Abstract Syntax Tree node for the Method type.
 	 * @return Abstract Syntax Tree node for the Method type.
 	 */
-	public Method createMethode(String name, LinkedList<Argument> args, Block body, Method.DroitAcces auth, Optional<Type> retour) {
-	    return new MethodImpl(name, args, body, auth, retour);
+	public MethodImpl createMethode(String name, LinkedList<Argument> args, Block body, DroitAcces auth, boolean statique, Optional<Type> retour) {
+	    return new MethodImpl(name, args, body, auth, statique, retour);
 	}
 	
 	/**

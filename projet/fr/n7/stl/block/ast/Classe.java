@@ -3,6 +3,8 @@
  */
 package fr.n7.stl.block.ast;
 
+import fr.n7.stl.block.ast.impl.MethodImpl;
+
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
@@ -20,9 +22,9 @@ public interface Classe {
 	
 	/**
 	 * Ajoute une méthode à la classe.
-	 * @param Méthode à ajouter.
+	 * @param method Méthode à ajouter.
 	 */
-	public void ajouterMethode(Method method);
+	public void ajouterMethode(MethodImpl method);
 	
 	
 	/**

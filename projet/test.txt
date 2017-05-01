@@ -6,7 +6,7 @@ class Poisson {
         print salut;
     }
     
-    public int ma_methode_incroyable2() {
+    public static int ma_methode_incroyable2() {
         int j = 4;
     }
     
@@ -15,7 +15,11 @@ class Poisson {
 }
 
 class Ordi {
-
+    
+    
+    public boolean est_incroyable() {
+        int test = 4;
+    }
 }
 
 public class Test {

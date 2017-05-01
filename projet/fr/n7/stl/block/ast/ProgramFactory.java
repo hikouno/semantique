@@ -6,6 +6,7 @@ package fr.n7.stl.block.ast;
 import java.util.LinkedList;
 import java.util.Optional;
 
+import fr.n7.stl.block.ast.impl.MethodImpl;
 import fr.n7.stl.block.ast.impl.Argument;
 
 /**
@@ -40,7 +41,7 @@ public interface ProgramFactory {
 	 * Create an Abstract Syntax Tree node for the Method type.
 	 * @return Abstract Syntax Tree node for the Method type.
 	 */
-	public Method createMethode(String name, LinkedList<Argument> args, Block body, Method.DroitAcces auth, Optional<Type> retour);
+	public MethodImpl createMethode(String name, LinkedList<Argument> args, Block body, MembreClasse.DroitAcces auth, boolean statique, Optional<Type> retour);
 	
 	/**
 	 * Create an Abstract Syntax Tree node for the method Argument type.

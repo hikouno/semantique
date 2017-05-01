@@ -5,7 +5,6 @@ package fr.n7.stl.block.ast.impl;
 
 import java.util.LinkedList;
 
-import fr.n7.stl.block.ast.Method;
 import fr.n7.stl.block.ast.Classe;
 import fr.n7.stl.block.ast.Block;
 import fr.n7.stl.block.ast.Type;
@@ -22,15 +21,15 @@ public class ClasseImpl implements Classe {
 
 	
 	protected String name;
-	protected LinkedList<Method> methods;
+	protected LinkedList<MethodImpl> methods;
 	
 	public ClasseImpl(String name) {
 		this.name = name;
-		this.methods = new LinkedList<Method>();
+		this.methods = new LinkedList<MethodImpl>();
 	}
 	
 	
-	public void ajouterMethode(Method method) {
+	public void ajouterMethode(MethodImpl method) {
 		this.methods.add(method);
 	}
 	
@@ -41,7 +40,7 @@ public class ClasseImpl implements Classe {
 	public String toString() {
 		
 		String text = "class "+this.name+" {\n";
-			for (Method method : methods) {
+			for (MethodImpl method : methods) {
 				text += method;
 			}
 		

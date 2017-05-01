@@ -19,20 +19,14 @@ import fr.n7.stl.tam.ast.TAMFactory;
  * A class method.
  *
  */
-public class MethodImpl extends MembreClasse {
+public class AttributImpl extends MembreClasse {
 
-	protected LinkedList<Argument> args;
-	protected Block corps;
+	protected Type type;
 	
-	protected Optional<Type> retour;
-	
-	
-	public MethodImpl(String name, LinkedList<Argument> args, Block body, DroitAcces auth, boolean statique, Optional<Type> retour) {
+	public AttributImpl(Type type, String name, DroitAcces auth, boolean statique) {
 		super(name, auth, statique);
 		
-		this.args = args;
-		this.corps = body;
-		this.retour = retour;
+		this.type = type;
 	}
 	
 	/* (non-Javadoc)
@@ -44,15 +38,7 @@ public class MethodImpl extends MembreClasse {
 		String text = (this.auth == DroitAcces.PRIVATE) ? "private " : ( (this.auth == DroitAcces.PUBLIC) ? "public " : "protected " );
 		
 		text += (this.statique) ? "static " : "";
-		
-		text += (retour.isPresent()) ? retour.get().toString() : "void";
-		text += " " + this.name + " (";
-		
-		for (int i = 0; i < args.size(); i++) {
-			text += args.get(i).toString() + ((i != args.size() - 1) ? ", " : "");
-		}
-		
-		text += ")\n" + this.corps;
+		text += this.type.toString() + " " + this.name;		
 		
 		return text;
 	}
@@ -62,7 +48,7 @@ public class MethodImpl extends MembreClasse {
 	 */
 	@Override
 	public boolean checkType() {
-		throw new RuntimeException("MethodImpl checkType à implémenter");
+		throw new RuntimeException("AttributImpl checkType à implémenter");
 	}
 
 	/* (non-Javadoc)
@@ -70,7 +56,7 @@ public class MethodImpl extends MembreClasse {
 	 */
 	@Override
 	public int allocateMemory(Register _register, int _offset) {
-		throw new RuntimeException("MethodImpl allocateMemory à implémenter");
+		throw new RuntimeException("AttributImpl allocateMemory à implémenter");
 	}
 
 	/* (non-Javadoc)
@@ -78,7 +64,7 @@ public class MethodImpl extends MembreClasse {
 	 */
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
-		throw new RuntimeException("MethodImpl getCode à implémenter");
+		throw new RuntimeException("AttributImpl getCode à implémenter");
 	}
 
 }
