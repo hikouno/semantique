@@ -46,6 +46,13 @@ public interface Classe {
 	 */
 	public String getNom();
 	
+	/**
+	 * Teste l'égalité de deux classes.
+	 * @param _classe La classe à comparer.
+	 * @return L'égalité des deux classes ou non.
+	 */
+	public boolean equalsTo(Classe _classe);
+	
 	
 	/**
 	 * Synthesized Semantics attribute to check that an instruction if well typed.

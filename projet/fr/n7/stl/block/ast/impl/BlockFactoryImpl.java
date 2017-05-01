@@ -17,6 +17,7 @@ import fr.n7.stl.block.ast.Expression;
 import fr.n7.stl.block.ast.Instruction;
 //import fr.n7.stl.block.ast.RecordType;
 import fr.n7.stl.block.ast.Type;
+import fr.n7.stl.block.ast.Classe;
 //import fr.n7.stl.block.ast.TypeDeclaration;
 import fr.n7.stl.block.ast.UnaryOperator;
 import fr.n7.stl.block.ast.Value;
@@ -66,7 +67,14 @@ public class BlockFactoryImpl implements BlockFactory {
 	public VariableDeclaration createVariableDeclaration(String _name, Type _type, Expression _initialValue) {
 		return new VariableDeclarationImpl(_name,_type,_initialValue);
 	}
-
+	
+	/* (non-Javadoc)
+	 */
+	@Override
+	public Type createClasseType(Classe classe) {
+		return new ClasseTypeImpl(classe);
+	}
+	
 	/* (non-Javadoc)
 	 * @see fr.n7.block.ast.ASTFactory#createIntegerType()
 	 */

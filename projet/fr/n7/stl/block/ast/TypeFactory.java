@@ -9,7 +9,13 @@ package fr.n7.stl.block.ast;
  *
  */
 public interface TypeFactory {
-
+	
+	/**
+	 * Create an Abstract Syntax Tree node for the ClassType type.
+	 * @return Abstract Syntax Tree node for the ClassType type.
+	 */
+	public Type createClasseType(Classe classe);
+	
 	/**
 	 * Create an Abstract Syntax Tree node for the integer type.
 	 * @return Abstract Syntax Tree node for the integer type.

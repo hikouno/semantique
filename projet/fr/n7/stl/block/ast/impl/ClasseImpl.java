@@ -49,6 +49,15 @@ public class ClasseImpl implements Classe {
 		return this.name;
 	}
 	
+	/**
+	 * Teste l'égalité de deux classes.
+	 * @param _classe La classe à comparer.
+	 * @return L'égalité des deux classes ou non.
+	 */
+	public boolean equalsTo(Classe _classe) {
+		return this.getNom().equals(_classe.getNom());
+	}
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
