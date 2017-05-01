@@ -171,6 +171,7 @@ local
 do
     prg := new ProgramFactoryImpl();
     
+    Collections.reverse(Interfaces^interfaces);
     Collections.reverse(Classes^classes);
     Programme^ast := prg.createProgram(Principale^ast, Interfaces^interfaces, Classes^classes);
 end

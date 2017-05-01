@@ -4,6 +4,10 @@ interface EtreVivant {
     int age_en_ns(int test, boolean tes2, char tes3);
 }
 
+interface Caillou {
+    int couleur();
+}
+
 class Poisson {
     
     public Poisson() {
