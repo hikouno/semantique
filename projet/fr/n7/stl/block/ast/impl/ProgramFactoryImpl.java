@@ -47,8 +47,20 @@ public class ProgramFactoryImpl implements ProgramFactory {
 	    return new ClasseImpl(name);
 	}
 	
+	/**
+	 * Create an Abstract Syntax Tree node for the Method type.
+	 * @return Abstract Syntax Tree node for the Method type.
+	 */
 	public Method createMethode(String name, LinkedList<Argument> args, Block body, Method.DroitAcces auth, Optional<Type> retour) {
 	    return new MethodImpl(name, args, body, auth, retour);
+	}
+	
+	/**
+	 * Create an Abstract Syntax Tree node for the method Argument type.
+	 * @return Abstract Syntax Tree node for the method Argument type.
+	 */
+	public Argument createArgument(Type type, String name) {
+	    return new Argument(type, name);
 	}
 
 }

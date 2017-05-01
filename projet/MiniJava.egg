@@ -59,6 +59,11 @@ inh classe_mere : Classe for ElementsClasse, ElementClasse;
 syn type            : Optional<Type> for AttributOuMethode;
 syn nom             : String for AttributOuMethode;
 syn methode_corps   : Block for AttributOuMethode, SuiteAttributOuMethode;
+syn methode_arguments : LinkedList<Argument> for AttributOuMethode, SuiteAttributOuMethode;
+
+syn args            : LinkedList<Argument> for Parametres, SuiteParametres;
+syn nom             : String for Parametre;
+syn type            : Type for Parametre;
 
 inh droit : DroitAcces for ElementClasse;
 syn droit : DroitAcces for DroitAcces;
@@ -434,7 +439,7 @@ do
     if AttributOuMethode^methode_corps != null then
         ElementClasse^classe_mere.ajouterMethode(
             prg.createMethode(AttributOuMethode^nom,
-                                new LinkedList<Argument>(),
+                                AttributOuMethode^methode_arguments,
                                 AttributOuMethode^methode_corps,
                                 ElementClasse^droit,
                                 AttributOuMethode^type)
@@ -468,7 +473,8 @@ end
 do
     AttributOuMethode^type := Optional.of(Type^ast);
     AttributOuMethode^nom := identificateur^txt;
-    AttributOuMethode^methode_corps := SuiteAttributOuMethode^methode_corps; --Si null alors c'est un attribut
+    AttributOuMethode^methode_corps := SuiteAttributOuMethode^methode_corps; --null si c'est un attribut
+    AttributOuMethode^methode_arguments := SuiteAttributOuMethode^methode_arguments; --null si c'est un attribut
 end
 }
 
@@ -491,6 +497,7 @@ do
     AttributOuMethode^type := Optional.empty();
     AttributOuMethode^nom := identificateur^txt;
     AttributOuMethode^methode_corps := Bloc^ast;
+    AttributOuMethode^methode_arguments := Parametres^args;
 end
 }
 
@@ -498,7 +505,8 @@ end
 SuiteAttributOuMethode -> point_virgule #ast ;
 #ast {
 do
-    SuiteAttributOuMethode^methode_corps := null; --C'est un attribut.
+    SuiteAttributOuMethode^methode_corps := null;     --C'est un attribut.
+    SuiteAttributOuMethode^methode_arguments := null; --C'est un attribut.
 end
 }
 
@@ -519,6 +527,7 @@ end
 #ast {
 do
     SuiteAttributOuMethode^methode_corps := Bloc^ast;
+    SuiteAttributOuMethode^methode_arguments := Parametres^args;
 end
 }
 
@@ -538,9 +547,14 @@ end
 }
 
 
-Parametres -> ;
+Parametres -> #args ;
+#args {
+do
+    Parametres^args := new LinkedList<Argument>();
+end
+}
 
-Parametres -> #tds Parametre SuiteParametres ;
+Parametres -> #tds Parametre SuiteParametres #args ;
 #tds {
 do
     Parametre^tds := Parametres^tds;
@@ -548,8 +562,24 @@ do
 end
 }
 
+#args {
+local
+    prg : ProgramFactoryImpl;
+    liste_args : LinkedList<Argument>;
+do
+    prg := new ProgramFactoryImpl();
+    
+    liste_args := new LinkedList<Argument>();
+    liste_args.add( prg.createArgument(Parametre^type, Parametre^nom) );
+    liste_args.addAll( SuiteParametres^args );
+    
+    Parametres^args := liste_args;
+    
+    --TESTER ICI SI IL N'Y A PAS DE DOUBLONS
+end
+}
 
-Parametre -> #tds Type identificateur ;
+Parametre -> #tds Type identificateur #ast ;
 #tds {
 do
     Type^tds := Parametre^tds;
@@ -557,14 +587,41 @@ do
 end
 }
 
+#ast {
+do
+    Parametre^nom := identificateur^txt;
+    Parametre^type := Type^ast;
+end
+}
 
-SuiteParametres -> ;
 
-SuiteParametres -> virgule #tds Parametre SuiteParametres ;
+SuiteParametres -> #args ;
+#args {
+do
+    SuiteParametres^args := new LinkedList<Argument>();
+end
+}
+
+SuiteParametres -> virgule #tds Parametre SuiteParametres #args ;
 #tds {
 do
     Parametre^tds := SuiteParametres^tds;
     SuiteParametres1^tds := SuiteParametres^tds;
+end
+}
+
+#args {
+local
+    prg : ProgramFactoryImpl;
+    liste_args : LinkedList<Argument>;
+do
+    prg := new ProgramFactoryImpl();
+    
+    liste_args := new LinkedList<Argument>();
+    liste_args.add( prg.createArgument(Parametre^type, Parametre^nom) );
+    liste_args.addAll( SuiteParametres1^args );
+    
+    SuiteParametres^args := liste_args;
 end
 }
 

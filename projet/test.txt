@@ -1,9 +1,9 @@
 
 class Poisson {
 
-    protected void ma_methode_incroyable() {
-        int i = 58 + 5;
-        print i;
+    protected void ma_methode_incroyable(int a, boolean e, char cc, boolean o) {
+        int salut = 58 + 5;
+        print salut;
     }
     
     public int ma_methode_incroyable2() {
