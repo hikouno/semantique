@@ -19,16 +19,22 @@ import fr.n7.stl.tam.ast.TAMFactory;
  */
 public class ClasseImpl implements Classe {
 
-	
 	protected String name;
+	
+	protected LinkedList<Constructeur> constructeurs;
 	protected LinkedList<AttributImpl> attributs;
 	protected LinkedList<MethodImpl> methods;
 	
 	public ClasseImpl(String name) {
 		this.name = name;
 		
+		this.constructeurs = new LinkedList<Constructeur>();
 		this.attributs = new LinkedList<AttributImpl>();
 		this.methods = new LinkedList<MethodImpl>();
+	}
+	
+	public void ajouterConstructeur(Constructeur constructeur) {
+		this.constructeurs.add(constructeur);
 	}
 	
 	public void ajouterAttribut(AttributImpl attribut) {
@@ -37,6 +43,10 @@ public class ClasseImpl implements Classe {
 	
 	public void ajouterMethode(MethodImpl method) {
 		this.methods.add(method);
+	}
+	
+	public String getNom() {
+		return this.name;
 	}
 	
 	/* (non-Javadoc)
@@ -49,6 +59,12 @@ public class ClasseImpl implements Classe {
 		
 		for (AttributImpl att : attributs) {
 			text += att + "\n";
+		}
+		
+		text += "\n";
+		
+		for (Constructeur constructeur : constructeurs) {
+			text += constructeur;
 		}
 		
 		text += "\n";

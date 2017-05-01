@@ -48,6 +48,14 @@ public class ProgramFactoryImpl implements ProgramFactory {
 	}
 	
 	/**
+	 * Create an Abstract Syntax Tree node for the Constructeur type.
+	 * @return Abstract Syntax Tree node for the Constructeur type.
+	 */
+	public Constructeur createConstructeur(Classe classe, DroitAcces auth, LinkedList<Argument> args, Block corps) {
+	    return new Constructeur(classe, auth, args, corps);
+	}
+	
+	/**
 	 * Create an Abstract Syntax Tree node for the Attribut type.
 	 * @return Abstract Syntax Tree node for the Attribut type.
 	 */

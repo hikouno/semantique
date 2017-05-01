@@ -68,6 +68,10 @@ syn type            : Type for Parametre;
 inh droit : DroitAcces for ElementClasse;
 syn droit : DroitAcces for DroitAcces;
 
+--Constructeur de classe
+syn args : LinkedList<Argument> for Constructeur;
+syn bloc : Block for Constructeur;
+
 --
 
 syn ast		: Block for Bloc;
@@ -449,7 +453,7 @@ do
 end
 }
  
-ElementClasse -> #tds AttributOuMethode #ast;
+ElementClasse -> #tds AttributOuMethode #ast ;
 #tds {
 do
     AttributOuMethode^tds := ElementClasse^tds;
@@ -482,13 +486,27 @@ do
 end
 }
  
-ElementClasse -> #tds Constructeur ;
+ElementClasse -> #tds Constructeur #ast ;
 #tds {
 do
     Constructeur^tds := ElementClasse^tds;
 end
 }
-   
+
+#ast {
+local
+    prg : ProgramFactoryImpl;
+do
+    prg := new ProgramFactoryImpl();
+    
+    ElementClasse^classe_mere.ajouterConstructeur(
+        prg.createConstructeur(ElementClasse^classe_mere,
+                                ElementClasse^droit,
+                                Constructeur^args,
+                                Constructeur^bloc)
+    );
+end
+}
 
 AttributOuMethode -> #tds #inh Type identificateur SuiteAttributOuMethode #ast ;
 #tds {
@@ -566,7 +584,7 @@ end
 }
 
 
-Constructeur -> identificateur_type parenthese_ouvrante #tds Parametres parenthese_fermante #inh Bloc ;
+Constructeur -> identificateur_type parenthese_ouvrante #tds Parametres parenthese_fermante #inh Bloc #ast ;
 #tds {
 do
     Parametres^tds := Constructeur^tds;
@@ -577,6 +595,13 @@ end
 #inh {
 do
     Bloc^factory := new BlockFactoryImpl();
+end
+}
+
+#ast {
+do
+    Constructeur^args := Parametres^args;
+    Constructeur^bloc := Bloc^ast;
 end
 }
 

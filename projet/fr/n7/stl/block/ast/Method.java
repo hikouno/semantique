@@ -3,10 +3,6 @@
  */
 package fr.n7.stl.block.ast;
 
-import fr.n7.stl.block.ast.impl.Constructeur;
-import fr.n7.stl.block.ast.impl.AttributImpl;
-import fr.n7.stl.block.ast.impl.MethodImpl;
-
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
@@ -20,38 +16,13 @@ import fr.n7.stl.tam.ast.TAMFactory;
  * @author Marc Pantel
  *
  */
-public interface Classe {
-	
-	/**
-	 * Ajoute un constructeur à la classe.
-	 * @param constructeur Constructeur à ajouter.
-	 */
-	public void ajouterConstructeur(Constructeur constructeur);
-	
-	/**
-	 * Ajoute un attribut à la classe.
-	 * @param attribut Attribut à ajouter.
-	 */
-	public void ajouterAttribut(AttributImpl attribut);
-	
-	/**
-	 * Ajoute une méthode à la classe.
-	 * @param method Méthode à ajouter.
-	 */
-	public void ajouterMethode(MethodImpl method);
-	
-	/**
-	 * Renvoie le nom de la classe.
-	 * @return Le nom de la classe.
-	 */
-	public String getNom();
-	
+public abstract class Method extends MembreClasse {
 	
 	/**
 	 * Synthesized Semantics attribute to check that an instruction if well typed.
 	 * @return Synthesized True if the instruction is well typed, False if not.
 	 */	
-	public boolean checkType();
+	public abstract boolean checkType();
 	
 	/**
 	 * Inherited Semantics attribute to allocate memory for the variables declared in the instruction.
@@ -60,7 +31,7 @@ public interface Classe {
 	 * @param _offset Inherited Current offset for the address of the variables.
 	 * @return Synthesized Size of the memory allocated to the variables.
 	 */	
-	public int allocateMemory(Register _register, int _offset);
+	public abstract int allocateMemory(Register _register, int _offset);
 	
 	/**
 	 * Inherited Semantics attribute to build the nodes of the abstract syntax tree for the generated TAM code.
@@ -68,6 +39,6 @@ public interface Classe {
 	 * @param _factory Inherited Factory to build AST nodes for TAM code.
 	 * @return Synthesized AST for the generated TAM code.
 	 */
-	public Fragment getCode(TAMFactory _factory);
+	public abstract Fragment getCode(TAMFactory _factory);
 
 }

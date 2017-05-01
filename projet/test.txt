@@ -1,6 +1,15 @@
 
 class Poisson {
-
+    
+    public Poisson() {
+    
+    }
+    
+    protected Poisson(int param1, int param2, boolean param3) {
+        int j = 2;
+        print j;
+    }
+    
     protected void ma_methode_incroyable(int a, boolean e, char cc, boolean o) {
         int salut = 58 + 5;
         print salut;
