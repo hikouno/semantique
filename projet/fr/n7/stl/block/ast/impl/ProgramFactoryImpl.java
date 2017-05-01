@@ -9,6 +9,7 @@ import java.util.Optional;
 import fr.n7.stl.block.ast.ProgramFactory;
 import fr.n7.stl.block.ast.Program;
 import fr.n7.stl.block.ast.ClassePrincipale;
+import fr.n7.stl.block.ast.Interface;
 import fr.n7.stl.block.ast.Classe;
 import fr.n7.stl.block.ast.MembreClasse.DroitAcces;
 import fr.n7.stl.block.ast.Type;
@@ -25,8 +26,8 @@ public class ProgramFactoryImpl implements ProgramFactory {
 	 * @param princ La classe principale.
 	 * @return Abstract Syntax Tree node for the Program type.
 	 */
-	public Program createProgram(ClassePrincipale princ, LinkedList<Classe> classes) {
-	    return new ProgramImpl(princ, classes);
+	public Program createProgram(ClassePrincipale princ, LinkedList<Interface> interfaces, LinkedList<Classe> classes) {
+	    return new ProgramImpl(princ, interfaces, classes);
 	}
 	
 	/**
@@ -37,6 +38,15 @@ public class ProgramFactoryImpl implements ProgramFactory {
 	 */
 	public ClassePrincipale createPrincipale(String nom, Block bloc) {
 	    return new ClassePrincipaleImpl(nom, bloc);
+	}
+	
+	/**
+	 * Create an Abstract Syntax Tree node for the Interface type.
+	 * @param name The name of the interface.
+	 * @return Abstract Syntax Tree node for the Interface type.
+	 */
+	public Interface createInterface(String name) {
+	    return new InterfaceImpl(name);
 	}
 	
 	/**

@@ -22,7 +22,7 @@ public interface ProgramFactory {
 	 * @param princ La classe principale.
 	 * @return Abstract Syntax Tree node for the Program type.
 	 */
-	public Program createProgram(ClassePrincipale princ, LinkedList<Classe> classes);
+	public Program createProgram(ClassePrincipale princ, LinkedList<Interface> interfaces, LinkedList<Classe> classes);
 	
 	/**
 	 * Create an Abstract Syntax Tree node for the ClassePrincipale type.
@@ -31,6 +31,14 @@ public interface ProgramFactory {
 	 * @return Abstract Syntax Tree node for the ClassePrincipale type.
 	 */
 	public ClassePrincipale createPrincipale(String nom, Block bloc);
+	
+	/**
+	 * Create an Abstract Syntax Tree node for the Interface type.
+	 * @param name The name of the interface.
+	 * @return Abstract Syntax Tree node for the Interface type.
+	 */
+	public Interface createInterface(String name);
+	
 	
 	/**
 	 * Create an Abstract Syntax Tree node for the Classe type.

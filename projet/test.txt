@@ -1,4 +1,9 @@
 
+interface EtreVivant {
+    void exister();
+    int age_en_ns(int test, boolean tes2, char tes3);
+}
+
 class Poisson {
     
     public Poisson() {

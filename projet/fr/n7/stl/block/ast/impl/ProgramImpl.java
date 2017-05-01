@@ -7,6 +7,7 @@ import java.util.LinkedList;
 
 import fr.n7.stl.block.ast.Program;
 import fr.n7.stl.block.ast.ClassePrincipale;
+import fr.n7.stl.block.ast.Interface;
 import fr.n7.stl.block.ast.Classe;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
@@ -21,7 +22,7 @@ public class ProgramImpl implements Program {
 	/**
 	 * Interfaces contained in the program.
 	 */
-	//protected List<Interfaces> interfaces;
+	protected LinkedList<Interface> interfaces;
 	
 	/**
 	 * Classes contained in the program.
@@ -36,8 +37,9 @@ public class ProgramImpl implements Program {
 	/**
 	 * Constructor for a MiniJava program.
 	 */
-	public ProgramImpl(ClassePrincipale principale, LinkedList<Classe> classes) {
+	public ProgramImpl(ClassePrincipale principale, LinkedList<Interface> interfaces, LinkedList<Classe> classes) {
 		this.principale = principale;
+		this.interfaces = interfaces;
 		this.classes = classes;
 	}
 	
@@ -47,9 +49,17 @@ public class ProgramImpl implements Program {
 	@Override
 	public String toString() {
 		String text = "";
+		for (Interface inter : this.interfaces) {
+			text += inter + "\n";
+		}
+		
+		text += "\n";
+		
 		for (Classe classe : this.classes) {
 			text += classe + "\n";
 		}
+		
+		text += "\n";
 		
 		text += this.principale;
 		return text;

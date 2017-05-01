@@ -48,9 +48,17 @@ syn ast : Type for Type, TypeAtomique;
 --PROGRAMME ASTS
 
 syn ast     : Program for Programme;
+
+--Principale
 syn ast     : ClassePrincipale for Principale;
 syn bloc    : Block for MethodePrincipale;
 
+--Interfaces
+
+syn ast        : Interface for Interface;
+syn interfaces : LinkedList<Interface> for Interfaces;
+
+--Classes
 syn ast     : Classe for Classe;
 syn classes : LinkedList<Classe> for Classes;
 inh classe_mere : Classe for ElementsClasse, ElementClasse;
@@ -159,28 +167,48 @@ do
     prg := new ProgramFactoryImpl();
     
     Collections.reverse(Classes^classes);
-    Programme^ast := prg.createProgram(Principale^ast, Classes^classes);
+    Programme^ast := prg.createProgram(Principale^ast, Interfaces^interfaces, Classes^classes);
 end
 }
 
 
-Interfaces -> #tds Interface Interfaces ;
+Interfaces -> #tds Interface Interfaces #interfaces ;
 #tds {
 do
     Interface^tds := new SymbolTable();
 end
 }
 
-Interfaces -> ;
-
-
-Interface -> interface identificateur_type Genericite HeritageInterface accolade_ouvrante #tds ElementsInterface accolade_fermante ;
-#tds {
+#interfaces {
 do
-    ElementsInterface^tds := Interface^tds;
+    Interfaces^interfaces := Interfaces1^interfaces;
+    Interfaces^interfaces.add(Interface^ast);
 end
 }
 
+Interfaces -> #interfaces ;
+#interfaces {
+do
+    Interfaces^interfaces := new LinkedList<Interface>();
+end
+}
+
+Interface -> interface identificateur_type Genericite HeritageInterface accolade_ouvrante #ast_inh ElementsInterface accolade_fermante ;
+#ast_inh {
+local
+    prg : ProgramFactoryImpl;
+    interface : Interface;
+do
+    --AST
+    prg := new ProgramFactoryImpl();
+    interface := prg.createInterface(identificateur_type^txt);
+    
+    Interface^ast := interface;
+    
+    --INH
+    ElementsInterface^tds := Interface^tds;
+end
+}
 
 HeritageInterface -> extension identificateur_type InstanceGenericite SuiteHeritageInterface ;
 
@@ -274,8 +302,8 @@ end
 }
 
 
-Classe -> classe  identificateur_type Genericite HeritageClasse ImplantationInterface accolade_ouvrante #ast_tds ElementsClasse accolade_fermante ;
-#ast_tds {
+Classe -> classe  identificateur_type Genericite HeritageClasse ImplantationInterface accolade_ouvrante #ast_inh ElementsClasse accolade_fermante ;
+#ast_inh {
 local
     prg : ProgramFactoryImpl;
     classe : Classe;
@@ -286,7 +314,7 @@ do
     
     Classe^ast := classe;
     
-    --TDS
+    --INH
     ElementsClasse^tds := Classe^tds;
     ElementsClasse^classe_mere := classe;
 end
