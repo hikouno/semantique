@@ -11,6 +11,7 @@ import fr.n7.stl.block.ast.BlockFactory;
 import fr.n7.stl.block.ast.BooleanValue;
 //import fr.n7.stl.block.ast.Sequence;
 import fr.n7.stl.block.ast.ConstantDeclaration;
+import fr.n7.stl.block.ast.ClasseDeclaration;
 import fr.n7.stl.block.ast.Expression;
 //import fr.n7.stl.block.ast.FieldDeclaration;
 //import fr.n7.stl.block.ast.FunctionCall;
@@ -35,7 +36,15 @@ public class BlockFactoryImpl implements BlockFactory {
 	 */
 	public BlockFactoryImpl() {
 	}
-
+	
+	/**
+	 * Create an Abstract Syntax Tree node for the ClasseDeclaration type.
+	 * @return Abstract Syntax Tree node for the ClasseDeclaration type.
+	 */
+	public ClasseDeclaration createClasseDeclaration(Classe classe) {
+		return new ClasseDeclarationImpl(classe);
+	}
+	
 	/* (non-Javadoc)
 	 * @see fr.n7.block.ast.ASTFactory#createBinaryExpression(fr.n7.block.ast.Expression, fr.n7.block.ast.Expression)
 	 */

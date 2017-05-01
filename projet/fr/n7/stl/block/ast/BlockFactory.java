@@ -9,5 +9,12 @@ package fr.n7.stl.block.ast;
  *
  */
 public interface BlockFactory extends ExpressionFactory, InstructionFactory, TypeFactory {
-
+    
+    /**
+	 * Create an Abstract Syntax Tree node for the ClasseDeclaration type.
+	 * @return Abstract Syntax Tree node for the ClasseDeclaration type.
+	 */
+	public ClasseDeclaration createClasseDeclaration(Classe classe);
+    
+    
 }
