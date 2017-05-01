@@ -3,6 +3,8 @@
  */
 package fr.n7.stl.block.ast.impl;
 
+import java.util.LinkedList;
+
 import fr.n7.stl.block.ast.Method;
 import fr.n7.stl.block.ast.Classe;
 import fr.n7.stl.block.ast.Block;
@@ -13,16 +15,23 @@ import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
 
 /**
- * A class method.
+ * A class.
  *
  */
 public class ClasseImpl implements Classe {
 
 	
 	protected String name;
+	protected LinkedList<Method> methods;
 	
 	public ClasseImpl(String name) {
 		this.name = name;
+		this.methods = new LinkedList<Method>();
+	}
+	
+	
+	public void ajouterMethode(Method method) {
+		this.methods.add(method);
 	}
 	
 	/* (non-Javadoc)
@@ -31,7 +40,13 @@ public class ClasseImpl implements Classe {
 	@Override
 	public String toString() {
 		
-		return "class "+this.name+"\n";
+		String text = "class "+this.name+" {\n";
+			for (Method method : methods) {
+				text += method;
+			}
+		
+		text += "\n}";
+		return text;
 	}
 
 	/* (non-Javadoc)

@@ -1,6 +1,14 @@
 
 class Poisson {
 
+    protected void ma_methode_incroyable() {
+        int i = 58 + 5;
+        print i;
+    }
+    
+    public int ma_methode_incroyable2() {
+        int j = 4;
+    }
 
 }
 

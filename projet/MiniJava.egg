@@ -44,7 +44,6 @@ syn profondeur_remontee : Integer for SuiteTypeAtomique;
 
 syn ast : Type for Type, TypeAtomique;
 
---
 
 --PROGRAMME ASTS
 
@@ -54,6 +53,15 @@ syn bloc    : Block for MethodePrincipale;
 
 syn ast     : Classe for Classe;
 syn classes : LinkedList<Classe> for Classes;
+inh classe_mere : Classe for ElementsClasse, ElementClasse;
+
+--Methodes et arguments de classe
+syn type            : Optional<Type> for AttributOuMethode;
+syn nom             : String for AttributOuMethode;
+syn methode_corps   : Block for AttributOuMethode, SuiteAttributOuMethode;
+
+inh droit : DroitAcces for ElementClasse;
+syn droit : DroitAcces for DroitAcces;
 
 --
 
@@ -255,19 +263,21 @@ end
 }
 
 
-Classe -> classe  identificateur_type Genericite HeritageClasse ImplantationInterface accolade_ouvrante #tds ElementsClasse accolade_fermante #ast ;
-#tds {
-do
-    ElementsClasse^tds := Classe^tds;
-end
-}
-
-#ast {
+Classe -> classe  identificateur_type Genericite HeritageClasse ImplantationInterface accolade_ouvrante #ast_tds ElementsClasse accolade_fermante ;
+#ast_tds {
 local
     prg : ProgramFactoryImpl;
+    classe : Classe;
 do
+    --AST
     prg := new ProgramFactoryImpl();
-    Classe^ast := prg.createClasse(identificateur_type^txt);
+    classe := prg.createClasse(identificateur_type^txt);
+    
+    Classe^ast := classe;
+    
+    --TDS
+    ElementsClasse^tds := Classe^tds;
+    ElementsClasse^classe_mere := classe;
 end
 }
 
@@ -357,22 +367,46 @@ ArgumentGenericite -> identificateur_type InstanceGenericite ;
 ArgumentGenericite -> type_String ;
 
 
-ElementsClasse -> DroitAcces #tds ElementClasse ElementsClasse ;
+ElementsClasse -> DroitAcces #tds #inh ElementClasse ElementsClasse ;
 #tds {
 do
     ElementClasse^tds := ElementsClasse^tds;
     ElementsClasse1^tds := ElementsClasse^tds;
 end
 }
+
+#inh {
+do
+    ElementClasse^classe_mere := ElementsClasse^classe_mere;
+    ElementClasse^droit := DroitAcces^droit;
+    
+    ElementsClasse1^classe_mere := ElementsClasse^classe_mere;
+end
+}
   
 ElementsClasse -> ;  
  
 
-DroitAcces -> public ;  
+DroitAcces -> public #droit ;
+#droit {
+do
+    DroitAcces^droit := DroitAcces.PUBLIC;
+end
+}
  
-DroitAcces -> protege ;  
- 
-DroitAcces -> prive ;  
+DroitAcces -> protege #droit ;
+#droit {
+do
+    DroitAcces^droit := DroitAcces.PROTECTED;
+end
+}
+
+DroitAcces -> prive #droit ;
+#droit {
+do
+    DroitAcces^droit := DroitAcces.PRIVATE;
+end
+}
  
 
 ElementClasse -> statique #tds AttributOuMethode ;
@@ -382,10 +416,28 @@ do
 end
 }
  
-ElementClasse -> #tds AttributOuMethode ;
+ElementClasse -> #tds AttributOuMethode #ast;
 #tds {
 do
     AttributOuMethode^tds := ElementClasse^tds;
+end
+}
+
+#ast {
+local
+    prg : ProgramFactoryImpl;
+do
+    prg := new ProgramFactoryImpl();
+    
+    if AttributOuMethode^methode_corps != null then
+        ElementClasse^classe_mere.ajouterMethode(
+            prg.createMethode(AttributOuMethode^nom,
+                                new LinkedList<Argument>(),
+                                AttributOuMethode^methode_corps,
+                                ElementClasse^droit,
+                                AttributOuMethode^type)
+        );
+    end
 end
 }
  
@@ -397,11 +449,10 @@ end
 }
    
 
-AttributOuMethode -> #tds #inh Type identificateur SuiteAttributOuMethode;
+AttributOuMethode -> #tds #inh Type identificateur SuiteAttributOuMethode #ast ;
 #tds {
 do
     Type^tds := AttributOuMethode^tds;
-    SuiteAttributOuMethode^tds := AttributOuMethode^tds;
 end
 }
 
@@ -411,7 +462,15 @@ do
 end
 }
 
-AttributOuMethode -> vide identificateur parenthese_ouvrante #tds Parametres parenthese_fermante #inh Bloc ;
+#ast {
+do
+    AttributOuMethode^type := Optional.of(Type^ast);
+    AttributOuMethode^nom := identificateur^txt;
+    AttributOuMethode^methode_corps := SuiteAttributOuMethode^methode_corps; --Si null alors c'est un attribut
+end
+}
+
+AttributOuMethode -> vide identificateur parenthese_ouvrante #tds Parametres parenthese_fermante #inh Bloc #ast ;
 #tds {
 do
     Parametres^tds := AttributOuMethode^tds;
@@ -425,10 +484,23 @@ do
 end
 }
 
+#ast {
+do
+    AttributOuMethode^type := Optional.empty();
+    AttributOuMethode^nom := identificateur^txt;
+    AttributOuMethode^methode_corps := Bloc^ast;
+end
+}
 
-SuiteAttributOuMethode -> point_virgule ;
 
-SuiteAttributOuMethode -> parenthese_ouvrante #tds Parametres parenthese_fermante #inh Bloc ;
+SuiteAttributOuMethode -> point_virgule #ast ;
+#ast {
+do
+    SuiteAttributOuMethode^methode_corps := null; --C'est un attribut.
+end
+}
+
+SuiteAttributOuMethode -> parenthese_ouvrante #tds Parametres parenthese_fermante #inh Bloc #ast ;
 #tds {
 do
     Parametres^tds := SuiteAttributOuMethode^tds;
@@ -439,6 +511,12 @@ end
 #inh {
 do
     Bloc^factory := new BlockFactoryImpl();
+end
+}
+
+#ast {
+do
+    SuiteAttributOuMethode^methode_corps := Bloc^ast;
 end
 }
 

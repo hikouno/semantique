@@ -20,7 +20,7 @@ public class Argument {
 	}
 	
 	public String getName() {
-		return this.type;
+		return this.name;
 	}
 	
 	public Type getType() {
@@ -32,6 +32,6 @@ public class Argument {
 	 */
 	@Override
 	public String toString() {
-		return this.type + " " + this.name;
+		return this.type.toString() + " " + this.name;
 	}
 }

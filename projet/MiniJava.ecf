@@ -15,4 +15,7 @@
     <import    lib="fr.n7.stl.block.ast.*"/>
     <import    lib="fr.n7.stl.block.ast.impl.*"/>
     <import    lib="fr.n7.stl.util.*"/>
+    
+    <!--Ajout pour le projet-->
+    <import    lib="fr.n7.stl.block.ast.Method.DroitAcces"/>
   </egg>

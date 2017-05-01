@@ -4,11 +4,14 @@
 package fr.n7.stl.block.ast.impl;
 
 import java.util.LinkedList;
+import java.util.Optional;
 
 import fr.n7.stl.block.ast.ProgramFactory;
 import fr.n7.stl.block.ast.Program;
 import fr.n7.stl.block.ast.ClassePrincipale;
 import fr.n7.stl.block.ast.Classe;
+import fr.n7.stl.block.ast.Method;
+import fr.n7.stl.block.ast.Type;
 import fr.n7.stl.block.ast.Block;
 
 /**
@@ -42,6 +45,10 @@ public class ProgramFactoryImpl implements ProgramFactory {
 	 */
 	public Classe createClasse(String name) {
 	    return new ClasseImpl(name);
+	}
+	
+	public Method createMethode(String name, LinkedList<Argument> args, Block body, Method.DroitAcces auth, Optional<Type> retour) {
+	    return new MethodImpl(name, args, body, auth, retour);
 	}
 
 }

@@ -17,7 +17,14 @@ import fr.n7.stl.tam.ast.TAMFactory;
  *
  */
 public interface Classe {
-
+	
+	/**
+	 * Ajoute une méthode à la classe.
+	 * @param Méthode à ajouter.
+	 */
+	public void ajouterMethode(Method method);
+	
+	
 	/**
 	 * Synthesized Semantics attribute to check that an instruction if well typed.
 	 * @return Synthesized True if the instruction is well typed, False if not.

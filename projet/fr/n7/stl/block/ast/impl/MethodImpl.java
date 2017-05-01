@@ -45,11 +45,13 @@ public class MethodImpl implements Method {
 	@Override
 	public String toString() {
 		
-		String text = (auth == DroitAcces.PRIVATE) ? "private " : ( (auth == DroitAcces.PUBLIC) ? "public " : "protected " ) +
-				this.name + " (";
+		String text = (auth == DroitAcces.PRIVATE) ? "private " : ( (auth == DroitAcces.PUBLIC) ? "public " : "protected " );
+		
+		text += (retour.isPresent()) ? retour.get().toString() : "void";
+		text += " " + this.name + " (";
 		
 		for (int i = 0; i < args.size(); i++) {
-			text += arg + (i != args.size() - 1) ? ", " : "";
+			text += args.get(i).toString() + ((i != args.size() - 1) ? ", " : "");
 		}
 		
 		text += ")\n" + this.corps;
