@@ -34,7 +34,7 @@ public interface Classe {
 	 * Ajoute un attribut à la classe.
 	 * @param attribut Attribut à ajouter.
 	 */
-	public void ajouterAttribut(AttributImpl attribut);
+	public boolean ajouterAttribut(AttributImpl attribut);
 	
 	/**
 	 * Ajoute une méthode à la classe.

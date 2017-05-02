@@ -530,12 +530,16 @@ do
                                 AttributOuMethode^type)
         );
     else                                                --UN ATTRIBUT
-        ElementClasse^classe_mere.ajouterAttribut(
+        
+        if (! ElementClasse^classe_mere.ajouterAttribut(
             prg.createAttribut(AttributOuMethode^type.get(),
                                 AttributOuMethode^nom,
                                 ElementClasse^droit,
-                                true)
-        );
+                                true) )
+        ) then
+            error(MiniJava_Attribut_DejaDef, ElementClasse^classe_mere.getNom(), AttributOuMethode^nom);
+        end
+        
     end
 end
 }
@@ -563,12 +567,14 @@ do
                                 AttributOuMethode^type)
         );
     else                                                --UN ATTRIBUT
-        ElementClasse^classe_mere.ajouterAttribut(
+        if (! ElementClasse^classe_mere.ajouterAttribut(
             prg.createAttribut(AttributOuMethode^type.get(),
                                 AttributOuMethode^nom,
                                 ElementClasse^droit,
-                                false)
-        );
+                                false) )
+        ) then
+            error(MiniJava_Attribut_DejaDef, ElementClasse^classe_mere.getNom(), AttributOuMethode^nom);
+        end
     end
 end
 }

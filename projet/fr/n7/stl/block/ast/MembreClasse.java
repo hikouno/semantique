@@ -25,6 +25,10 @@ public abstract class MembreClasse {
 		this.statique = statique;
 	}
 	
+	public String getNom() {
+		return this.name;
+	}
+	
 	public boolean estStatique() {
 		return this.statique;
 	}

@@ -45,8 +45,14 @@ public class ClasseImpl implements Classe {
 		return true;
 	}
 	
-	public void ajouterAttribut(AttributImpl attribut) {
+	public boolean ajouterAttribut(AttributImpl attribut) {
+		for (AttributImpl _att : this.attributs) {
+			if (attribut.getNom().equals(_att.getNom()) && attribut.estStatique() == _att.estStatique())
+				return false;
+		}
+		
 		this.attributs.add(attribut);
+		return true;
 	}
 	
 	public void ajouterMethode(MethodImpl method) {
