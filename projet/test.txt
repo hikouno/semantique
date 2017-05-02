@@ -47,6 +47,9 @@ public class Test {
 
     public static void main(String[] args) {
         
+        Ordi ordi = 1;
+        Poisson poisson = 4;
+        
         print 1;
         
         int j = 2;
