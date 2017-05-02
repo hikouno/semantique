@@ -23,7 +23,7 @@ inh tds : SymbolTable for Bloc, Instructions, Instruction, Expression, SuiteCond
                     AppelOuAcces, Acces, SuiteNouveau, Parametres, Parametre, SuiteParametres,
                     Principale, MethodePrincipale,  Interface, ElementsInterface,
                     ElementInterface, Signature, Classes, Classe, ElementsClasse, ElementClasse,
-                    Constructeur, AttributOuMethode, SuiteAttributOuMethode; --Appel
+                    Constructeur, AttributOuMethode, SuiteAttributOuMethode, Arguments; --Appel
 
 inh blocParent	: Block for Instructions;
 
@@ -1447,12 +1447,27 @@ do
 end  
 }
 
-SuiteNouveau -> #ast ; 
+SuiteNouveau -> #tds Arguments #ast ;
+#tds {
+do
+    Arguments^tds := SuiteNouveau^tds;
+end
+}
+
 #ast {
 do 
     --SuiteNouveau^ast := SuiteNouveau^factory.createPointerAllocation(SuiteNouveau^type);
     SuiteNouveau^ast := null;
 end 
+}
+
+Arguments -> parenthese_ouvrante parenthese_fermante ;
+
+Arguments -> parenthese_ouvrante #tds Expressions parenthese_fermante ;
+#tds {
+do
+    Expressions^tds := Arguments^tds;
+end
 }
 
 

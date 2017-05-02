@@ -15,10 +15,8 @@ public class ClasseDeclarationImpl implements ClasseDeclaration {
 	protected Classe classe;
 	
 	/**
-	 * Creates a variable declaration instruction node for the Abstract Syntax Tree.
-	 * @param _name Name of the declared variable.
-	 * @param _type Type of the declared variable.
-	 * @param _value Value of the declared variable.
+	 * Creates a class declaration instruction node for the Abstract Syntax Tree.
+	 * @param _classe The declared class.
 	 */
 	public ClasseDeclarationImpl(Classe _classe) {
 		this.classe = _classe;
