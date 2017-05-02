@@ -176,8 +176,8 @@ local
 do
     prg := new ProgramFactoryImpl();
     
-    Collections.reverse(Interfaces^interfaces);
-    Collections.reverse(Classes^classes);
+    --Collections.reverse(Interfaces^interfaces);
+    --Collections.reverse(Classes^classes);
     Programme^ast := prg.createProgram(Principale^ast, Interfaces^interfaces, Classes^classes);
 end
 }
@@ -843,12 +843,25 @@ do
 end
 }
  
---TypeAtomique -> identificateur_type InstanceGenericite #ast ;
---#ast {
---do
---    TypeAtomique^ast := ; --A CODER !!! mdr
---end
---}
+TypeAtomique -> identificateur_type InstanceGenericite #ast ;
+#ast {
+local
+    f : Optional<Declaration>;
+    d : Declaration;
+do
+    if (TypeAtomique^tds.knows(identificateur_type^txt)) then
+        f := TypeAtomique^tds.get(identificateur_type^txt);
+        d := f.get();
+        match d
+            with ClasseDeclaration then TypeAtomique^ast := TypeAtomique^factory.createClasseType(d.getClasse());
+            
+            else error(MiniJava_badtype_classe, identificateur_type^txt);
+        end
+    else
+        error(MiniJava_undefined_classe, identificateur_type^txt);
+    end
+end
+}
 
 
 SuiteTypeAtomique -> crochet_ouvrant crochet_fermant #calcul_prof SuiteTypeAtomique #remonte_prof ;

@@ -39,11 +39,8 @@ class Ordi {
     
     public boolean est_incroyable() {
         int test = 4;
+        Poisson tee = 2;
     }
-}
-
-class Ordi {
-    
 }
 
 public class Test {
