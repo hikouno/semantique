@@ -15,8 +15,8 @@ public class InterfaceDeclarationImpl implements InterfaceDeclaration {
 	protected Interface interf;
 	
 	/**
-	 * Creates a class declaration instruction node for the Abstract Syntax Tree.
-	 * @param _classe The declared class.
+	 * Creates an interface declaration instruction node for the Abstract Syntax Tree.
+	 * @param _interf The declared interface.
 	 */
 	public InterfaceDeclarationImpl(Interface _interf) {
 		this.interf = _interf;
