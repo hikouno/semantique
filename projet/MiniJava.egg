@@ -279,9 +279,12 @@ end
 
 #ast {
 do
-    ElementInterface^interface_mere.ajouterSignature(Signature^type,
+    if (! ElementInterface^interface_mere.ajouterSignature(Signature^type,
                                                         Signature^nom,
-                                                        Signature^args);
+                                                        Signature^args)
+    ) then
+        error(MiniJava_Signature_DejaDef, ElementInterface^interface_mere.getNom(), Signature^nom);
+    end
 end
 }
 

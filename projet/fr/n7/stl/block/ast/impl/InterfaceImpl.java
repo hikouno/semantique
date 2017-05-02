@@ -30,6 +30,34 @@ public class InterfaceImpl implements Interface {
 			this.args = args;
 		}
 		
+		/** Renvoie true si on a deux signatures ambigues
+		 * (même nom et types des paramètres dans l'ordre).
+		 */
+		public boolean match(Signature _signature) {
+			
+			LinkedList<Argument> args_fournis = _signature.getArguments();
+			
+			//1. Même nom.
+			if (!this.nom.equals(_signature.getNom())) {
+				return false;
+			}
+			
+			//2. Même nombre d'arguments
+			if (args_fournis.size() != this.args.size())
+				return false;
+		
+			//3. Arguments de même type.
+			for (int i = 0; i < this.args.size(); i++) {
+				if ( !this.args.get(i).getType().equalsTo(args_fournis.get(i).getType()) )
+					return false;
+			}
+			
+			return true;
+		}
+		
+		public String getNom() { return this.nom; }
+		public LinkedList<Argument> getArguments() { return this.args; }
+		
 		@Override
 		public String toString() {
 			String text = type.isPresent() ? type.get().toString() : "void";
@@ -53,10 +81,25 @@ public class InterfaceImpl implements Interface {
 		this.signatures = new LinkedList<Signature>();
 	}
 	
-	public void ajouterSignature(Optional<Type> type, String nom, LinkedList<Argument> args) {
-		this.signatures.add( new Signature(type, nom, args) );
+	public boolean ajouterSignature(Optional<Type> type, String nom, LinkedList<Argument> args) {
+		Signature signature = new Signature(type, nom, args);
+		
+		for (Signature _sign : this.signatures) {
+			if (signature.match(_sign))
+					return false; //Une signature similaire existe déjà.
+		}
+		
+		this.signatures.add( signature );
+		return true;
 	}
 	
+	/**
+	 * Renvoie le nom de l'interface.
+	 * @return Le nom de l'interface.
+	 */
+	public String getNom() {
+		return this.name;
+	}
 	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()

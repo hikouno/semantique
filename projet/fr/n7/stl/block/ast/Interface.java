@@ -20,8 +20,13 @@ public interface Interface {
 	/**
 	 * Ajoute une signature à l'interface.
 	 */
-	public void ajouterSignature(Optional<Type> type, String nom, LinkedList<Argument> args);
+	public boolean ajouterSignature(Optional<Type> type, String nom, LinkedList<Argument> args);
 	
+	/**
+	 * Renvoie le nom de l'interface.
+	 * @return Le nom de l'interface.
+	 */
+	public String getNom();
 	
 	/**
 	 * Synthesized Semantics attribute to check that an instruction if well typed.

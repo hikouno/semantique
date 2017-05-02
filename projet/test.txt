@@ -1,7 +1,10 @@
 
 interface EtreVivant {
     void exister();
+    boolean exister();
+    
     int age_en_ns(int test, boolean tes2, char tes3);
+    boolean age_en_ns(int testd, boolean tes2d, char teds);
 }
 
 interface Caillou {
@@ -36,8 +39,8 @@ class Poisson {
         int j = 4;
     }
     
-    public int ma_methode_incroyable58(int b) {
-        int j = 4;
+    public int ma_methode_incroyable2(int b) {
+        int j = 42;
     }
     
     

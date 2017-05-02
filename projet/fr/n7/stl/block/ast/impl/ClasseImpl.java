@@ -57,8 +57,7 @@ public class ClasseImpl implements Classe {
 	
 	public boolean ajouterMethode(MethodImpl method) {
 		for (MethodImpl _method : this.methods) {
-			if (method.getNom().equals( _method.getNom()) &&  method.match(_method) &&
-				method.estStatique() == _method.estStatique())
+			if (method.match(_method) && method.estStatique() == _method.estStatique())
 					return false; //Une méthode similaire existe déjà
 		}
 		
