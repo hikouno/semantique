@@ -342,6 +342,7 @@ do
     
     if Classes^tds.contains(Classe^ast.getNom()) then
         error(MiniJava_classe_already_defined, Classe^ast.getNom());
+        Classes1^tds := Classes^tds;
 	else
         Classes1^tds := Classes^tds;
         Classes1^tds.register( fac.createClasseDeclaration(Classe^ast) );
