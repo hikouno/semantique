@@ -15,11 +15,13 @@ public abstract class MembreClasse {
 	
 	public enum DroitAcces { PUBLIC, PRIVATE, PROTECTED };
 	
+	protected Classe classe;
 	protected String name;
 	protected DroitAcces auth;
 	protected boolean statique;
 	
-	public MembreClasse(String name, DroitAcces auth, boolean statique) {
+	public MembreClasse(Classe classe, String name, DroitAcces auth, boolean statique) {
+		this.classe = classe;
 		this.name = name;
 		this.auth = auth;
 		this.statique = statique;
@@ -27,6 +29,10 @@ public abstract class MembreClasse {
 	
 	public String getNom() {
 		return this.name;
+	}
+	
+	public Classe getClasse() {
+		return this.classe;
 	}
 	
 	public boolean estStatique() {

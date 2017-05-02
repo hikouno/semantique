@@ -5,6 +5,7 @@ package fr.n7.stl.block.ast.impl;
 
 import fr.n7.stl.block.ast.MembreClasse;
 import fr.n7.stl.block.ast.MembreClasse.DroitAcces;
+import fr.n7.stl.block.ast.Classe;
 import fr.n7.stl.block.ast.Block;
 import fr.n7.stl.block.ast.Type;
 
@@ -23,8 +24,8 @@ public class AttributImpl extends MembreClasse {
 
 	protected Type type;
 	
-	public AttributImpl(Type type, String name, DroitAcces auth, boolean statique) {
-		super(name, auth, statique);
+	public AttributImpl(Classe classe, Type type, String name, DroitAcces auth, boolean statique) {
+		super(classe, name, auth, statique);
 		
 		this.type = type;
 	}

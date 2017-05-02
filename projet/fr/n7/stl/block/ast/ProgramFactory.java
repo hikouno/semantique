@@ -57,13 +57,13 @@ public interface ProgramFactory {
 	 * Create an Abstract Syntax Tree node for the Attribut type.
 	 * @return Abstract Syntax Tree node for the Attribut type.
 	 */
-	public AttributImpl createAttribut(Type type, String name, MembreClasse.DroitAcces auth, boolean statique);
+	public AttributImpl createAttribut(Classe classe, Type type, String name, MembreClasse.DroitAcces auth, boolean statique);
 	
 	/**
 	 * Create an Abstract Syntax Tree node for the Method type.
 	 * @return Abstract Syntax Tree node for the Method type.
 	 */
-	public MethodImpl createMethode(String name, LinkedList<Argument> args, Block body, MembreClasse.DroitAcces auth, boolean statique, Optional<Type> retour);
+	public MethodImpl createMethode(Classe classe, String name, LinkedList<Argument> args, Block body, MembreClasse.DroitAcces auth, boolean statique, Optional<Type> retour);
 	
 	/**
 	 * Create an Abstract Syntax Tree node for the method Argument type.

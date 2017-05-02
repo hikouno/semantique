@@ -544,7 +544,8 @@ do
     if AttributOuMethode^methode_corps != null then     --UNE METHODE
         
         if (! ElementClasse^classe_mere.ajouterMethode(
-            prg.createMethode(AttributOuMethode^nom,
+            prg.createMethode(ElementClasse^classe_mere,
+								AttributOuMethode^nom,
                                 AttributOuMethode^methode_arguments,
                                 AttributOuMethode^methode_corps,
                                 ElementClasse^droit,
@@ -557,7 +558,8 @@ do
     else                                                --UN ATTRIBUT
         
         if (! ElementClasse^classe_mere.ajouterAttribut(
-            prg.createAttribut(AttributOuMethode^type.get(),
+            prg.createAttribut(ElementClasse^classe_mere,
+								AttributOuMethode^type.get(),
                                 AttributOuMethode^nom,
                                 ElementClasse^droit,
                                 true) )
@@ -585,7 +587,8 @@ do
     if AttributOuMethode^methode_corps != null then     --UNE METHODE
         
         if (! ElementClasse^classe_mere.ajouterMethode(
-            prg.createMethode(AttributOuMethode^nom,
+            prg.createMethode(ElementClasse^classe_mere,
+								AttributOuMethode^nom,
                                 AttributOuMethode^methode_arguments,
                                 AttributOuMethode^methode_corps,
                                 ElementClasse^droit,
@@ -598,7 +601,8 @@ do
     else                                                --UN ATTRIBUT
         
         if (! ElementClasse^classe_mere.ajouterAttribut(
-            prg.createAttribut(AttributOuMethode^type.get(),
+            prg.createAttribut(ElementClasse^classe_mere,
+								AttributOuMethode^type.get(),
                                 AttributOuMethode^nom,
                                 ElementClasse^droit,
                                 false) )

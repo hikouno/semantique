@@ -5,6 +5,7 @@ package fr.n7.stl.block.ast.impl;
 
 import fr.n7.stl.block.ast.MembreClasse;
 import fr.n7.stl.block.ast.MembreClasse.DroitAcces;
+import fr.n7.stl.block.ast.Classe;
 import fr.n7.stl.block.ast.Block;
 import fr.n7.stl.block.ast.Type;
 
@@ -27,8 +28,8 @@ public class MethodImpl extends MembreClasse {
 	protected Optional<Type> retour;
 	
 	
-	public MethodImpl(String name, LinkedList<Argument> args, Block body, DroitAcces auth, boolean statique, Optional<Type> retour) {
-		super(name, auth, statique);
+	public MethodImpl(Classe classe, String name, LinkedList<Argument> args, Block body, DroitAcces auth, boolean statique, Optional<Type> retour) {
+		super(classe, name, auth, statique);
 		
 		this.args = args;
 		this.corps = body;
@@ -64,6 +65,10 @@ public class MethodImpl extends MembreClasse {
 	
 	public LinkedList<Argument> getArguments() {
 		return this.args;
+	}
+	
+	public Optional<Type> getTypeRetour() {
+		return this.retour;
 	}
 	
 	/* (non-Javadoc)
