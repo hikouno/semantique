@@ -3,6 +3,8 @@
  */
 package fr.n7.stl.block.ast.impl;
 
+import java.util.LinkedList;
+
 import fr.n7.stl.block.ast.Assignable;
 import fr.n7.stl.block.ast.AtomicType;
 import fr.n7.stl.block.ast.BinaryOperator;
@@ -49,8 +51,8 @@ public class BlockFactoryImpl implements BlockFactory {
 	 * Create an Abstract Syntax Tree node for the ClasseInstanceAllocation type.
 	 * @return Abstract Syntax Tree node for the ClasseInstanceAllocation type.
 	 */
-    public Expression createClasseInstanceAllocation(Classe classe) {
-		return new ClasseInstanceAllocationImpl(classe);
+    public Expression createClasseInstanceAllocation(Classe classe, LinkedList<Expression> args) {
+		return new ClasseInstanceAllocationImpl(classe, args);
 	}
 	
 	/* (non-Javadoc)

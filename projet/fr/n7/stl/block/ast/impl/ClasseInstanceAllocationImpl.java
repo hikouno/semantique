@@ -3,6 +3,8 @@
  */
 package fr.n7.stl.block.ast.impl;
 
+import java.util.LinkedList;
+
 import fr.n7.stl.block.ast.Expression;
 import fr.n7.stl.block.ast.Classe;
 import fr.n7.stl.block.ast.Type;
@@ -15,11 +17,11 @@ import fr.n7.stl.tam.ast.TAMFactory;
 public class ClasseInstanceAllocationImpl implements Expression {
 
 	protected Classe classe;
-	//AJOUTER LES ARGUMENTS PASSÉS AU CONSTRUCTEUR
+	protected LinkedList<Expression> arguments;
 	
-	
-	public ClasseInstanceAllocationImpl(Classe _classe) {
+	public ClasseInstanceAllocationImpl(Classe _classe, LinkedList<Expression> _arguments) {
 		this.classe = _classe;
+		this.arguments = _arguments;
 	}
 
 	/* (non-Javadoc)
@@ -27,7 +29,15 @@ public class ClasseInstanceAllocationImpl implements Expression {
 	 */
 	@Override
 	public String toString() {
-		return "new " + this.classe.getNom() + "(arguments....)";
+		String text = "new " + this.classe.getNom() + "(";
+		
+		for (int i = 0; i < this.arguments.size(); i++) {
+			text += this.arguments.get(i).toString() + ((i != this.arguments.size() - 1) ? ", " : "");
+		}
+		
+		text += ")";
+		
+		return text;
 	}
 
 	/* (non-Javadoc)

@@ -84,6 +84,7 @@ syn droit : DroitAcces for DroitAcces;
 --Constructeur de classe
 syn args : LinkedList<Argument> for Constructeur;
 syn bloc : Block for Constructeur;
+syn args : LinkedList<Expression> for Arguments;
 
 --
 
@@ -1459,19 +1460,31 @@ do
     match SuiteNouveau^type
         with ClasseTypeImpl then
             SuiteNouveau^ast := SuiteNouveau^factory.createClasseInstanceAllocation(
-                                SuiteNouveau^type.getClasse() );
+                                SuiteNouveau^type.getClasse(),
+                                Arguments^args);
         else
             error(MiniJava_badtype_classe, SuiteNouveau^type.toString());
     end
 end 
 }
 
-Arguments -> parenthese_ouvrante parenthese_fermante ;
+Arguments -> parenthese_ouvrante parenthese_fermante #args ;
+#args {
+do
+    Arguments^args := new LinkedList<Expression>();
+end
+}
 
-Arguments -> parenthese_ouvrante #tds Expressions parenthese_fermante ;
+Arguments -> parenthese_ouvrante #tds Expressions parenthese_fermante #args ;
 #tds {
 do
     Expressions^tds := Arguments^tds;
+end
+}
+
+#args {
+do
+    Arguments^args := Expressions^expressions;
 end
 }
 
