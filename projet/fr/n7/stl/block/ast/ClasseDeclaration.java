@@ -4,8 +4,7 @@
 package fr.n7.stl.block.ast;
 
 /**
- * AST node for the constant declaration instruction.
- * @author Marc Pantel
+ * AST node for the class declaration instruction.
  *
  */
 public interface ClasseDeclaration extends Declaration {

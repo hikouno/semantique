@@ -13,6 +13,7 @@ import fr.n7.stl.block.ast.BlockFactory;
 import fr.n7.stl.block.ast.BooleanValue;
 //import fr.n7.stl.block.ast.Sequence;
 import fr.n7.stl.block.ast.ConstantDeclaration;
+import fr.n7.stl.block.ast.InterfaceDeclaration;
 import fr.n7.stl.block.ast.ClasseDeclaration;
 import fr.n7.stl.block.ast.Expression;
 //import fr.n7.stl.block.ast.FieldDeclaration;
@@ -20,6 +21,7 @@ import fr.n7.stl.block.ast.Expression;
 import fr.n7.stl.block.ast.Instruction;
 //import fr.n7.stl.block.ast.RecordType;
 import fr.n7.stl.block.ast.Type;
+import fr.n7.stl.block.ast.Interface;
 import fr.n7.stl.block.ast.Classe;
 //import fr.n7.stl.block.ast.TypeDeclaration;
 import fr.n7.stl.block.ast.UnaryOperator;
@@ -37,6 +39,15 @@ public class BlockFactoryImpl implements BlockFactory {
 	 * 
 	 */
 	public BlockFactoryImpl() {
+		
+	}
+	
+	/**
+	 * Create an Abstract Syntax Tree node for the InterfaceDeclaration type.
+	 * @return Abstract Syntax Tree node for the InterfaceDeclaration type.
+	 */
+	public InterfaceDeclaration createInterfaceDeclaration(Interface interf) {
+		return new InterfaceDeclarationImpl(interf);
 	}
 	
 	/**

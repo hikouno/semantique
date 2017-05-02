@@ -13,6 +13,12 @@ import java.util.LinkedList;
 public interface BlockFactory extends ExpressionFactory, InstructionFactory, TypeFactory {
     
     /**
+	 * Create an Abstract Syntax Tree node for the InterfaceDeclaration type.
+	 * @return Abstract Syntax Tree node for the InterfaceDeclaration type.
+	 */
+	public InterfaceDeclaration createInterfaceDeclaration(Interface interf);
+    
+    /**
 	 * Create an Abstract Syntax Tree node for the ClasseDeclaration type.
 	 * @return Abstract Syntax Tree node for the ClasseDeclaration type.
 	 */

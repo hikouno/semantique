@@ -21,7 +21,7 @@ inh tds : SymbolTable for Bloc, Instructions, Instruction, Expression, SuiteCond
                     Condition, SuiteCondition, Terme, SuiteTerme, Facteur, SuiteFacteur, Type,
                     TypeAtomique, Affectable, SuiteAffectable, Expressions, SuiteExpressions,
                     AppelOuAcces, Acces, SuiteNouveau, Parametres, Parametre, SuiteParametres,
-                    Principale, MethodePrincipale,  Interface, ElementsInterface,
+                    Principale, MethodePrincipale, Interfaces, Interface, ElementsInterface,
                     ElementInterface, Signature, Classes, Classe, ElementsClasse, ElementClasse,
                     Constructeur, AttributOuMethode, SuiteAttributOuMethode, Arguments; --Appel
 
@@ -159,13 +159,14 @@ term   identificateur			is    "[a-z_][a-zA-Z0-9_]*";
 term   identificateur_type		is    "[A-Z][a-zA-Z0-9_]*"; 
 
 
-Programme -> Interfaces #tds Classes Principale #ast ;
+Programme -> #tds Interfaces Classes Principale #ast ;
 #tds {
 local
     tds : SymbolTable;
 do
     tds := new SymbolTable();
     
+    Interfaces^tds := tds;
     Classes^tds := tds;
     Principale^tds := tds;
 end
@@ -184,10 +185,26 @@ end
 }
 
 
-Interfaces -> #tds Interface Interfaces #interfaces ;
+Interfaces -> #tds Interface #tds1 Interfaces #interfaces ;
 #tds {
 do
-    Interface^tds := new SymbolTable();
+    Interface^tds := Interfaces^tds;
+end
+}
+
+#tds1 {
+local
+    fac : BlockFactoryImpl;
+do
+    fac := new BlockFactoryImpl();
+    
+    if Interfaces^tds.contains(Interface^ast.getNom()) then
+        error(MiniJava_interface_already_defined, Interface^ast.getNom());
+        Interfaces1^tds := Interfaces^tds;
+	else
+        Interfaces1^tds := Interfaces^tds;
+        Interfaces1^tds.register( fac.createInterfaceDeclaration(Interface^ast) );
+    end
 end
 }
 

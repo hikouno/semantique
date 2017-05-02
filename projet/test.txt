@@ -11,6 +11,10 @@ interface Caillou {
     int couleur();
 }
 
+class EtreVivant {
+
+}
+
 class Poisson {
     
     public Poisson() {
@@ -72,6 +76,8 @@ public class Test {
         
         Ordi ordi = new Ordi();
         Poisson poisson = new Poisson(5 + 2, 4, true);
+        
+        EtreVivant test = 3;
         
         print 1;
         
