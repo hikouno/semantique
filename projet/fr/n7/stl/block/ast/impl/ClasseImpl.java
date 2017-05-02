@@ -36,6 +36,11 @@ public class ClasseImpl implements Classe {
 	}
 	
 	public void ajouterConstructeur(Constructeur constructeur) {
+		for (Constructeur _constr : this.constructeurs) {
+			if (constructeur.match(_constr))
+				throw new Exception("Signature pas ok.");
+		}
+		
 		this.constructeurs.add(constructeur);
 	}
 	
