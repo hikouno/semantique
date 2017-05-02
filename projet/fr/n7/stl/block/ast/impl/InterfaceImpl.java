@@ -33,7 +33,7 @@ public class InterfaceImpl implements Interface {
 		@Override
 		public String toString() {
 			String text = type.isPresent() ? type.get().toString() : "void";
-			text += " " + name + "(";
+			text += " " + this.nom + "(";
 			
 			for (int i = 0; i < args.size(); i++) {
 				text += args.get(i).toString() + ((i != args.size() - 1) ? ", " : "");
