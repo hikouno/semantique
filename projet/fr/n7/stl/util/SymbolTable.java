@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
+import java.util.LinkedList;
 
 import fr.n7.stl.block.ast.Declaration;
 import fr.n7.stl.block.ast.ForbiddenDeclarationException;
@@ -65,6 +66,13 @@ public class SymbolTable implements HierarchicalScope<Declaration> {
 			this.declarations.put(_declaration.getName(), _declaration);
 		} else {
 			throw new ForbiddenDeclarationException();
+		}
+	}
+	
+	public void register(LinkedList<Declaration> _declarations) throws ForbiddenDeclarationException {
+		// System.out.println("Register( " + _declaration.getName() + " )");
+		for (Declaration dec : _declarations) {
+			this.register(dec);
 		}
 	}
 
