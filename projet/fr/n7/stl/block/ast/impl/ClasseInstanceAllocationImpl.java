@@ -23,7 +23,22 @@ public class ClasseInstanceAllocationImpl implements Expression {
 		this.classe = _classe;
 		this.arguments = _arguments;
 	}
-
+	
+	
+	/** Renvoie le constructeur appelé par l'utilisateur si il existe.
+	 * Renvoie une exception sinon.
+	 * */
+	private Constructeur constructeurAppele() {
+		LinkedList<Constructeur> constructeurs = this.classe.getConstructeurs();
+		
+		//On a la garantie sémantique que la classe n'a que des constructeurs différents.
+		for (Constructeur constructeur : constructeurs) {
+			continue;
+		}
+		
+		return null;
+	}
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */

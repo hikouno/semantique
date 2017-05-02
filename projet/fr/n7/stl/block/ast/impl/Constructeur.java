@@ -5,6 +5,7 @@ package fr.n7.stl.block.ast.impl;
 
 import fr.n7.stl.block.ast.Block;
 import fr.n7.stl.block.ast.Classe;
+import fr.n7.stl.block.ast.Expression;
 import fr.n7.stl.block.ast.MembreClasse.DroitAcces;
 
 import java.util.LinkedList;
@@ -33,6 +34,50 @@ public class Constructeur {
 		
 		this.args = args;
 		this.corps = corps;
+	}
+	
+	/**
+	 * Teste si un jeu d'expressions fourni correspond à la signature
+	 * du constructeur.
+	 */
+	public boolean match(LinkedList<Expression> args_fournis) {
+		
+		//1. Même nombre d'arguments
+		if (args_fournis.size() != this.args.size())
+			return false;
+		
+		//2. Arguments de même type.
+		for (int i = 0; i < this.args.size(); i++) {
+			if ( !this.args.get(i).getType().equalsTo(args_fournis.get(i).getType()) )
+				return false;
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * Teste si la signature du constructeur correspond à celle du
+	 * constructeur passé en argument (équivalence des types).
+	 */
+	public boolean match(Constructeur _constructeur) {
+		
+		LinkedList<Argument> args_fournis = _constructeur.getArguments();
+		
+		//1. Même nombre d'arguments
+		if (args_fournis.size() != this.args.size())
+			return false;
+		
+		//2. Arguments de même type.
+		for (int i = 0; i < this.args.size(); i++) {
+			if ( !this.args.get(i).getType().equalsTo(args_fournis.get(i).getType()) )
+				return false;
+		}
+		
+		return true;
+	}
+	
+	public LinkedList<Argument> getArguments() {
+		return this.args;
 	}
 	
 	/* (non-Javadoc)

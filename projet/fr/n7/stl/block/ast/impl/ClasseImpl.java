@@ -14,8 +14,10 @@ import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
 
 /**
- * A class.
- *
+ * Une classe.
+ * 
+ * Cette implémentation garantit que la classe ne peut avoir deux constructeurs
+ * de même signature (au niveau des types).
  */
 public class ClasseImpl implements Classe {
 
@@ -47,6 +49,14 @@ public class ClasseImpl implements Classe {
 	
 	public String getNom() {
 		return this.name;
+	}
+	
+	/**
+	 * Renvoie les constructeurs de la classe.
+	 * @return Les constructeurs de la classe.
+	 */
+	public LinkedList<Constructeur> getConstructeurs() {
+		return this.constructeurs;
 	}
 	
 	/**

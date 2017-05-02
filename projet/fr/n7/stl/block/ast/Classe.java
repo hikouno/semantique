@@ -3,6 +3,8 @@
  */
 package fr.n7.stl.block.ast;
 
+import java.util.LinkedList;
+
 import fr.n7.stl.block.ast.impl.Constructeur;
 import fr.n7.stl.block.ast.impl.AttributImpl;
 import fr.n7.stl.block.ast.impl.MethodImpl;
@@ -45,6 +47,12 @@ public interface Classe {
 	 * @return Le nom de la classe.
 	 */
 	public String getNom();
+	
+	/**
+	 * Renvoie les constructeurs de la classe.
+	 * @return Les constructeurs de la classe.
+	 */
+	public LinkedList<Constructeur> getConstructeurs();
 	
 	/**
 	 * Teste l'égalité de deux classes.
