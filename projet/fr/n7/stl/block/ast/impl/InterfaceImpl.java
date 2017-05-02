@@ -101,6 +101,15 @@ public class InterfaceImpl implements Interface {
 		return this.name;
 	}
 	
+	/**
+	 * Teste l'égalité de deux interfaces.
+	 * @param _interface L'interface à comparer.
+	 * @return L'égalité des deux interfaces ou non.
+	 */
+	public boolean equalsTo(Interface _interface) {
+		return this.name.equals(_interface.getNom());
+	}
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */

@@ -894,7 +894,7 @@ do
         d := f.get();
         match d
             with ClasseDeclaration then TypeAtomique^ast := TypeAtomique^factory.createClasseType(d.getClasse());
-            --with InterfaceDeclaration then TypeAtomique^ast := TypeAtomique^factory.createClasseType(d.getClasse());
+            with InterfaceDeclaration then TypeAtomique^ast := TypeAtomique^factory.createInterfaceType(d.getInterface());
             
             else error(MiniJava_badtype_classe, identificateur_type^txt);
         end

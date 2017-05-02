@@ -29,6 +29,13 @@ public interface Interface {
 	public String getNom();
 	
 	/**
+	 * Teste l'égalité de deux interfaces.
+	 * @param _interface L'interface à comparer.
+	 * @return L'égalité des deux interfaces ou non.
+	 */
+	public boolean equalsTo(Interface _interface);
+	
+	/**
 	 * Synthesized Semantics attribute to check that an instruction if well typed.
 	 * @return Synthesized True if the instruction is well typed, False if not.
 	 */	

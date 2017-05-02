@@ -11,6 +11,12 @@ package fr.n7.stl.block.ast;
 public interface TypeFactory {
 	
 	/**
+	 * Create an Abstract Syntax Tree node for the InterfaceType type.
+	 * @return Abstract Syntax Tree node for the InterfaceType type.
+	 */
+	public Type createInterfaceType(Interface interf);
+	
+	/**
 	 * Create an Abstract Syntax Tree node for the ClassType type.
 	 * @return Abstract Syntax Tree node for the ClassType type.
 	 */

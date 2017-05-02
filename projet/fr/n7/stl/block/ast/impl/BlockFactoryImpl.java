@@ -100,6 +100,12 @@ public class BlockFactoryImpl implements BlockFactory {
 	
 	/* (non-Javadoc)
 	 */
+	public Type createInterfaceType(Interface interf) {
+		return new InterfaceTypeImpl(interf);
+	}
+	
+	/* (non-Javadoc)
+	 */
 	@Override
 	public Type createClasseType(Classe classe) {
 		return new ClasseTypeImpl(classe);
