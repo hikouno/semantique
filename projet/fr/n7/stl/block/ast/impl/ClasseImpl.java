@@ -48,15 +48,22 @@ public class ClasseImpl implements Classe {
 	public boolean ajouterAttribut(AttributImpl attribut) {
 		for (AttributImpl _att : this.attributs) {
 			if (attribut.getNom().equals(_att.getNom()) && attribut.estStatique() == _att.estStatique())
-				return false;
+				return false; //Un attribut de même nom et de même "staticité" existe déjà.
 		}
 		
 		this.attributs.add(attribut);
 		return true;
 	}
 	
-	public void ajouterMethode(MethodImpl method) {
+	public boolean ajouterMethode(MethodImpl method) {
+		for (MethodImpl _method : this.methods) {
+			if (method.getNom().equals( _method.getNom()) &&  method.match(_method) &&
+				method.estStatique() == _method.estStatique())
+					return false; //Une méthode similaire existe déjà
+		}
+		
 		this.methods.add(method);
+		return true;
 	}
 	
 	public String getNom() {

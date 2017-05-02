@@ -521,14 +521,18 @@ do
     prg := new ProgramFactoryImpl();
     
     if AttributOuMethode^methode_corps != null then     --UNE METHODE
-        ElementClasse^classe_mere.ajouterMethode(
+        
+        if (! ElementClasse^classe_mere.ajouterMethode(
             prg.createMethode(AttributOuMethode^nom,
                                 AttributOuMethode^methode_arguments,
                                 AttributOuMethode^methode_corps,
                                 ElementClasse^droit,
                                 true,
-                                AttributOuMethode^type)
-        );
+                                AttributOuMethode^type) )
+        ) then
+            error(MiniJava_Methode_DejaDef, ElementClasse^classe_mere.getNom(), AttributOuMethode^nom);
+        end
+    
     else                                                --UN ATTRIBUT
         
         if (! ElementClasse^classe_mere.ajouterAttribut(
@@ -539,7 +543,7 @@ do
         ) then
             error(MiniJava_Attribut_DejaDef, ElementClasse^classe_mere.getNom(), AttributOuMethode^nom);
         end
-        
+    
     end
 end
 }
@@ -558,15 +562,20 @@ do
     prg := new ProgramFactoryImpl();
     
     if AttributOuMethode^methode_corps != null then     --UNE METHODE
-        ElementClasse^classe_mere.ajouterMethode(
+        
+        if (! ElementClasse^classe_mere.ajouterMethode(
             prg.createMethode(AttributOuMethode^nom,
                                 AttributOuMethode^methode_arguments,
                                 AttributOuMethode^methode_corps,
                                 ElementClasse^droit,
                                 false,
-                                AttributOuMethode^type)
-        );
+                                AttributOuMethode^type) )
+        ) then
+            error(MiniJava_Methode_DejaDef, ElementClasse^classe_mere.getNom(), AttributOuMethode^nom);
+        end
+    
     else                                                --UN ATTRIBUT
+        
         if (! ElementClasse^classe_mere.ajouterAttribut(
             prg.createAttribut(AttributOuMethode^type.get(),
                                 AttributOuMethode^nom,
@@ -575,6 +584,7 @@ do
         ) then
             error(MiniJava_Attribut_DejaDef, ElementClasse^classe_mere.getNom(), AttributOuMethode^nom);
         end
+    
     end
 end
 }

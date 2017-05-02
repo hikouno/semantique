@@ -28,7 +28,15 @@ class Poisson {
         print salut;
     }
     
-    public static int ma_methode_incroyable2() {
+    public static int ma_methode_incroyable2(int a) {
+        int j = 4;
+    }
+    
+    public int ma_methode_incroyable2(int b) {
+        int j = 4;
+    }
+    
+    public int ma_methode_incroyable58(int b) {
         int j = 4;
     }
     

@@ -40,7 +40,7 @@ public interface Classe {
 	 * Ajoute une méthode à la classe.
 	 * @param method Méthode à ajouter.
 	 */
-	public void ajouterMethode(MethodImpl method);
+	public boolean ajouterMethode(MethodImpl method);
 	
 	/**
 	 * Renvoie le nom de la classe.
