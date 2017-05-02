@@ -586,12 +586,14 @@ local
 do
     prg := new ProgramFactoryImpl();
     
-    ElementClasse^classe_mere.ajouterConstructeur(
+    if (! ElementClasse^classe_mere.ajouterConstructeur(
         prg.createConstructeur(ElementClasse^classe_mere,
                                 ElementClasse^droit,
                                 Constructeur^args,
-                                Constructeur^bloc)
-    );
+                                Constructeur^bloc) )
+    ) then
+        error(MiniJava_Constructeur_DejaDef, ElementClasse^classe_mere.getNom());
+    end
 end
 }
 

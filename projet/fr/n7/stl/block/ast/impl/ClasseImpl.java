@@ -35,13 +35,14 @@ public class ClasseImpl implements Classe {
 		this.methods = new LinkedList<MethodImpl>();
 	}
 	
-	public void ajouterConstructeur(Constructeur constructeur) {
+	public boolean ajouterConstructeur(Constructeur constructeur) {
 		for (Constructeur _constr : this.constructeurs) {
 			if (constructeur.match(_constr))
-				throw new Exception("Signature pas ok.");
+				return false; //Un constructeur similaire existe déjà.
 		}
 		
 		this.constructeurs.add(constructeur);
+		return true;
 	}
 	
 	public void ajouterAttribut(AttributImpl attribut) {

@@ -19,6 +19,10 @@ class Poisson {
         print j;
     }
     
+    public Poisson(int a, int b, boolean c) {
+        print 4;
+    }
+    
     protected void ma_methode_incroyable(int a, boolean e, char cc, boolean o) {
         int salut = 58 + 5;
         print salut;

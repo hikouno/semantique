@@ -28,7 +28,7 @@ public interface Classe {
 	 * Ajoute un constructeur à la classe.
 	 * @param constructeur Constructeur à ajouter.
 	 */
-	public void ajouterConstructeur(Constructeur constructeur);
+	public boolean ajouterConstructeur(Constructeur constructeur);
 	
 	/**
 	 * Ajoute un attribut à la classe.
