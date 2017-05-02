@@ -16,5 +16,11 @@ public interface BlockFactory extends ExpressionFactory, InstructionFactory, Typ
 	 */
 	public ClasseDeclaration createClasseDeclaration(Classe classe);
     
+    /**
+	 * Create an Abstract Syntax Tree node for the ClasseInstanceAllocation type.
+	 * @return Abstract Syntax Tree node for the ClasseInstanceAllocation type.
+	 */
+    public Expression createClasseInstanceAllocation(Classe classe);
+    
     
 }

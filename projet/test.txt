@@ -47,8 +47,8 @@ public class Test {
 
     public static void main(String[] args) {
         
-        Ordi ordi = 1;
-        Poisson poisson = 4;
+        Ordi ordi = new Ordi();
+        Poisson poisson = new Requin();
         
         print 1;
         

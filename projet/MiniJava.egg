@@ -1423,7 +1423,7 @@ end
 #inh {
 do 
     SuiteNouveau^type := Type^ast; 
-end 
+end
 }
 
 #ast {
@@ -1456,8 +1456,13 @@ end
 
 #ast {
 do 
-    --SuiteNouveau^ast := SuiteNouveau^factory.createPointerAllocation(SuiteNouveau^type);
-    SuiteNouveau^ast := null;
+    match SuiteNouveau^type
+        with ClasseTypeImpl then
+            SuiteNouveau^ast := SuiteNouveau^factory.createClasseInstanceAllocation(
+                                SuiteNouveau^type.getClasse() );
+        else
+            error(MiniJava_badtype_classe, SuiteNouveau^type.toString());
+    end
 end 
 }
 

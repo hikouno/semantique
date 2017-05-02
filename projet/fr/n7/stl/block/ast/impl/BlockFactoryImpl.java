@@ -45,6 +45,14 @@ public class BlockFactoryImpl implements BlockFactory {
 		return new ClasseDeclarationImpl(classe);
 	}
 	
+	/**
+	 * Create an Abstract Syntax Tree node for the ClasseInstanceAllocation type.
+	 * @return Abstract Syntax Tree node for the ClasseInstanceAllocation type.
+	 */
+    public Expression createClasseInstanceAllocation(Classe classe) {
+		return new ClasseInstanceAllocationImpl(classe);
+	}
+	
 	/* (non-Javadoc)
 	 * @see fr.n7.block.ast.ASTFactory#createBinaryExpression(fr.n7.block.ast.Expression, fr.n7.block.ast.Expression)
 	 */
