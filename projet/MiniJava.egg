@@ -1571,6 +1571,7 @@ Facteur -> identificateur #tds #inh AppelOuAcces #ast;
 #tds {
 do
     AppelOuAcces^tds := Facteur^tds;
+    --AppelOuAcces^premier_identificateur := identificateur^txt
 end
 }
 
@@ -1655,10 +1656,11 @@ end
 }
 
 
---Acces -> point identificateur #tds AppelOuAcces #ast ;
+--Acces -> point identificateur #tds #inh AppelOuAcces #ast ;
 --#tds {
 --do
 --    AppelOuAcces^tds := Acces^tds;
+--    AppelOuAcces^tds := createMembreClasseAccess(identificateur
 --end
 --}
 
@@ -1693,5 +1695,34 @@ end
 --    Appel^ast := Acces^ast;
 --end
 --}
+
+--Appel -> #tds Arguments #inh Acces ;
+--#tds {
+--do
+--    Arguments^tds := Appel^tds;
+--    Acces^tds := Appel^tds;
+--end
+--}
+
+--#inh {
+--local
+--    d : Type;
+--do
+--    d := Appel^support.getType();
+--    match d
+--        with ClasseTypeImpl then
+--            Acces^support := Appel^factory.createMethodCall(d.getClasse(), Expression^ast);
+--       
+--        else error();
+--    end
+    
+--    Acces^support := Appel^factory.createMethodCall(Acces^support, Expression^ast);
+--end
+--}
+
+
+--Facteur -> identificateur_type point identificateur AppelOuAcces ;
+
+--Facteur -> parenthese_ouvrante Expression parenthese_fermante ;
 
 end
