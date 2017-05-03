@@ -964,7 +964,10 @@ do
 	if Instruction^tds.contains(identificateur^txt) then
 		error(MiniJava_already_defined, identificateur^txt);
 	else
-		d := Instruction^factory.createVariableDeclaration(identificateur^txt, Type^ast, Expression^ast);
+        match Type^ast
+            with ClasseTypeImpl then d := Instruction^factory.createClasseInstanceDeclaration(Type^ast.getClasse(), identificateur^txt);
+            else d := Instruction^factory.createVariableDeclaration(identificateur^txt, Type^ast, Expression^ast);
+        end
 		
 		Instruction^tds.register(d);
 		Instruction^instr := d;

@@ -15,6 +15,7 @@ import fr.n7.stl.block.ast.BooleanValue;
 import fr.n7.stl.block.ast.ConstantDeclaration;
 import fr.n7.stl.block.ast.InterfaceDeclaration;
 import fr.n7.stl.block.ast.ClasseDeclaration;
+import fr.n7.stl.block.ast.ClasseInstanceDeclaration;
 import fr.n7.stl.block.ast.Expression;
 //import fr.n7.stl.block.ast.FieldDeclaration;
 //import fr.n7.stl.block.ast.FunctionCall;
@@ -56,6 +57,14 @@ public class BlockFactoryImpl implements BlockFactory {
 	 */
 	public ClasseDeclaration createClasseDeclaration(Classe classe) {
 		return new ClasseDeclarationImpl(classe);
+	}
+	
+	/**
+	 * Create an Abstract Syntax Tree node for the ClasseInstanceDeclaration type.
+	 * @return Abstract Syntax Tree node for the ClasseInstanceDeclaration type.
+	 */
+	public ClasseInstanceDeclaration createClasseInstanceDeclaration(Classe classe, String nom) {
+		return new ClasseInstanceDeclarationImpl(nom, new ClasseTypeImpl(classe), new ClasseInstanceImpl(classe));
 	}
 	
 	/**
