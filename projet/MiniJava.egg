@@ -1589,6 +1589,7 @@ do
       match d
       with ConstantDeclaration then AppelOuAcces^support := d.getValue();
       with VariableDeclaration then AppelOuAcces^support := Facteur^factory.createVariableUse(d);
+      with ClasseInstanceDeclaration then AppelOuAcces^support := Facteur^factory.createInstanceUse(d);
       end
    else
       error(MiniJava_undefined_ident, identificateur^txt);
