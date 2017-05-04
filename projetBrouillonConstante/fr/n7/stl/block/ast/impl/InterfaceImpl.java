@@ -8,6 +8,9 @@ import java.util.Optional;
 
 import fr.n7.stl.block.ast.Interface;
 import fr.n7.stl.block.ast.Type;
+import fr.n7.stl.block.ast.Expression;
+import fr.n7.stl.block.ast.Constante;
+
 
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
@@ -73,25 +76,6 @@ public class InterfaceImpl implements Interface {
 		}
 	}
 	
-	private class Constante {
-		private Type type;
-		private String nom;
-		private Expression valeur;
-		
-		public Constante(Type type, String nom, Expression valeur) {
-			this.type = type;
-			this.nom = nom;
-			this.args = args;
-		}
-		
-		public String getNom() { return this.nom ;}
-		
-		@Override
-		public String toString() {
-			return "final static" + this.type + this.nom + this.valeur;
-		}			
-	}
-	
 	protected String name;
 	protected LinkedList<Signature> signatures;
 	protected LinkedList<Constante> constantes;
@@ -102,7 +86,7 @@ public class InterfaceImpl implements Interface {
 		this.constantes = new LinkedList<Constante>();
 	}
 	
-	/* Ajouter une signature. */
+	/** Ajouter une signature. */
 	public boolean ajouterSignature(Optional<Type> type, String nom, LinkedList<Argument> args) {
 		Signature signature = new Signature(type, nom, args);
 		
@@ -110,24 +94,46 @@ public class InterfaceImpl implements Interface {
 			if (signature.match(_sign))
 					return false; //Une signature similaire existe déjà.
 		}
-		
 		this.signatures.add( signature );
 		return true;
 	}
 	
-	/* Ajouter une constante. */
+	/** Ajouter une constante. */
 	public boolean ajouterConstante(Type type, String nom, Expression valeur) {
-		Constante constante = new Constante(type, nom, valeur);
+		Constante constante = new ConstanteImpl(type, nom, valeur);
 		
 		for (Constante _const : this.constantes) {
 			if (nom.equals(_const.getNom())) {
 					return false; //Une constante de même nom existe déjà.
 				}
 		}
-		
 		this.constantes.add( constante );
 		return true;
 	}
+	
+	/** Teste si une constante appartient dèjà à l'interface. */
+	public boolean isPresentConstante(String nom) {		
+		for (Constante _const : this.constantes) {
+			if (nom.equals(_const.getNom())) {
+					return true; //Une constante de même nom existe déjà.
+				}
+		}
+		return false;
+	}
+	
+	/** Renvoie la constante si elle est présente, null sinon. */
+	public Expression getValueConstante(String nom) {		
+		for (Constante _const : this.constantes) {
+			if (nom.equals(_const.getNom())) {
+					return _const.getValue(); //On a trouvé la constante.
+				}
+		}
+		return null;
+	}
+	
+	
+	
+	
 	
 	/**
 	 * Renvoie le nom de l'interface.
@@ -153,6 +159,10 @@ public class InterfaceImpl implements Interface {
 	public String toString() {
 		
 		String text = "interface "+this.name+" {\n";
+		
+		for (Constante consta : this.constantes) {
+			text += consta.toString() + "\n";
+		}
 		
 		for (Signature sign : this.signatures) {
 			text += sign + "\n";

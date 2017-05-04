@@ -57,8 +57,6 @@ syn bloc    : Block for MethodePrincipale;
 syn ast        : Interface for Interface;
 syn interfaces : LinkedList<Interface> for Interfaces;
 inh interface_mere : Interface for ElementsInterface, ElementInterface;
-syn constantes : LinkedList<ConstantDeclaration> for Interface, ElementsInterface;
-syn constante : ConstantDeclaration for ElementInterface;
 
 --Signatures d'interfaces
 syn type : Optional<Type> for Signature;
@@ -206,7 +204,6 @@ do
 	else
         Interfaces1^tds := Interfaces^tds;
         Interfaces1^tds.register( fac.createInterfaceDeclaration(Interface^ast));
-	Interfaces1^tds.register( Interface^constantes);
     end
 end
 }
@@ -245,7 +242,6 @@ end
 
 #ast {
 do
-    Interface^constantes := ElementsInterface^constantes;
 end
 }
 
@@ -259,7 +255,7 @@ SuiteHeritageInterface -> virgule identificateur_type InstanceGenericite SuiteHe
 SuiteHeritageInterface -> ;
 
 
-ElementsInterface -> #tds #inh ElementInterface ElementsInterface #ast ;
+ElementsInterface -> #tds #inh ElementInterface ElementsInterface ;
 #tds {
 do
     ElementInterface^tds := ElementsInterface^tds;
@@ -274,22 +270,9 @@ do
 end
 }
 
-#ast {
-do
-    ElementsInterface^constantes := ElementsInterface1^constantes;
-    ElementsInterface^constantes.add(ElementInterface^constante);
-    
-end
-}
 
 
-
-ElementsInterface -> #ast ;
-#ast {
-do
-    ElementsInterface^constantes := new LinkedList<ConstantDeclaration>();
-end
-}
+ElementsInterface -> ;
 
 
 ElementInterface -> final statique #tds #inh Type identificateur affectation Expression #ast point_virgule ;
@@ -313,7 +296,7 @@ end
 
 #ast {
 do
-	ElementInterface^interface_mere.ajouterConstante(identificateur^txt, Type^ast, Expression^ast);
+	ElementInterface^interface_mere.ajouterConstante(Type^ast, identificateur^txt, Expression^ast);
 end
 }
 
@@ -332,7 +315,6 @@ do
     ) then
         error(MiniJava_Signature_DejaDef, ElementInterface^interface_mere.getNom(), Signature^nom);
     end
-    ElementInterface^constante := null;
 end
 }
 
@@ -1686,18 +1668,18 @@ end
 }
 
 
---Acces -> point identificateur #tds AppelOuAcces #ast ;
---#tds {
---do
---    AppelOuAcces^tds := Acces^tds;
---end
---}
+Acces -> point identificateur #tds AppelOuAcces #ast ;
+#tds {
+do
+    AppelOuAcces^tds := Acces^tds;
+end
+}
 
---#ast {
---do
---    Acces^ast := AppelOuAcces^ast;
---end
---}
+#ast {
+do
+    Acces^ast := AppelOuAcces^ast;
+end
+}
 
 --Appel -> parenthese_ouvrante parenthese_fermante #tds #inh Acces #ast ;
 --#tds {
@@ -1724,5 +1706,73 @@ end
 --    Appel^ast := Acces^ast;
 --end
 --}
+
+
+--Appel -> #tds Arguments #inh Acces ;
+--#tds {
+--do
+--    Arguments^tds := Appel^tds;
+--    Acces^tds := Appel^tds;
+--end
+--}
+
+--#inh {
+--local
+--    d : Type;
+--do
+--    d := Appel^support.getType();
+--    match d
+--        with ClasseTypeImpl then
+--            Acces^support := Appel^factory.createMethodCall(d.getClasse(), Expression^ast);
+--       
+--        else error();
+--    end
+    
+--    Acces^support := Appel^factory.createMethodCall(Acces^support, Expression^ast);
+--end
+--}
+
+
+Facteur -> identificateur_type #tds  point identificateur #inh AppelOuAcces #ast;
+#tds {
+do
+    AppelOuAcces^tds := Facteur^tds;
+    --AppelOuAcces^premier_identificateur := identificateur^txt
+end
+}
+
+#inh {
+local
+   f : Optional<Declaration>;
+   d : Declaration;
+   interf : Interface;
+do
+   if (Facteur^tds.knows(identificateur_type^txt)) then
+      f := Facteur^tds.get(identificateur_type^txt);
+      d := f.get();
+      match d
+      with InterfaceDeclaration then 
+			interf := d.getInterface();
+			if (interf.isPresentConstante(identificateur^txt)) then
+				AppelOuAcces^support := interf.getValueConstante(identificateur^txt);
+			else 
+				error(MiniJava_undefined_ident, identificateur^txt);
+			end
+	  else
+		error(MiniJava_badtype_classe, identificateur^txt);
+      end
+   else
+      error(MiniJava_undefined_ident, identificateur_type^txt);
+   end
+end
+}
+
+#ast {
+do
+	Facteur^ast := AppelOuAcces^ast;
+end
+}
+
+--Facteur -> parenthese_ouvrante Expression parenthese_fermante ;
 
 end

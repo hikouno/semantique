@@ -84,6 +84,7 @@ public class Test {
         
         print 1;
         
+	int k = EtreVivant.const1;
         int j = 2;
         int i = 4;
         

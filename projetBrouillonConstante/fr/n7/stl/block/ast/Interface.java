@@ -23,6 +23,16 @@ public interface Interface {
 	public boolean ajouterSignature(Optional<Type> type, String nom, LinkedList<Argument> args);
 	
 	/**
+	 * Ajoute une constante à l'interface. */
+	public boolean ajouterConstante(Type type, String nom, Expression valeur);
+	
+	/** Teste si une constante appartient dèjà à l'interface. */
+	public boolean isPresentConstante(String nom);
+	
+	/** Renvoie la constante si elle est présente, null sinon. */
+	public Expression getValueConstante(String nom);
+	
+	/**
 	 * Renvoie le nom de l'interface.
 	 * @return Le nom de l'interface.
 	 */
