@@ -312,11 +312,8 @@ end
 }
 
 #ast {
-local 
-	fac : BlockFactoryImpl;
 do
-	fac := new BlockFactoryImpl();
-	ElementInterface^constante := fac.createConstantDeclaration(identificateur^txt, Type^ast, Expression^ast, ElementInterface^interface_mere);
+	ElementInterface^interface_mere.ajouterConstante(identificateur^txt, Type^ast, Expression^ast);
 end
 }
 
