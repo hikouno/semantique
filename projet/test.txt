@@ -76,6 +76,7 @@ public class Test {
         
         Ordi ordi = new Ordi();
         Poisson poisson = new Poisson(5 + 2, 4, true);
+        print poisson.cinq_nageoires;
         
         EtreVivant test = 3;
         

@@ -4,6 +4,9 @@
 package fr.n7.stl.block.ast;
 
 import java.util.LinkedList;
+import java.util.Optional;
+
+import fr.n7.stl.block.ast.impl.InstanceUseImpl;
 
 /**
  * Combines the various factories for the Bloc language.
@@ -43,6 +46,13 @@ public interface BlockFactory extends ExpressionFactory, InstructionFactory, Typ
 	 * @return Abstract Syntax Tree node for the access to a variable.
 	 */
 	public Expression createInstanceUse(ClasseInstanceDeclaration _declaration);
+	
+	/**
+	 * Create a node for a variable use expression in the Abstract Syntax Tree.
+	 * with resolving the reference with the Symbol Table.	 
+	 * @return Abstract Syntax Tree node for the access to a variable.
+	 */
+	public Optional<Expression> createInstanceAccess(InstanceUseImpl _use, String nom);
     
     
 }

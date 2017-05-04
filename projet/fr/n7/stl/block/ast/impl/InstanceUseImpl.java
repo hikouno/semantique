@@ -26,6 +26,10 @@ public class InstanceUseImpl implements Expression {
 		this.declaration = _declaration;
 	}
 	
+	public ClasseInstanceDeclaration getDeclaration() {
+		return this.declaration;
+	}
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */

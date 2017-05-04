@@ -4,6 +4,7 @@
 package fr.n7.stl.block.ast;
 
 import java.util.LinkedList;
+import java.util.Optional;
 
 import fr.n7.stl.block.ast.impl.Constructeur;
 import fr.n7.stl.block.ast.impl.AttributImpl;
@@ -53,6 +54,18 @@ public interface Classe {
 	 * @return Les constructeurs de la classe.
 	 */
 	public LinkedList<Constructeur> getConstructeurs();
+	
+	/**
+	 * Renvoie si il existe l'attribut de la classe associé au nom.
+	 * @return Le résultat.
+	 */
+	public Optional<AttributImpl> getAttribut(String nom);
+	
+	/**
+	 * Renvoie si elle existe la méthode de la classe associée au nom.
+	 * @return Le résultat.
+	 */
+	public Optional<MethodImpl> getMethode(String nom);
 	
 	/**
 	 * Teste l'égalité de deux classes.
