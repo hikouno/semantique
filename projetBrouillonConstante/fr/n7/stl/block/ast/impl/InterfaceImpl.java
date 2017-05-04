@@ -73,14 +73,36 @@ public class InterfaceImpl implements Interface {
 		}
 	}
 	
+	private class Constante {
+		private Type type;
+		private String nom;
+		private Expression valeur;
+		
+		public Constante(Type type, String nom, Expression valeur) {
+			this.type = type;
+			this.nom = nom;
+			this.args = args;
+		}
+		
+		public String getNom() { return this.nom ;}
+		
+		@Override
+		public String toString() {
+			return "final static" + this.type + this.nom + this.valeur;
+		}			
+	}
+	
 	protected String name;
 	protected LinkedList<Signature> signatures;
+	protected LinkedList<Constante> constantes;
 	
 	public InterfaceImpl(String name) {
 		this.name = name;
 		this.signatures = new LinkedList<Signature>();
+		this.constantes = new LinkedList<Constante>();
 	}
 	
+	/* Ajouter une signature. */
 	public boolean ajouterSignature(Optional<Type> type, String nom, LinkedList<Argument> args) {
 		Signature signature = new Signature(type, nom, args);
 		
@@ -90,6 +112,20 @@ public class InterfaceImpl implements Interface {
 		}
 		
 		this.signatures.add( signature );
+		return true;
+	}
+	
+	/* Ajouter une constante. */
+	public boolean ajouterConstante(Type type, String nom, Expression valeur) {
+		Constante constante = new Constante(type, nom, valeur);
+		
+		for (Constante _const : this.constantes) {
+			if (nom.equals(_const.getNom())) {
+					return false; //Une constante de même nom existe déjà.
+				}
+		}
+		
+		this.constantes.add( constante );
 		return true;
 	}
 	
