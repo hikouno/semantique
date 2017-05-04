@@ -5,6 +5,7 @@ package fr.n7.stl.block.ast.impl;
 
 import fr.n7.stl.block.ast.ClasseInstanceDeclaration;
 import fr.n7.stl.block.ast.ClasseInstance;
+import fr.n7.stl.block.ast.Expression;
 import fr.n7.stl.block.ast.Type;
 
 import fr.n7.stl.tam.ast.Fragment;
@@ -18,15 +19,15 @@ import fr.n7.stl.tam.ast.TAMFactory;
 public class ClasseInstanceDeclarationImpl implements ClasseInstanceDeclaration {
 
 	private String nom;
-	protected ClasseTypeImpl type;
-	protected ClasseInstance value;
+	protected ClasseInstance instance;
+	protected Expression value;
 	
 	/**
 	 * Creates a class declaration instruction node for the Abstract Syntax Tree.
 	 */
-	public ClasseInstanceDeclarationImpl(String _nom, ClasseTypeImpl _type, ClasseInstance _value) {
+	public ClasseInstanceDeclarationImpl(String _nom, ClasseInstance _instance, Expression _value) {
 		this.nom = _nom;
-		this.type = _type;
+		this.instance = _instance;
 		this.value = _value;
 	}
 	
@@ -34,8 +35,8 @@ public class ClasseInstanceDeclarationImpl implements ClasseInstanceDeclaration 
 	 * Provide the value associated to a name in a type declaration.
 	 * @return Value from the declaration.
 	 */
-	public ClasseInstance getValue() {
-		return this.value;
+	public ClasseInstance getInstance() {
+		return this.instance;
 	}
 
 	/* (non-Javadoc)
@@ -43,7 +44,7 @@ public class ClasseInstanceDeclarationImpl implements ClasseInstanceDeclaration 
 	 */
 	@Override
 	public String toString() {
-		return this.type + " " + this.nom + " = " + this.value + ";\n";
+		return this.instance.getClasse().getNom() + " " + this.nom + " = " + this.value + ";\n";
 	}
 	
 	/* (non-Javadoc)

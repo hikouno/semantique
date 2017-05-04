@@ -965,7 +965,7 @@ do
 		error(MiniJava_already_defined, identificateur^txt);
 	else
         match Type^ast
-            with ClasseTypeImpl then d := Instruction^factory.createClasseInstanceDeclaration(Type^ast.getClasse(), identificateur^txt);
+            with ClasseTypeImpl then d := Instruction^factory.createClasseInstanceDeclaration(identificateur^txt, Type^ast.getClasse(), Expression^ast);
             else d := Instruction^factory.createVariableDeclaration(identificateur^txt, Type^ast, Expression^ast);
         end
 		

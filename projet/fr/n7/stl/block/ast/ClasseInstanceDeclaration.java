@@ -14,7 +14,7 @@ public interface ClasseInstanceDeclaration extends VariableDeclaration {
 	 * Provide the value associated to a name in a type declaration.
 	 * @return Value from the declaration.
 	 */
-	public ClasseInstance getValue();
+	public ClasseInstance getInstance();
 	
 	/**
 	 * Synthesized semantics attribute for the type of the declared variable.
