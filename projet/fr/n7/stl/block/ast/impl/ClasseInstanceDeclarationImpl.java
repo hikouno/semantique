@@ -19,16 +19,25 @@ import fr.n7.stl.tam.ast.TAMFactory;
 public class ClasseInstanceDeclarationImpl implements ClasseInstanceDeclaration {
 
 	private String nom;
-	protected ClasseInstance instance;
+	protected Type type;
 	protected Expression value;
+	
+	protected ClasseInstance instance;
 	
 	/**
 	 * Creates a class declaration instruction node for the Abstract Syntax Tree.
 	 */
-	public ClasseInstanceDeclarationImpl(String _nom, ClasseInstance _instance, Expression _value) {
+	public ClasseInstanceDeclarationImpl(String _nom, Type _type, Expression _value) {
 		this.nom = _nom;
-		this.instance = _instance;
+		this.type = _type;
+		
+		if (!(_type instanceof ClasseTypeImpl))
+			throw new RuntimeException("ClasseInstanceDeclaration demande un type ClasseType");
+		
 		this.value = _value;
+		
+		//Génération de l'instance de classe.
+		this.instance = new ClasseInstanceImpl( ((ClasseTypeImpl) _type).getClasse() );
 	}
 	
 	/**
@@ -38,13 +47,17 @@ public class ClasseInstanceDeclarationImpl implements ClasseInstanceDeclaration 
 	public ClasseInstance getInstance() {
 		return this.instance;
 	}
+	
+	/*public ClasseInstanceDeclarationImpl getDeclaration(String nom) {
+		return this.instance.getDeclaration(nom);
+	}*/
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return this.instance.getClasse().getNom() + " " + this.nom + " = " + this.value + ";\n";
+		return this.type + " " + this.nom + " = " + this.value + ";\n";
 	}
 	
 	/* (non-Javadoc)

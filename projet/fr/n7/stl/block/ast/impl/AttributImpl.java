@@ -43,6 +43,10 @@ public class AttributImpl extends MembreClasse {
 		
 		return text;
 	}
+	
+	public Type getType() {
+		return this.type;
+	}
 
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Block#checkType()

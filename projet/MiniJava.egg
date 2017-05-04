@@ -965,7 +965,8 @@ do
 		error(MiniJava_already_defined, identificateur^txt);
 	else
         match Type^ast
-            with ClasseTypeImpl then d := Instruction^factory.createClasseInstanceDeclaration(identificateur^txt, Type^ast.getClasse(), Expression^ast);
+            with ClasseTypeImpl then
+            d := Instruction^factory.createClasseInstanceDeclaration(identificateur^txt, Type^ast, Expression^ast);
             else d := Instruction^factory.createVariableDeclaration(identificateur^txt, Type^ast, Expression^ast);
         end
 		
@@ -1020,8 +1021,8 @@ do
         o := Affectable^tds.get(identificateur^txt);
         d := o.get();
         match d
-        with VariableDeclaration then SuiteAffectable^support := Affectable^factory.createVariableAssignment( d );
-        with ConstantDeclaration then error(MiniJava_not_a_variable, identificateur^txt);
+            with VariableDeclaration then SuiteAffectable^support := Affectable^factory.createVariableAssignment( d );
+            with ConstantDeclaration then error(MiniJava_not_a_variable, identificateur^txt);
         end
     else
         error(MiniJava_undefined_ident, identificateur^txt);
@@ -1587,9 +1588,11 @@ do
       f := Facteur^tds.get(identificateur^txt);
       d := f.get();
       match d
-      with ConstantDeclaration then AppelOuAcces^support := d.getValue();
-      with VariableDeclaration then AppelOuAcces^support := Facteur^factory.createVariableUse(d);
-      with ClasseInstanceDeclaration then AppelOuAcces^support := Facteur^factory.createInstanceUse(d);
+      
+        with ClasseInstanceDeclaration then AppelOuAcces^support := Facteur^factory.createInstanceUse(d);
+        
+        with VariableDeclaration then AppelOuAcces^support := Facteur^factory.createVariableUse(d);
+      
       end
    else
       error(MiniJava_undefined_ident, identificateur^txt);
@@ -1660,19 +1663,48 @@ end
 }
 
 
---Acces -> point identificateur #tds #inh AppelOuAcces #ast ;
---#tds {
---do
---    AppelOuAcces^tds := Acces^tds;
---    AppelOuAcces^tds := createMembreClasseAccess(identificateur
---end
---}
+Acces -> point identificateur #tds #inh AppelOuAcces #ast ;
+#tds {
+do
+    AppelOuAcces^tds := Acces^tds;
+end
+}
 
---#ast {
---do
---    Acces^ast := AppelOuAcces^ast;
---end
---}
+#inh {
+local
+    supp : Expression;
+    d : Optional<Expression>;
+    dget : Expression;
+    
+    dec : ClasseInstanceDeclaration;
+do
+    supp := Acces^support;
+    match supp
+        with InstanceUseImpl then
+            d := Acces^factory.createInstanceAccess(supp, identificateur^txt);
+            
+            if ( d.isPresent() ) then
+                dget := d.get();
+                match dget with
+                    InstanceAccessImpl then AppelOuAcces^support := dget.getAST();
+                else
+                    AppelOuAcces^support := dget;
+                end
+            else
+                dec := supp.getDeclaration();
+                error(MiniJava_Bad_Access, dec.getName(), identificateur^txt);
+            end
+       
+        else error(MiniJava_Acces_NonImplemente);
+    end
+end
+}
+
+#ast {
+do
+    Acces^ast := AppelOuAcces^ast;
+end
+}
 
 --Appel -> parenthese_ouvrante parenthese_fermante #tds #inh Acces #ast ;
 --#tds {
@@ -1712,10 +1744,10 @@ end
 --local
 --    d : Type;
 --do
---    d := Appel^support.getType();
+--    d := Appel^support;
 --    match d
---        with ClasseTypeImpl then
---            Acces^support := Appel^factory.createMethodCall(d.getClasse(), Expression^ast);
+--        with InstanceUseImpl then
+--            Acces^support := Appel^factory.createMethodCall(d, Arguments^args);
 --       
 --        else error();
 --    end

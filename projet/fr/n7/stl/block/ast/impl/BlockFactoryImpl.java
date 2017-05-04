@@ -4,6 +4,7 @@
 package fr.n7.stl.block.ast.impl;
 
 import java.util.LinkedList;
+import java.util.Optional;
 
 import fr.n7.stl.block.ast.Assignable;
 import fr.n7.stl.block.ast.AtomicType;
@@ -63,8 +64,8 @@ public class BlockFactoryImpl implements BlockFactory {
 	 * Create an Abstract Syntax Tree node for the ClasseInstanceDeclaration type.
 	 * @return Abstract Syntax Tree node for the ClasseInstanceDeclaration type.
 	 */
-	public ClasseInstanceDeclaration createClasseInstanceDeclaration(String nom, Classe classe, Expression value) {
-		return new ClasseInstanceDeclarationImpl(nom, new ClasseInstanceImpl(classe), value);
+	public ClasseInstanceDeclaration createClasseInstanceDeclaration(String nom, Type type, Expression value) {
+		return new ClasseInstanceDeclarationImpl(nom, type, value);
 	}
 	
 	/**
@@ -152,6 +153,20 @@ public class BlockFactoryImpl implements BlockFactory {
 	 */
 	public Expression createInstanceUse(ClasseInstanceDeclaration _declaration) {
 		return new InstanceUseImpl(_declaration);
+	}
+	
+	/**
+	 * Create a node for a variable use expression in the Abstract Syntax Tree.
+	 * with resolving the reference with the Symbol Table.	 
+	 * @return Abstract Syntax Tree node for the access to a variable.
+	 */
+	public Optional<Expression> createInstanceAccess(InstanceUseImpl _use, String nom) {
+		InstanceAccessImpl access = new InstanceAccessImpl(_use);
+		
+		if (access.setMembreAccede(nom))
+			return Optional.of(access);
+		
+		return Optional.empty();
 	}
 	
 	/* (non-Javadoc)

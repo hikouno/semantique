@@ -4,6 +4,7 @@
 package fr.n7.stl.block.ast.impl;
 
 import java.util.LinkedList;
+import java.util.Optional;
 
 import fr.n7.stl.block.ast.Classe;
 import fr.n7.stl.block.ast.Block;
@@ -75,6 +76,43 @@ public class ClasseImpl implements Classe {
 	 */
 	public LinkedList<Constructeur> getConstructeurs() {
 		return this.constructeurs;
+	}
+	
+	/**
+	 * Renvoie les attributs de la classe.
+	 * @return Les attributs de la classe.
+	 */
+	public LinkedList<AttributImpl> getAttributs() {
+		return this.attributs;
+	}
+	
+	/**
+	 * Renvoie si il existe l'attribut de la classe associé au nom.
+	 * @return Le résultat.
+	 */
+	public Optional<AttributImpl> getAttribut(String nom) {
+		
+		for (AttributImpl _att : this.attributs) {
+			if (_att.getNom().equals(nom))
+				return Optional.of(_att);
+		}
+		
+		return Optional.empty();
+	}
+	
+	/**
+	 * Renvoie si elle existe la méthode de la classe associée au nom.
+	 * @return Le résultat.
+	 */
+	public Optional<MethodImpl> getMethode(String nom) {
+		
+		for (MethodImpl _method : this.methods) {
+			if (_method.getNom().equals(nom))
+				return Optional.of(_method);
+		}
+		
+		return Optional.empty();
+		
 	}
 	
 	/**
