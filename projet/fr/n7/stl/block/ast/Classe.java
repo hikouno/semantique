@@ -56,6 +56,12 @@ public interface Classe {
 	public LinkedList<Constructeur> getConstructeurs();
 	
 	/**
+	 * Renvoie les attributs de la classe.
+	 * @return Les attributs de la classe.
+	 */
+	public LinkedList<AttributImpl> getAttributs();
+	
+	/**
 	 * Renvoie si il existe l'attribut de la classe associé au nom.
 	 * @return Le résultat.
 	 */

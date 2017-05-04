@@ -966,7 +966,7 @@ do
 	else
         match Type^ast
             with ClasseTypeImpl then
-            d := Instruction^factory.createClasseInstanceDeclaration(identificateur^txt, Type^ast.getClasse(), Expression^ast);
+            d := Instruction^factory.createClasseInstanceDeclaration(identificateur^txt, Type^ast, Expression^ast);
             else d := Instruction^factory.createVariableDeclaration(identificateur^txt, Type^ast, Expression^ast);
         end
 		
@@ -1674,6 +1674,8 @@ end
 local
     supp : Expression;
     d : Optional<Expression>;
+    dget : Expression;
+    
     dec : ClasseInstanceDeclaration;
 do
     supp := Acces^support;
@@ -1682,7 +1684,12 @@ do
             d := Acces^factory.createInstanceAccess(supp, identificateur^txt);
             
             if ( d.isPresent() ) then
-                AppelOuAcces^support := d.get();
+                dget := d.get();
+                match dget with
+                    InstanceAccessImpl then AppelOuAcces^support := dget.getAST();
+                else
+                    AppelOuAcces^support := dget;
+                end
             else
                 dec := supp.getDeclaration();
                 error(MiniJava_Bad_Access, dec.getName(), identificateur^txt);

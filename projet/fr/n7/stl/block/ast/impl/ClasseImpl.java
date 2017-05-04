@@ -79,6 +79,14 @@ public class ClasseImpl implements Classe {
 	}
 	
 	/**
+	 * Renvoie les attributs de la classe.
+	 * @return Les attributs de la classe.
+	 */
+	public LinkedList<AttributImpl> getAttributs() {
+		return this.attributs;
+	}
+	
+	/**
 	 * Renvoie si il existe l'attribut de la classe associé au nom.
 	 * @return Le résultat.
 	 */

@@ -20,15 +20,19 @@ import fr.n7.stl.tam.ast.TAMFactory;
  */
 public class InstanceAccessImpl implements Expression {
 	
+	private enum Acces {METHODE, ATTRIBUT, ERREUR};
+	
 	protected InstanceUseImpl use;
 	protected String membreAccede;
 	protected Type type;
+	protected Acces acces;
 	
 	public InstanceAccessImpl(InstanceUseImpl _use) {
 		this.use = _use;
 		
 		this.membreAccede = null;
 		this.type = null;
+		this.acces = Acces.ERREUR;
 	}
 	
 	public boolean setMembreAccede(String _nom) {
@@ -44,16 +48,28 @@ public class InstanceAccessImpl implements Expression {
 		if (attribut.isPresent()) {
 			this.membreAccede = _nom;
 			this.type = attribut.get().getType();
+			this.acces = Acces.ATTRIBUT;
+			
 			return true;
 		}
 		else if (methode.isPresent()) {
 			this.membreAccede = _nom;
 			this.type = methode.get().getTypeRetour().isPresent() ? 
 						methode.get().getTypeRetour().get() : null;
+			this.acces = Acces.METHODE;
+			
 			return true;
 		}
 		
 		return false;
+	}
+	
+	public Expression getAST() {
+		/*if (this.acces == Acces.ATTRIBUT) {
+			return this.use.getDeclaration().getDeclaration(this.membreAccede);
+		}*/
+		
+		return this;
 	}
 	
 	/* (non-Javadoc)

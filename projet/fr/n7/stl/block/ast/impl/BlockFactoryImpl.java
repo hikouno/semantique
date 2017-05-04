@@ -64,8 +64,8 @@ public class BlockFactoryImpl implements BlockFactory {
 	 * Create an Abstract Syntax Tree node for the ClasseInstanceDeclaration type.
 	 * @return Abstract Syntax Tree node for the ClasseInstanceDeclaration type.
 	 */
-	public ClasseInstanceDeclaration createClasseInstanceDeclaration(String nom, Classe classe, Expression value) {
-		return new ClasseInstanceDeclarationImpl(nom, new ClasseInstanceImpl(classe), value);
+	public ClasseInstanceDeclaration createClasseInstanceDeclaration(String nom, Type type, Expression value) {
+		return new ClasseInstanceDeclarationImpl(nom, type, value);
 	}
 	
 	/**
