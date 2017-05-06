@@ -52,7 +52,7 @@ class Poisson {
     private static int mon_attribut;
     
     
-    private boolean cinq_nageoires;
+    public boolean cinq_nageoires;
 }
 
 class Poisson {

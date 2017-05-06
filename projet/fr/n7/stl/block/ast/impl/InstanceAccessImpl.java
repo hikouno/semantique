@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.Optional;
 import java.io.PrintWriter;
 
+import fr.n7.stl.block.ast.MembreClasse.DroitAcces;
 import fr.n7.stl.block.ast.Classe;
 import fr.n7.stl.block.ast.Type;
 import fr.n7.stl.block.ast.Expression;
@@ -92,10 +93,18 @@ public class InstanceAccessImpl implements Expression {
             //Last argument.
             if (depth == history.size() - 1) {
                 if (attribut.isPresent()) {
+                    
+                    if (attribut.get().getDroitAcces() != DroitAcces.PUBLIC)
+                        return false;
+                    
                     this.membreAccede = _nom;
                     this.type = attribut.get().getType();
                 }
                 else if (methode.isPresent()) {
+                    
+                    if (methode.get().getDroitAcces() != DroitAcces.PUBLIC)
+                        return false;
+                    
                     this.membreAccede = _nom;
                     this.type = methode.get().getTypeRetour().isPresent() ? 
                                 methode.get().getTypeRetour().get() : null;
@@ -107,7 +116,7 @@ public class InstanceAccessImpl implements Expression {
             
                 if (attribut.isPresent()) {
                     
-                    if (!(attribut.get().getType() instanceof ClasseTypeImpl))
+                    if (!(attribut.get().getType() instanceof ClasseTypeImpl) || attribut.get().getDroitAcces() != DroitAcces.PUBLIC)
                         return false;
                     
                     classe = ((ClasseTypeImpl) attribut.get().getType()).getClasse();
@@ -116,7 +125,7 @@ public class InstanceAccessImpl implements Expression {
                 } else if (methode.isPresent()) {
                     
                     Optional<Type> retour = methode.get().getTypeRetour();
-                    if (!retour.isPresent() || !(retour.get() instanceof ClasseTypeImpl))
+                    if (!retour.isPresent() || !(retour.get() instanceof ClasseTypeImpl) || methode.get().getDroitAcces() != DroitAcces.PUBLIC)
                         return false;
                     
                     classe = ((ClasseTypeImpl) retour.get()).getClasse();

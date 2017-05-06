@@ -27,6 +27,10 @@ public abstract class MembreClasse {
 		this.statique = statique;
 	}
 	
+	public DroitAcces getDroitAcces() {
+		return this.auth;
+	}
+	
 	public String getNom() {
 		return this.name;
 	}
