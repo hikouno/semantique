@@ -160,8 +160,22 @@ public class BlockFactoryImpl implements BlockFactory {
 	 * with resolving the reference with the Symbol Table.	 
 	 * @return Abstract Syntax Tree node for the access to a variable.
 	 */
-	public Optional<Expression> createInstanceAccess(InstanceUseImpl _use, String nom) {
+	public Optional<Expression> createInstanceAccess_use(InstanceUseImpl _use, String nom) {
 		InstanceAccessImpl access = new InstanceAccessImpl(_use);
+		
+		if (access.setMembreAccede(nom))
+			return Optional.of(access);
+		
+		return Optional.empty();
+	}
+	
+	/**
+	 * Create a node for a variable use expression in the Abstract Syntax Tree.
+	 * with resolving the reference with the Symbol Table.	 
+	 * @return Abstract Syntax Tree node for the access to a variable.
+	 */
+	public Optional<Expression> createInstanceAccess_access(InstanceAccessImpl _access, String nom) {
+		InstanceAccessImpl access = new InstanceAccessImpl(_access);
 		
 		if (access.setMembreAccede(nom))
 			return Optional.of(access);

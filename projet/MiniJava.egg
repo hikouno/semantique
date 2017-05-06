@@ -1674,22 +1674,26 @@ end
 local
     supp : Expression;
     d : Optional<Expression>;
-    dget : Expression;
     
     dec : ClasseInstanceDeclaration;
 do
     supp := Acces^support;
     match supp
         with InstanceUseImpl then
-            d := Acces^factory.createInstanceAccess(supp, identificateur^txt);
+            d := Acces^factory.createInstanceAccess_use(supp, identificateur^txt);
             
             if ( d.isPresent() ) then
-                dget := d.get();
-                match dget with
-                    InstanceAccessImpl then AppelOuAcces^support := dget.getAST();
-                else
-                    AppelOuAcces^support := dget;
-                end
+                AppelOuAcces^support := d.get();
+            else
+                dec := supp.getDeclaration();
+                error(MiniJava_Bad_Access, dec.getName(), identificateur^txt);
+            end
+        
+        with InstanceAccessImpl then
+            d := Acces^factory.createInstanceAccess_access(supp, identificateur^txt);
+            
+            if ( d.isPresent() ) then
+                AppelOuAcces^support := d.get();
             else
                 dec := supp.getDeclaration();
                 error(MiniJava_Bad_Access, dec.getName(), identificateur^txt);

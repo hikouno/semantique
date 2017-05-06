@@ -21,7 +21,7 @@ legg :
 
 compile :
 	cd egg && \
-	$(JAVAC) -classpath ../$(EGGJAR):../.:. *.java&& \
+	$(JAVAC) -classpath ../$(EGGJAR):../.:. *.java -Xlint:unchecked && \
 	cd .. && \
 	$(JAVAC) -classpath $(EGGJAR):. Main.java
 
