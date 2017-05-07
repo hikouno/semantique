@@ -5,7 +5,6 @@ package fr.n7.stl.block.ast.impl;
 
 import java.util.LinkedList;
 import java.util.Optional;
-import java.io.PrintWriter;
 
 import fr.n7.stl.block.ast.MembreClasse.DroitAcces;
 import fr.n7.stl.block.ast.Classe;
@@ -24,17 +23,45 @@ import fr.n7.stl.tam.ast.TAMFactory;
  */
 public class InstanceAccessImpl implements Expression {
     
+    private class AppelOuAcces {
+        
+        private String nom;
+        private LinkedList<Expression> arguments;
+        
+        public AppelOuAcces() {
+            this.nom = null;
+            this.arguments = null;
+        }
+        
+        public void setNom(String _nom) {
+            this.nom = _nom;
+        }
+        
+        public String getNom() {
+            return nom;
+        }
+        
+        public void setArguments(LinkedList<Expression> _args) {
+            this.arguments = _args;
+        }
+        
+        public LinkedList<Expression> getArguments() {
+            return arguments;
+        }
+    }
+    
+    
     protected InstanceUseImpl use;
     protected InstanceAccessImpl access;
     
-    protected String membreAccede;
+    protected AppelOuAcces membreAccede;
     protected Type type;
     
     public InstanceAccessImpl(InstanceUseImpl _use) {
         this.use = _use;
         this.access = null;
         
-        this.membreAccede = null;
+        this.membreAccede = new AppelOuAcces();
         this.type = null;
     }
     
@@ -42,7 +69,7 @@ public class InstanceAccessImpl implements Expression {
         this.access = _access;
         this.use = null;
         
-        this.membreAccede = null;
+        this.membreAccede = new AppelOuAcces();
         this.type = null;
     }
     
@@ -57,32 +84,38 @@ public class InstanceAccessImpl implements Expression {
     }
     
     @SuppressWarnings("unchecked")
-    public LinkedList<String> getCallHistory() {
+    public LinkedList<AppelOuAcces> getCallHistory() {
         
-        LinkedList<String> history = (this.use != null) ? new LinkedList<String>() :
-                            (LinkedList<String>) this.access.getCallHistory().clone();
+        LinkedList<AppelOuAcces> history = (this.use != null) ? new LinkedList<AppelOuAcces>() :
+                            (LinkedList<AppelOuAcces>) this.access.getCallHistory().clone();
         
         history.add(membreAccede);
         return history;
     }
     
     @SuppressWarnings("unchecked")
-    public LinkedList<String> getCallHistory(String _nom) {
+    public LinkedList<AppelOuAcces> getCallHistory(AppelOuAcces _acces) {
         
-        LinkedList<String> history = (this.use != null) ? new LinkedList<String>() :
-                            (LinkedList<String>) (this.access.getCallHistory().clone());
+        LinkedList<AppelOuAcces> history = (this.use != null) ? new LinkedList<AppelOuAcces>() :
+                            (LinkedList<AppelOuAcces>) (this.access.getCallHistory().clone());
         
-        history.add(_nom);
+        history.add(_acces);
         return history;
     }
     
-    public boolean setMembreAccede(String _nom) {
-        
-        LinkedList<String> history = this.getCallHistory(_nom);
-        
+    public void setNomAcces(String _nom) {
+        this.membreAccede.setNom(_nom);
+    }
+    
+    public void setArgumentsAcces(LinkedList<Expression> _args) {
+        this.membreAccede.setArguments(_args);
+    }
+    
+    public boolean update() {
+        LinkedList<AppelOuAcces> history = this.getCallHistory();
         
         Classe classe = this.getClasse();
-        String elementAccede = history.get(0); //Tableau de taille > 0
+        String elementAccede = history.get(0).getNom(); //Tableau de taille > 0
         int depth = 0;
         
         
@@ -97,7 +130,6 @@ public class InstanceAccessImpl implements Expression {
                     if (attribut.get().getDroitAcces() != DroitAcces.PUBLIC)
                         return false;
                     
-                    this.membreAccede = _nom;
                     this.type = attribut.get().getType();
                 }
                 else if (methode.isPresent()) {
@@ -105,7 +137,6 @@ public class InstanceAccessImpl implements Expression {
                     if (methode.get().getDroitAcces() != DroitAcces.PUBLIC)
                         return false;
                     
-                    this.membreAccede = _nom;
                     this.type = methode.get().getTypeRetour().isPresent() ? 
                                 methode.get().getTypeRetour().get() : null;
                 } else {
@@ -120,7 +151,7 @@ public class InstanceAccessImpl implements Expression {
                         return false;
                     
                     classe = ((ClasseTypeImpl) attribut.get().getType()).getClasse();
-                    elementAccede = history.get(depth + 1);
+                    elementAccede = history.get(depth + 1).getNom();
                     
                 } else if (methode.isPresent()) {
                     
@@ -129,7 +160,7 @@ public class InstanceAccessImpl implements Expression {
                         return false;
                     
                     classe = ((ClasseTypeImpl) retour.get()).getClasse();
-                    elementAccede = history.get(depth + 1);
+                    elementAccede = history.get(depth + 1).getNom();
                 } else {
                     return false;
                 }
@@ -137,13 +168,6 @@ public class InstanceAccessImpl implements Expression {
             }
             
             depth++;
-        }
-        
-        try {
-            PrintWriter out = new PrintWriter("debug.txt");
-            out.println(this.type.toString());
-            out.close();
-        } catch (Exception e) {
         }
         
         return true;
@@ -154,7 +178,7 @@ public class InstanceAccessImpl implements Expression {
      */
     @Override
     public String toString() {
-        return (this.use != null) ? (use.toString() + "." + membreAccede) : (access.toString() + "." + membreAccede);
+        return (this.use != null) ? (use.toString() + "." + membreAccede.getNom()) : (access.toString() + "." + membreAccede.getNom());
     }
 
     /* (non-Javadoc)

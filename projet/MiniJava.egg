@@ -15,23 +15,23 @@ inh factory	: BlockFactory for Bloc, Instruction,
                     SuiteConditionnelle, Instructions, Expression, Condition,
                     SuiteCondition, Terme, SuiteTerme, Facteur, SuiteFacteur,
                     Type, TypeAtomique, Valeur, Affectable, SuiteAffectable,
-                    AppelOuAcces, Acces, SuiteNouveau;
+                    AppelOuAcces, Acces, Appel, SuiteNouveau;
 
 inh tds : SymbolTable for Bloc, Instructions, Instruction, Expression, SuiteConditionnelle,
                     Condition, SuiteCondition, Terme, SuiteTerme, Facteur, SuiteFacteur, Type,
                     TypeAtomique, Affectable, SuiteAffectable, Expressions, SuiteExpressions,
-                    AppelOuAcces, Acces, SuiteNouveau, Parametres, Parametre, SuiteParametres,
+                    AppelOuAcces, Acces, Appel, SuiteNouveau, Parametres, Parametre, SuiteParametres,
                     Principale, MethodePrincipale, Interfaces, Interface, ElementsInterface,
                     ElementInterface, Signature, Classes, Classe, ElementsClasse, ElementClasse,
-                    Constructeur, AttributOuMethode, SuiteAttributOuMethode, Arguments; --Appel
+                    Constructeur, AttributOuMethode, SuiteAttributOuMethode, Arguments;
 
 inh blocParent	: Block for Instructions;
 
 inh support : Assignable for SuiteAffectable;
 syn ast 	: Assignable for SuiteAffectable, Affectable;
 
-inh support : Expression for AppelOuAcces, Acces;
-syn ast		: Expression for AppelOuAcces, Acces; --, Appel
+inh support : Expression for AppelOuAcces, Acces, Appel;
+syn ast		: Expression for AppelOuAcces, Acces, Appel;
 
 syn expressions : LinkedList<Expression> for Expressions, SuiteExpressions;
 
@@ -1621,18 +1621,19 @@ do
 end
 }
 
---AppelOuAcces -> #tds Appel #ast ;
---#tds {
---do
---    Appel^tds := AppelOuAcces^tds;
---end
---}
+AppelOuAcces -> #tds Appel #ast ;
+#tds {
+do
+    Appel^tds := AppelOuAcces^tds;
+    Appel^support := AppelOuAcces^support;
+end
+}
 
---#ast {
---do
---    AppelOuAcces^ast := Appel^ast;
---end
---}
+#ast {
+do
+    AppelOuAcces^ast := Appel^ast;
+end
+}
 
 
 Acces -> #ast ;
@@ -1710,55 +1711,36 @@ do
 end
 }
 
---Appel -> parenthese_ouvrante parenthese_fermante #tds #inh Acces #ast ;
---#tds {
---do
---    Acces^tds := Appel^tds;
---end
---}
+Appel -> #tds Arguments #inh Acces #ast ;
+#tds {
+do
+    Arguments^tds := Appel^tds;
+    Acces^tds := Appel^tds;
+end
+}
 
---#ast {
---do
---    Appel^ast := Acces^ast;
---end
---}
- 
---Appel -> parenthese_ouvrante Expressions parenthese_fermante #tds Acces #ast ;
---#tds {
---do
---    Acces^tds := Appel^tds;
---end
---}
-
---#ast {
---do
---    Appel^ast := Acces^ast;
---end
---}
-
---Appel -> #tds Arguments #inh Acces ;
---#tds {
---do
---    Arguments^tds := Appel^tds;
---    Acces^tds := Appel^tds;
---end
---}
-
---#inh {
---local
---    d : Type;
---do
---    d := Appel^support;
---    match d
---        with InstanceUseImpl then
---            Acces^support := Appel^factory.createMethodCall(d, Arguments^args);
---       
---        else error();
---    end
+#inh {
+local
+    d : Expression;
     
---    Acces^support := Appel^factory.createMethodCall(Acces^support, Expression^ast);
---end
---}
+do
+    d := Appel^support;
+    
+    match d
+        with InstanceAccessImpl then
+            d.setArgumentsAcces(Arguments^args);
+            Acces^support := d;
+        
+        else error(MiniJava_Appel_NonImplemente);
+    end
+end
+}
+
+#ast {
+do
+    Appel^ast := Acces^ast;
+end
+}
 
 
 --Facteur -> identificateur_type point identificateur AppelOuAcces ;
