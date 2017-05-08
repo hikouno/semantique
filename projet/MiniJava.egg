@@ -1722,13 +1722,19 @@ end
 #inh {
 local
     d : Expression;
-    
+    dec : ClasseInstanceDeclaration;
 do
     d := Appel^support;
     
     match d
         with InstanceAccessImpl then
+            dec := d.getDeclaration();
+            
             d.setArgumentsAcces(Arguments^args);
+            if (!d.update(true)) then
+                error(MiniJava_Bad_Access_Appel, dec.getName());
+            end
+            
             Acces^support := d;
         
         else error(MiniJava_Appel_NonImplemente);

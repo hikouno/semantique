@@ -108,31 +108,32 @@ public class InstanceAccessImpl implements Expression {
     }
     
     public void setArgumentsAcces(LinkedList<Expression> _args) {
+        
         this.membreAccede.setArguments(_args);
     }
     
-    public boolean update() {
+    public boolean update(boolean fullCheck) {
         LinkedList<AppelOuAcces> history = this.getCallHistory();
         
         Classe classe = this.getClasse();
-        String elementAccede = history.get(0).getNom(); //Tableau de taille > 0
+        AppelOuAcces elementAccede = history.get(0); //Tableau de taille > 0
         int depth = 0;
         
         
         while (depth < history.size()) {
-            Optional<AttributImpl> attribut = classe.getAttribut(elementAccede);
-            Optional<MethodImpl> methode = classe.getMethode(elementAccede);
+            Optional<AttributImpl> attribut = classe.getAttribut(elementAccede.getNom());
+            Optional<MethodImpl> methode = classe.getMethode(elementAccede.getNom());
             
             //Last argument.
             if (depth == history.size() - 1) {
-                if (attribut.isPresent()) {
+                if (attribut.isPresent() && elementAccede.getArguments() == null) {
                     
                     if (attribut.get().getDroitAcces() != DroitAcces.PUBLIC)
                         return false;
                     
                     this.type = attribut.get().getType();
                 }
-                else if (methode.isPresent()) {
+                else if (methode.isPresent() && (!fullCheck || elementAccede.getArguments() != null)) {
                     
                     if (methode.get().getDroitAcces() != DroitAcces.PUBLIC)
                         return false;
@@ -145,22 +146,22 @@ public class InstanceAccessImpl implements Expression {
             
             } else { //Browsing access history.
             
-                if (attribut.isPresent()) {
+                if (attribut.isPresent() && elementAccede.getArguments() == null) {
                     
                     if (!(attribut.get().getType() instanceof ClasseTypeImpl) || attribut.get().getDroitAcces() != DroitAcces.PUBLIC)
                         return false;
                     
                     classe = ((ClasseTypeImpl) attribut.get().getType()).getClasse();
-                    elementAccede = history.get(depth + 1).getNom();
+                    elementAccede = history.get(depth + 1);
                     
-                } else if (methode.isPresent()) {
+                } else if (methode.isPresent() && (!fullCheck || elementAccede.getArguments() != null)) {
                     
                     Optional<Type> retour = methode.get().getTypeRetour();
                     if (!retour.isPresent() || !(retour.get() instanceof ClasseTypeImpl) || methode.get().getDroitAcces() != DroitAcces.PUBLIC)
                         return false;
                     
                     classe = ((ClasseTypeImpl) retour.get()).getClasse();
-                    elementAccede = history.get(depth + 1).getNom();
+                    elementAccede = history.get(depth + 1);
                 } else {
                     return false;
                 }
@@ -178,7 +179,22 @@ public class InstanceAccessImpl implements Expression {
      */
     @Override
     public String toString() {
-        return (this.use != null) ? (use.toString() + "." + membreAccede.getNom()) : (access.toString() + "." + membreAccede.getNom());
+        String text = (this.use != null) ? use.toString() : access.toString();
+        text += "." + membreAccede.getNom();
+        
+        if (membreAccede.getArguments() != null) {
+            text += "(";
+            
+            for (int i = 0; i < membreAccede.getArguments().size(); i++) {
+                text += membreAccede.getArguments().get(i);
+                text += (i < membreAccede.getArguments().size() - 1) ? ", " : "";
+            }
+            
+            text += ")";
+        }
+        
+        
+        return text;
     }
 
     /* (non-Javadoc)
