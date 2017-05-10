@@ -209,6 +209,12 @@ public class BlockFactoryImpl implements BlockFactory {
         return new RepetitionImpl(_condition,_body);
     }
 
+
+    @Override
+    public Instruction createReturn(Expression expr) {
+        return new ReturnImpl(expr);
+    }
+
     /* (non-Javadoc)
      * @see fr.n7.stl.block.ast.TypeFactory#createBooleanType()
      */
