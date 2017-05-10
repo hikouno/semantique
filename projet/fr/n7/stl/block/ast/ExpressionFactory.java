@@ -42,6 +42,20 @@ public interface ExpressionFactory {
 	public Value createBooleanValue(boolean _value);
 	
 	/**
+	 * Create a node for an char value expression in the Abstract Syntax Tree.
+	 * @param _texte Textual representation of the value of the Abstract Syntax Tree CharValue node.
+	 * @return Abstract Syntax Tree node for the char constant.
+	 */
+	public Value createCharValue(String _texte);
+	
+	/**
+	 * Create a node for a String value expression in the Abstract Syntax Tree.
+	 * @param _texte Textual representation of the value of the Abstract Syntax Tree StringValue node.
+	 * @return Abstract Syntax Tree node for the String constant.
+	 */
+	public Value createStringValue(String _texte);
+	
+	/**
 	 * Create a node for a variable use expression in the Abstract Syntax Tree.
 	 * with resolving the reference with the Symbol Table.	 
 	 * @param _declaration Abstract Syntax Tree node for the declaration of the variable.

@@ -879,12 +879,12 @@ do
 end
 }
  
-TypeAtomique -> type_float #ast ;
-#ast {
-do
-    TypeAtomique^ast :=  TypeAtomique^factory.createFloatingType(); --A CODER ?
-end
-}
+--TypeAtomique -> type_float #ast ;
+--#ast {
+--do
+--    TypeAtomique^ast :=  TypeAtomique^factory.createFloatingType(); --A CODER ?
+--end
+--}
 
 TypeAtomique -> type_String #ast ;
 #ast {
@@ -1584,9 +1584,19 @@ do
 end
 }
 
---Valeur -> chaine ;
+Valeur -> chaine #ast;
+#ast {
+do
+    Valeur^ast := Valeur^factory.createStringValue(chaine^txt);  
+end
+}
 
---Valeur -> caractere ;
+Valeur -> caractere #ast;
+#ast {
+do
+    Valeur^ast := Valeur^factory.createCharValue(caractere^txt);  
+end
+}
 
 
 Facteur -> identificateur #tds #inh AppelOuAcces #ast;
