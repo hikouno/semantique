@@ -209,6 +209,15 @@ public class BlockFactoryImpl implements BlockFactory {
         return Optional.empty();
     }
     
+    /**
+     * Create a node for an undeclared variable use expression in the Abstract Syntax Tree.
+     * with resolving the reference with the Symbol Table.   
+     * @return Abstract Syntax Tree node for the access to a variable.
+     */
+    public Expression createUndeclaredVariableUse(String _decName) {
+        return new UndeclaredVariableUseImpl(_decName);
+    }
+    
     /* (non-Javadoc)
      * @see fr.n7.stl.block.ast.ExpressionFactory#createVariableAssignment(fr.n7.stl.block.ast.VariableDeclaration)
      */

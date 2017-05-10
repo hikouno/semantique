@@ -1614,7 +1614,7 @@ do
       
       end
    else
-      error(MiniJava_undefined_ident, identificateur^txt);
+      AppelOuAcces^support := Facteur^factory.createUndeclaredVariableUse(identificateur^txt);
    end
 end
 }
@@ -1718,6 +1718,12 @@ do
                 dec := supp.getDeclaration();
                 error(MiniJava_Bad_Access, dec.getName(), identificateur^txt);
             end
+		
+		with UndeclaredVariableUseImpl then
+            AppelOuAcces^support := Acces^factory.createUndeclaredAccess_use(supp, identificateur^txt);
+        
+        with UndeclaredAccessImpl then
+            AppelOuAcces^support := Acces^factory.createUndeclaredAccess_access(supp, identificateur^txt);
        
         else error(MiniJava_Acces_NonImplemente);
     end
@@ -1754,6 +1760,10 @@ do
                 error(MiniJava_Bad_Access_Appel, dec.getName());
             end
             
+            Acces^support := d;
+        
+        with UndeclaredAccessImpl then
+            d.setArgumentsAcces(Arguments^args);
             Acces^support := d;
         
         else error(MiniJava_Appel_NonImplemente);
