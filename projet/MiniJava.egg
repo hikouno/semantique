@@ -1594,6 +1594,7 @@ do
       f := Facteur^tds.get(identificateur^txt);
       d := f.get();
       match d
+        with ConstantDeclaration then AppelOuAcces^support := d.getValue();
       
         with ClasseInstanceDeclaration then AppelOuAcces^support := Facteur^factory.createInstanceUse(d);
         
@@ -1755,7 +1756,45 @@ end
 }
 
 
---Facteur -> identificateur_type point identificateur AppelOuAcces ;
+Facteur -> identificateur_type #tds  point identificateur #inh AppelOuAcces #ast;
+#tds {
+do
+    AppelOuAcces^tds := Facteur^tds;
+    --AppelOuAcces^premier_identificateur := identificateur^txt
+end
+}
+
+#inh {
+local
+   f : Optional<Declaration>;
+   d : Declaration;
+   interf : Interface;
+do
+   if (Facteur^tds.knows(identificateur_type^txt)) then
+      f := Facteur^tds.get(identificateur_type^txt);
+      d := f.get();
+      match d
+      with InterfaceDeclaration then 
+			interf := d.getInterface();
+			if (interf.isPresentConstante(identificateur^txt)) then
+				AppelOuAcces^support := interf.getValueConstante(identificateur^txt);
+			else 
+				error(MiniJava_undefined_ident, identificateur^txt);
+			end
+	  else
+		error(MiniJava_badtype_classe, identificateur^txt);
+      end
+   else
+      error(MiniJava_undefined_ident, identificateur_type^txt);
+   end
+end
+}
+
+#ast {
+do
+	Facteur^ast := AppelOuAcces^ast;
+end
+}
 
 --Facteur -> parenthese_ouvrante Expression parenthese_fermante ;
 

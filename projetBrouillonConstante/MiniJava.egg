@@ -222,7 +222,7 @@ do
 end
 }
 
-Interface -> interface identificateur_type Genericite HeritageInterface accolade_ouvrante ast_inh ElementsInterface #ast accolade_fermante ;
+Interface -> interface identificateur_type Genericite HeritageInterface accolade_ouvrante #ast_inh ElementsInterface #ast accolade_fermante ;
 #ast_inh {
 local
     prg : ProgramFactoryImpl;

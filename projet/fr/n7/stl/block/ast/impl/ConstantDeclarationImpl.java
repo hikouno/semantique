@@ -50,6 +50,7 @@ public class ConstantDeclarationImpl implements ConstantDeclaration {
 		return this.value;
 	}
 
+	
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Instruction#checkType()
 	 */

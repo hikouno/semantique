@@ -8,6 +8,8 @@ import java.util.Optional;
 
 import fr.n7.stl.block.ast.Interface;
 import fr.n7.stl.block.ast.Type;
+import fr.n7.stl.block.ast.Expression;
+import fr.n7.stl.block.ast.Constante;
 
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
@@ -75,10 +77,12 @@ public class InterfaceImpl implements Interface {
 	
 	protected String name;
 	protected LinkedList<Signature> signatures;
+	protected LinkedList<Constante> constantes;
 	
 	public InterfaceImpl(String name) {
 		this.name = name;
 		this.signatures = new LinkedList<Signature>();
+		this.constantes = new LinkedList<Constante>();
 	}
 	
 	public boolean ajouterSignature(Optional<Type> type, String nom, LinkedList<Argument> args) {
@@ -92,6 +96,41 @@ public class InterfaceImpl implements Interface {
 		this.signatures.add( signature );
 		return true;
 	}
+
+
+	/** Ajouter une constante. */
+	public boolean ajouterConstante(Type type, String nom, Expression valeur) {
+		Constante constante = new ConstanteImpl(type, nom, valeur);
+		
+		for (Constante _const : this.constantes) {
+			if (nom.equals(_const.getNom())) {
+					return false; //Une constante de même nom existe déjà.
+				}
+		}
+		this.constantes.add( constante );
+		return true;
+	}
+	
+	/** Teste si une constante appartient dèjà à l'interface. */
+	public boolean isPresentConstante(String nom) {		
+		for (Constante _const : this.constantes) {
+			if (nom.equals(_const.getNom())) {
+					return true; //Une constante de même nom existe déjà.
+				}
+		}
+		return false;
+	}
+	
+	/** Renvoie la constante si elle est présente, null sinon. */
+	public Expression getValueConstante(String nom) {		
+		for (Constante _const : this.constantes) {
+			if (nom.equals(_const.getNom())) {
+					return _const.getValue(); //On a trouvé la constante.
+				}
+		}
+		return null;
+	}
+
 	
 	/**
 	 * Renvoie le nom de l'interface.
@@ -117,6 +156,10 @@ public class InterfaceImpl implements Interface {
 	public String toString() {
 		
 		String text = "interface "+this.name+" {\n";
+
+		for (Constante consta : this.constantes) {
+			text += consta.toString() + "\n";
+		}
 		
 		for (Signature sign : this.signatures) {
 			text += sign + "\n";

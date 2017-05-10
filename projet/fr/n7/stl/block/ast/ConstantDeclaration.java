@@ -16,4 +16,7 @@ public interface ConstantDeclaration extends Instruction, Declaration {
 	 */
 	public Expression getValue();
 
+
+	
+
 }

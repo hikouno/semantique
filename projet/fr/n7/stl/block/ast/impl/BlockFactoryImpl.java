@@ -396,11 +396,11 @@ public class BlockFactoryImpl implements BlockFactory {
     } */
 
     /* (non-Javadoc)
-     * @see fr.n7.stl.block.ast.InstructionFactory#createConstantDeclaration(java.lang.String, fr.n7.stl.block.ast.Type, fr.n7.stl.block.ast.Expression)
+     * @see fr.n7.stl.block.ast.InstructionFactory#createConstantDeclaration(java.lang.String, fr.n7.stl.block.ast.Type, fr.n7.stl.block.ast.Expression, fr.n7.stl.block.ast.Interface)
      */
     @Override
     public ConstantDeclaration createConstantDeclaration(String _name, Type _type, Expression _value) {
-        return new ConstantDeclarationImpl(_name,_type,_value);
+          return new ConstantDeclarationImpl(_name,_type,_value);
     }
 
     /* (non-Javadoc)
