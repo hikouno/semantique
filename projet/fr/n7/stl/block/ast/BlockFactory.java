@@ -8,6 +8,8 @@ import java.util.Optional;
 
 import fr.n7.stl.block.ast.impl.InstanceUseImpl;
 import fr.n7.stl.block.ast.impl.InstanceAccessImpl;
+import fr.n7.stl.block.ast.impl.UndeclaredAccessImpl;
+import fr.n7.stl.block.ast.impl.UndeclaredVariableUseImpl;
 
 /**
  * Combines the various factories for the Bloc language.
@@ -61,7 +63,21 @@ public interface BlockFactory extends ExpressionFactory, InstructionFactory, Typ
 	 * @return Abstract Syntax Tree node for the access to a variable.
 	 */
 	public Optional<Expression> createInstanceAccess_access(InstanceAccessImpl _access, String nom);
+	
+	/**
+	* Create a node for a variable use expression in the Abstract Syntax Tree.
+	* with resolving the reference with the Symbol Table.	 
+	* @return Abstract Syntax Tree node for the access to a variable.
+	*/
+	public Expression createUndeclaredAccess_use(UndeclaredVariableUseImpl _use, String nom);
 
+	/**
+	* Create a node for a variable use expression in the Abstract Syntax Tree.
+	* with resolving the reference with the Symbol Table.	 
+	* @return Abstract Syntax Tree node for the access to a variable.
+	*/
+	public Expression createUndeclaredAccess_access(UndeclaredAccessImpl _access, String nom);
+	
 	/**
 	 * Create a node for a return in the Abstract Syntax Tree 
 	 * @return ReturnImpl instruction.
