@@ -909,7 +909,7 @@ do
             else error(MiniJava_badtype_classe, identificateur_type^txt);
         end
     else
-        error(MiniJava_undefined_classe, identificateur_type^txt);
+        TypeAtomique^ast := TypeAtomique^factory.createUndeclaredType(identificateur_type^txt);
     end
 end
 }

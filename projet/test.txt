@@ -26,6 +26,7 @@ class Poisson {
     protected Poisson(int param1, int param2, boolean param3) {
         int j = 2;
         print j;
+        Poisson wesh = new Poisson();
     }
     
     public Poisson(int a, int b, boolean c, int e) {
@@ -72,7 +73,6 @@ class Ordi {
         Poisson tee = 2;
         
         print pc.methode(2, true).deux;
-        
         return 7;
     }
 }

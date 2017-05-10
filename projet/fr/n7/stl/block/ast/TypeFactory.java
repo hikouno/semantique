@@ -23,6 +23,12 @@ public interface TypeFactory {
 	public Type createClasseType(Classe classe);
 	
 	/**
+	 * Create an Abstract Syntax Tree node for the UndeclaredType type.
+	 * @return Abstract Syntax Tree node for the UndeclaredType type.
+	 */
+	public Type createUndeclaredType(String nom);
+	
+	/**
 	 * Create an Abstract Syntax Tree node for the integer type.
 	 * @return Abstract Syntax Tree node for the integer type.
 	 */

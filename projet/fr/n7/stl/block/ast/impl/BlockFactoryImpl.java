@@ -458,6 +458,14 @@ public class BlockFactoryImpl implements BlockFactory {
         return new ArrayTypeImpl(_element);
     }
 
+	/**
+	 * Create an Abstract Syntax Tree node for the UndeclaredType type.
+	 * @return Abstract Syntax Tree node for the UndeclaredType type.
+	 */
+	public Type createUndeclaredType(String nom) {
+		return new UndeclaredTypeImpl(nom);
+	}
+
     /* (non-Javadoc)
      * @see fr.n7.stl.block.ast.TypeFactory#createPointerType(fr.n7.stl.block.ast.Type)
      *
