@@ -268,7 +268,7 @@ end
 ElementsInterface -> ;
 
 
-ElementInterface -> final statique #tds #inh Type identificateur affectation Expression point_virgule ;
+ElementInterface -> final statique #tds #inh Type identificateur affectation Expression #ast point_virgule ;
 #tds {
 do
     Type^tds := ElementInterface^tds;
@@ -284,6 +284,12 @@ do
     
     Type^factory := fac;
     Expression^factory := fac;
+end
+}
+
+#ast {
+do
+	ElementInterface^interface_mere.ajouterConstante(Type^ast, identificateur^txt, Expression^ast);
 end
 }
 

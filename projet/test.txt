@@ -1,5 +1,7 @@
 
 interface EtreVivant {
+    final static int const1 = 2;
+
     void exister();
     boolean exister();
     
@@ -86,6 +88,7 @@ public class Test {
         
         int j = 2;
         int i = 4;
+	int k = const1;
         
         j = i * 2 + 5;
     }
