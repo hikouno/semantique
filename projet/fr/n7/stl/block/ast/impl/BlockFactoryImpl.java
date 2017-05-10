@@ -91,6 +91,23 @@ public class BlockFactoryImpl implements BlockFactory {
     public Value createIntegerValue(String _texte) {
         return new IntegerValueImpl(_texte);
     }
+    
+    /* (non-Javadoc)
+     * @see fr.n7.block.ast.ASTFactory#createCharValue()
+     */
+    @Override
+    public Value createCharValue(String _texte) {
+		return new CharValueImpl(_texte);
+	}
+	
+	
+	/* (non-Javadoc)
+     * @see fr.n7.block.ast.ASTFactory#createStringValue()
+     */
+    @Override
+    public Value createStringValue(String _texte) {
+		return new StringValueImpl(_texte);
+	}
 
     /* (non-Javadoc)
      * @see fr.n7.block.ast.ASTFactory#createBlock()

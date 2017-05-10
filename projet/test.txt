@@ -1,6 +1,7 @@
 
 interface EtreVivant {
     final static int const1 = 2;
+    
 
     void exister();
     boolean exister();
@@ -83,12 +84,16 @@ public class Test {
         print ordi.est_incroyable(1, 2, 3).cinq_nageoires;
         
         EtreVivant test = 3;
-        
+        test = 3;
         print 1;
+        
+        char osef = 'z';
         
         int j = 2;
         int i = 4;
-	int k = EtreVivant.const1;
+        int k = EtreVivant.const1;
+        
+        String chaine = "chaine";
         
         j = i * 2 + 5;
     }
