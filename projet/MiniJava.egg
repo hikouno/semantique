@@ -1139,7 +1139,19 @@ do
 end
 }
 
---Instruction -> retour Expression point_virgule ;
+Instruction -> retour #tds Expression point_virgule #instr;
+#tds {
+do
+    Expression^tds := Instruction^tds;
+end
+}
+
+#instr {
+do
+    Instruction^instr := Instruction^factory.createReturn(Expression^ast);
+end
+}
+
 
 
 Expression -> #tds Condition #inh SuiteCondition #ast ;
