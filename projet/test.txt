@@ -71,7 +71,10 @@ class Ordi {
     public Poisson est_incroyable() {
         int test = 4;
         Poisson tee = 2;
-	return 7;
+        
+        print pc.methode(2, true).deux;
+        
+        return 7;
     }
 }
 

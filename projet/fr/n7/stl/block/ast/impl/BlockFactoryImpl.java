@@ -162,6 +162,30 @@ public class BlockFactoryImpl implements BlockFactory {
         return new VariableUseImpl(_declaration);
     }
     
+	/**
+	* Create a node for a variable use expression in the Abstract Syntax Tree.
+	* with resolving the reference with the Symbol Table.	 
+	* @return Abstract Syntax Tree node for the access to a variable.
+	*/
+	public Expression createUndeclaredAccess_use(UndeclaredVariableUseImpl _use, String nom) {
+		UndeclaredAccessImpl access = new UndeclaredAccessImpl(_use);
+		access.setNomAcces(nom);
+
+		return access;
+	}
+
+	/**
+	* Create a node for a variable use expression in the Abstract Syntax Tree.
+	* with resolving the reference with the Symbol Table.	 
+	* @return Abstract Syntax Tree node for the access to a variable.
+	*/
+	public Expression createUndeclaredAccess_access(UndeclaredAccessImpl _access, String nom) {
+		UndeclaredAccessImpl access = new UndeclaredAccessImpl(_access);
+		access.setNomAcces(nom);
+
+		return access;
+	}
+    
     /**
      * Create a node for a variable use expression in the Abstract Syntax Tree.
      * with resolving the reference with the Symbol Table.   
@@ -200,6 +224,15 @@ public class BlockFactoryImpl implements BlockFactory {
             return Optional.of(access);
         
         return Optional.empty();
+    }
+    
+    /**
+     * Create a node for an undeclared variable use expression in the Abstract Syntax Tree.
+     * with resolving the reference with the Symbol Table.   
+     * @return Abstract Syntax Tree node for the access to a variable.
+     */
+    public Expression createUndeclaredVariableUse(String _decName) {
+        return new UndeclaredVariableUseImpl(_decName);
     }
     
     /* (non-Javadoc)
