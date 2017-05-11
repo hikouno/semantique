@@ -17,6 +17,7 @@ import fr.n7.stl.block.ast.ConstantDeclaration;
 import fr.n7.stl.block.ast.InterfaceDeclaration;
 import fr.n7.stl.block.ast.ClasseDeclaration;
 import fr.n7.stl.block.ast.ClasseInstanceDeclaration;
+import fr.n7.stl.block.ast.UndeclaredInstanceDeclaration;
 import fr.n7.stl.block.ast.Expression;
 //import fr.n7.stl.block.ast.FieldDeclaration;
 //import fr.n7.stl.block.ast.FunctionCall;
@@ -66,6 +67,22 @@ public class BlockFactoryImpl implements BlockFactory {
      */
     public ClasseInstanceDeclaration createClasseInstanceDeclaration(String nom, Type type, Expression value) {
         return new ClasseInstanceDeclarationImpl(nom, type, value);
+    }
+    
+    /**
+	 * Create an Abstract Syntax Tree node for the UndefinedInstanceDeclaration type.
+	 * @return Abstract Syntax Tree node for the UndefinedInstanceDeclaration type.
+	 */
+	public UndeclaredInstanceDeclaration createUndeclaredInstanceDeclaration(String nom, String typeNom, Expression value) {
+        return new UndeclaredInstanceDeclarationImpl(nom, typeNom, value);
+    }
+    
+    /**
+	 * Create an Abstract Syntax Tree node for the ClasseInstanceAllocation type.
+	 * @return Abstract Syntax Tree node for the ClasseInstanceAllocation type.
+	 */
+    public Expression createUndeclaredAllocation(String nom, LinkedList<Expression> args) {
+        return new UndeclaredAllocationImpl(nom, args);
     }
     
     /**
@@ -167,7 +184,7 @@ public class BlockFactoryImpl implements BlockFactory {
 	* with resolving the reference with the Symbol Table.	 
 	* @return Abstract Syntax Tree node for the access to a variable.
 	*/
-	public Expression createUndeclaredAccess_use(UndeclaredVariableUseImpl _use, String nom) {
+	public Expression createUndeclaredAccess_use(UndeclaredInstanceUseImpl _use, String nom) {
 		UndeclaredAccessImpl access = new UndeclaredAccessImpl(_use);
 		access.setNomAcces(nom);
 
@@ -231,8 +248,8 @@ public class BlockFactoryImpl implements BlockFactory {
      * with resolving the reference with the Symbol Table.   
      * @return Abstract Syntax Tree node for the access to a variable.
      */
-    public Expression createUndeclaredVariableUse(String _decName) {
-        return new UndeclaredVariableUseImpl(_decName);
+    public Expression createUndeclaredInstanceUse(UndeclaredInstanceDeclaration _declaration) {
+        return new UndeclaredInstanceUseImpl(_declaration);
     }
     
     /* (non-Javadoc)

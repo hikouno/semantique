@@ -28,6 +28,7 @@ class Poisson {
         int j = 2;
         print j;
         Poisson wesh = new Poisson();
+        print wesh.cinq_nageoires;
     }
     
     public Poisson(int a, int b, boolean c, int e) {
@@ -89,6 +90,9 @@ public class Test {
         EtreVivant test = 3;
         test = 3;
         print 1;
+        
+        Poissond wesh = new Poissond();
+        print wesh.cinq_nageoires;
         
         char osef = 'z';
         

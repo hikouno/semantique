@@ -3,6 +3,8 @@
  */
 package fr.n7.stl.block.ast.impl;
 
+import fr.n7.stl.block.ast.UndeclaredInstanceDeclaration;
+
 import fr.n7.stl.block.ast.Expression;
 import fr.n7.stl.block.ast.Type;
 import fr.n7.stl.tam.ast.Fragment;
@@ -13,19 +15,19 @@ import fr.n7.stl.tam.ast.TAMFactory;
  * @author Marc Pantel
  *
  */
-public class UndeclaredVariableUseImpl implements Expression {
+public class UndeclaredInstanceUseImpl implements Expression {
 
-	protected String decName;
+	protected UndeclaredInstanceDeclaration declaration;
 	
 	/**
 	 * Creates a variable use expression Abstract Syntax Tree node.
 	 */
-	public UndeclaredVariableUseImpl(String _decName) {
-		this.decName = _decName;
+	public UndeclaredInstanceUseImpl(UndeclaredInstanceDeclaration _declaration) {
+		this.declaration = _declaration;
 	}
 	
-	public String getDecName() {
-		return decName;
+	public UndeclaredInstanceDeclaration getDeclaration() {
+		return declaration;
 	}
 	
 	/* (non-Javadoc)
@@ -33,7 +35,7 @@ public class UndeclaredVariableUseImpl implements Expression {
 	 */
 	@Override
 	public String toString() {
-		return ("@???{" + this.decName + "}");
+		return ("@???{" + this.declaration.getName() + "}");
 	}
 
 	/* (non-Javadoc)
@@ -41,7 +43,7 @@ public class UndeclaredVariableUseImpl implements Expression {
 	 */
 	@Override
 	public Type getType() {
-		throw new RuntimeException("getType pour UndeclarationVariableUseImpl");
+		throw new RuntimeException("getType pour UndeclarationInstanceUseImpl");
 	}
 
 	/* (non-Javadoc)
@@ -49,7 +51,7 @@ public class UndeclaredVariableUseImpl implements Expression {
 	 */
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
-		throw new RuntimeException("getCode pour UndeclarationVariableUseImpl");
+		throw new RuntimeException("getCode pour UndeclarationInstanceUseImpl");
 	}
 
 }

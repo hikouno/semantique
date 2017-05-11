@@ -972,7 +972,11 @@ do
 	else
         match Type^ast
             with ClasseTypeImpl then
-            d := Instruction^factory.createClasseInstanceDeclaration(identificateur^txt, Type^ast, Expression^ast);
+                d := Instruction^factory.createClasseInstanceDeclaration(identificateur^txt, Type^ast, Expression^ast);
+            
+            with UndeclaredTypeImpl then
+                d := Instruction^factory.createUndeclaredInstanceDeclaration(identificateur^txt, Type^ast.getNom(), Expression^ast);
+            
             else d := Instruction^factory.createVariableDeclaration(identificateur^txt, Type^ast, Expression^ast);
         end
 		
@@ -1528,6 +1532,11 @@ do
             SuiteNouveau^ast := SuiteNouveau^factory.createClasseInstanceAllocation(
                                 SuiteNouveau^type.getClasse(),
                                 Arguments^args);
+        
+        with UndeclaredTypeImpl then
+            SuiteNouveau^ast := SuiteNouveau^factory.createUndeclaredAllocation(
+                                SuiteNouveau^type.getNom(),
+                                Arguments^args);
         else
             error(MiniJava_badtype_classe, SuiteNouveau^type.toString());
     end
@@ -1617,6 +1626,8 @@ do
       d := f.get();
       match d
         with ConstantDeclaration then AppelOuAcces^support := d.getValue();
+        
+        with UndeclaredInstanceDeclaration then AppelOuAcces^support := Facteur^factory.createUndeclaredInstanceUse(d);
       
         with ClasseInstanceDeclaration then AppelOuAcces^support := Facteur^factory.createInstanceUse(d);
         
@@ -1624,7 +1635,7 @@ do
       
       end
    else
-      AppelOuAcces^support := Facteur^factory.createUndeclaredVariableUse(identificateur^txt);
+      error(MiniJava_undefined_ident, identificateur^txt);
    end
 end
 }
@@ -1729,7 +1740,7 @@ do
                 error(MiniJava_Bad_Access, dec.getName(), identificateur^txt);
             end
 		
-		with UndeclaredVariableUseImpl then
+		with UndeclaredInstanceUseImpl then
             AppelOuAcces^support := Acces^factory.createUndeclaredAccess_use(supp, identificateur^txt);
         
         with UndeclaredAccessImpl then

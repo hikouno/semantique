@@ -46,12 +46,12 @@ public class UndeclaredAccessImpl implements Expression {
         }
     }
     
-    protected UndeclaredVariableUseImpl use;
+    protected UndeclaredInstanceUseImpl use;
     protected UndeclaredAccessImpl access;
     
     protected AppelOuAcces membreAccede;
     
-    public UndeclaredAccessImpl(UndeclaredVariableUseImpl _use) {
+    public UndeclaredAccessImpl(UndeclaredInstanceUseImpl _use) {
         this.use = _use;
         this.access = null;
         
