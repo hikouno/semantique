@@ -64,7 +64,15 @@ class Poisson {
 
 }
 
-class Ordi {
+class SansConstructeur {
+}
+
+class AvecConstructeur {
+	public AvecConstructeur() {
+	}
+}
+
+class Ordi extends SansConstructeur {
     
     private boolean pc;
     public int pc;

@@ -68,6 +68,9 @@ syn ast     : Classe for Classe;
 syn classes : LinkedList<Classe> for Classes;
 inh classe_mere : Classe for ElementsClasse, ElementClasse;
 
+--Héritage
+syn superClasse		: String for HeritageClasse;
+
 --Methodes et arguments de classe
 syn type            : Optional<Type> for AttributOuMethode;
 syn nom             : String for AttributOuMethode;
@@ -393,11 +396,31 @@ Classe -> classe  identificateur_type Genericite HeritageClasse ImplantationInte
 local
     prg : ProgramFactoryImpl;
     classe : Classe;
+    superClasse : Classe;
+    f : Optional<Declaration>;
+    d : Declaration;
 do
     --AST
     prg := new ProgramFactoryImpl();
-    classe := prg.createClasse(identificateur_type^txt);
+    if (HeritageClasse^superClasse = null) then
+		classe := prg.createClasse(identificateur_type^txt);
+	else
+		if (Classe^tds.knows(HeritageClasse^superClasse)) then
+			f := Classe^tds.get(HeritageClasse^superClasse);
+			d := f.get();
+			match d 
+				with ClasseDeclarationImpl then superClasse := d.getClasse();
+			else 
+				error(MiniJava_Heritage_NonExist, HeritageClasse^superClasse);
+				superClasse := null;
+			end
+			classe := prg.createClasseHeritant(identificateur_type^txt, superClasse);
+		else
+			error(MiniJava_Heritage_NonExist, HeritageClasse^superClasse);
+			classe := null;
+		end    
     
+    end
     Classe^ast := classe;
     
     --INH
@@ -406,9 +429,20 @@ do
 end
 }
 
-HeritageClasse -> extension identificateur_type InstanceGenericite ;
+HeritageClasse -> extension identificateur_type #syn InstanceGenericite ;
+#syn {
+do
+	HeritageClasse^superClasse := identificateur_type^txt;
+end
+}
 
-HeritageClasse -> ;
+
+HeritageClasse -> #syn;
+#syn {
+do
+	HeritageClasse^superClasse := null;
+end
+}
 
 ImplantationInterface -> implantation identificateur_type InstanceGenericite SuiteHeritageInterface ;
 

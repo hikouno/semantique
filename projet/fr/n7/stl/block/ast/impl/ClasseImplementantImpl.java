@@ -5,6 +5,7 @@
 package fr.n7.stl.block.ast.impl;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 
 import fr.n7.stl.block.ast.Classe;
@@ -25,7 +26,7 @@ import fr.n7.stl.tam.ast.TAMFactory;
 public class ClasseImplementantImpl extends ClasseImpl {
 	
 	
-	protected LinkedList<InterfaceImpl> interfacesImplementees;
+	protected List<InterfaceImpl> interfacesImplementees;
 	
 	
 	public ClasseImplementantImpl(String name) {
@@ -38,7 +39,7 @@ public class ClasseImplementantImpl extends ClasseImpl {
 	 */
 	public boolean ajouterInterface(InterfaceImpl interfac) {
 		for (InterfaceImpl _interf : this.interfacesImplementees) {
-			if (interfac.getNom().equalsTo(_interf.getNom()) )
+			if (interfac.getNom().equals(_interf.getNom()) )
 					return false; //Une interface similaire existe déjà
 		}
 		
@@ -52,8 +53,8 @@ public class ClasseImplementantImpl extends ClasseImpl {
 	 * Renvoie les interfaces de la classe.
 	 * @return Les interfaces de la classe.
 	 */
-	public LinkedList<Classe> getClassesImplementees() {
-		return this.classesImplementees;
+	public List<InterfaceImpl> getClassesImplementees() {
+		return this.interfacesImplementees;
 	}
 	
 	/* (non-Javadoc)
@@ -69,7 +70,7 @@ public class ClasseImplementantImpl extends ClasseImpl {
 		
 			for (InterfaceImpl interf : interfacesImplementees) {
 				if(this.interfacesImplementees.indexOf(interf) == 
-					this.interfacesImplementees.length()-1) {
+					this.interfacesImplementees.size()-1) {
 						text += interf.getNom();
 				} else {
 					text += interf.getNom() + ", ";

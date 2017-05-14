@@ -23,11 +23,11 @@ import fr.n7.stl.tam.ast.TAMFactory;
  * 
  */
  
- public classe ClasseHeritantImpl extends ClasseImplementantImpl {
+ public class ClasseHeritantImpl extends ClasseImplementantImpl {
 	 
-	 protected ClasseImpl superClasse;
+	 protected Classe superClasse;
 	 
-	 public ClasseHeritantImpl (String name, ClasseImpl superClasse) {
+	 public ClasseHeritantImpl (String name, Classe superClasse) {
 		 super(name);
 		 this.superClasse = superClasse;
 	 }
@@ -37,9 +37,53 @@ import fr.n7.stl.tam.ast.TAMFactory;
 	 * Renvoie la superClasse de la classe.
 	 * @return La superClasse de la classe.
 	 */
-	 public ClasseImpl getSuperClasse() {
+	 public Classe getSuperClasse() {
 		 return this.superClasse;
 	 }
+	 
+	 
+	 /* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		
+		String text = "class "+ this.name + " extends " + this.superClasse.getNom();		
+		
+		if(this.interfacesImplementees.size() != 0) {
+			
+			text += " implements ";
+		
+			for (InterfaceImpl interf : interfacesImplementees) {
+				if(this.interfacesImplementees.indexOf(interf) == 
+					this.interfacesImplementees.size()-1) {
+						text += interf.getNom();
+				} else {
+					text += interf.getNom() + ", ";
+				}
+			}
+		}
+		text += " {\n";
+		
+		for (AttributImpl att : attributs) {
+			text += att + "\n";
+		}
+		
+		text += "\n";
+		
+		for (Constructeur constructeur : constructeurs) {
+			text += constructeur;
+		}
+		
+		text += "\n";
+		
+		for (MethodImpl method : methods) {
+			text += method;
+		}
+		
+		text += "\n}";
+		return text;
+	}
 	 
  }
 	 
