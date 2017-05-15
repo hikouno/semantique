@@ -286,6 +286,16 @@ public class BlockFactoryImpl implements BlockFactory {
         return new VariableAssignmentImpl(_declaration);
     }
 
+    /**
+	* Create a node for an instance assignment expression in the Abstract Syntax Tree.
+	* with resolving the reference with the Symbol Table.	 
+	* @return Abstract Syntax Tree node for the assignment.
+	*/
+	public Assignable createInstanceAssignment_dec(ClasseInstanceDeclaration _declaration) {
+        return new InstanceAssignmentImpl(_declaration);
+    }
+
+
     /* (non-Javadoc)
      * @see fr.n7.stl.block.ast.InstructionFactory#createConditional(fr.n7.stl.block.ast.Expression, fr.n7.stl.block.ast.Block, fr.n7.stl.block.ast.Block)
      */

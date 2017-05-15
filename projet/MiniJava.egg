@@ -1217,6 +1217,7 @@ do
         o := Affectable^tds.get(identificateur^txt);
         d := o.get();
         match d
+            with ClasseInstanceDeclaration then SuiteAffectable^support := Affectable^factory.createInstanceAssignment_dec( d );
             with VariableDeclaration then SuiteAffectable^support := Affectable^factory.createVariableAssignment( d );
             with ConstantDeclaration then error(MiniJava_not_a_variable, identificateur^txt);
         end

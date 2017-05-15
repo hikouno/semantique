@@ -113,6 +113,15 @@ public interface BlockFactory extends ExpressionFactory, InstructionFactory, Typ
 	*/
 	public Expression createMembreClasseAccess_access(MembreClasseAccessImpl _access, String nom);
 	
+	
+	/**
+	* Create a node for an instance assignment expression in the Abstract Syntax Tree.
+	* with resolving the reference with the Symbol Table.	 
+	* @return Abstract Syntax Tree node for the assignment.
+	*/
+	public Assignable createInstanceAssignment_dec(ClasseInstanceDeclaration _declaration);
+	
+	
 	/**
 	 * Create a node for a return in the Abstract Syntax Tree 
 	 * @return ReturnImpl instruction.

@@ -96,7 +96,9 @@ public class InstanceAccessImpl implements Expression {
     @Override
     public String toString() {
         String text = (this.use != null) ? use.toString() : access.toString();
-        text += "." + membreAccede.getNom();
+        
+        if (membreAccede.getNom() != null)
+            text += "." + membreAccede.getNom();
         
         if (membreAccede.getArguments() != null) {
             text += "(";
