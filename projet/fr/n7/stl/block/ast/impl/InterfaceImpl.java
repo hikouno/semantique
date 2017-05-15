@@ -10,6 +10,7 @@ import fr.n7.stl.block.ast.Interface;
 import fr.n7.stl.block.ast.Type;
 import fr.n7.stl.block.ast.Expression;
 import fr.n7.stl.block.ast.Constante;
+import fr.n7.stl.block.ast.Classe;
 
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
@@ -78,11 +79,13 @@ public class InterfaceImpl implements Interface {
 	protected String name;
 	protected LinkedList<Signature> signatures;
 	protected LinkedList<Constante> constantes;
+	protected LinkedList<Classe> superClasses;
 	
-	public InterfaceImpl(String name) {
+	public InterfaceImpl(String name, LinkedList<Classe> superClasses) {
 		this.name = name;
 		this.signatures = new LinkedList<Signature>();
 		this.constantes = new LinkedList<Constante>();
+		this.superClasses = superClasses;
 	}
 	
 	public boolean ajouterSignature(Optional<Type> type, String nom, LinkedList<Argument> args) {
@@ -155,7 +158,23 @@ public class InterfaceImpl implements Interface {
 	@Override
 	public String toString() {
 		
-		String text = "interface "+this.name+" {\n";
+		String text = "interface "+this.name;
+		
+		if(this.superClasses.size() != 0) {
+			
+			text += " extends ";
+		
+			for (Classe classe : this.superClasses) {
+				if(this.superClasses.indexOf(classe) == 
+					this.superClasses.size()-1) {
+						text += classe.getNom();
+				} else {
+					text += classe.getNom() + ", ";
+				}
+			}
+		}
+		
+		text += " {\n";
 
 		for (Constante consta : this.constantes) {
 			text += consta.toString() + "\n";

@@ -23,7 +23,8 @@ inh tds : SymbolTable for Bloc, Instructions, Instruction, Expression, SuiteCond
                     AppelOuAcces, Acces, Appel, SuiteNouveau, Parametres, Parametre, SuiteParametres,
                     Principale, MethodePrincipale, Interfaces, Interface, ElementsInterface,
                     ElementInterface, Signature, Classes, Classe, ElementsClasse, ElementClasse,
-                    Constructeur, AttributOuMethode, SuiteAttributOuMethode, Arguments;
+                    Constructeur, AttributOuMethode, SuiteAttributOuMethode, Arguments, HeritageInterface,
+                    SuiteHeritageInterface, ImplantationInterface;
 
 inh blocParent	: Block for Instructions;
 
@@ -70,6 +71,7 @@ inh classe_mere : Classe for ElementsClasse, ElementClasse;
 
 --Héritage
 syn superClasse		: String for HeritageClasse;
+syn superClasses	: LinkedList<Classe> for HeritageInterface, SuiteHeritageInterface;
 
 --Methodes et arguments de classe
 syn type            : Optional<Type> for AttributOuMethode;
@@ -225,7 +227,7 @@ do
 end
 }
 
-Interface -> interface identificateur_type Genericite HeritageInterface accolade_ouvrante #ast_inh ElementsInterface accolade_fermante ;
+Interface -> interface identificateur_type Genericite #inh HeritageInterface accolade_ouvrante #ast_inh ElementsInterface accolade_fermante ;
 #ast_inh {
 local
     prg : ProgramFactoryImpl;
@@ -233,7 +235,7 @@ local
 do
     --AST
     prg := new ProgramFactoryImpl();
-    interface := prg.createInterface(identificateur_type^txt);
+    interface := prg.createInterface(identificateur_type^txt, HeritageInterface^superClasses);
     
     Interface^ast := interface;
     
@@ -243,15 +245,82 @@ do
 end
 }
 
-HeritageInterface -> extension identificateur_type InstanceGenericite SuiteHeritageInterface ;
+#inh {
+do
+	HeritageInterface^tds := Interface^tds;
+end
+}
 
-HeritageInterface -> ;
+HeritageInterface -> extension identificateur_type InstanceGenericite #inh SuiteHeritageInterface #syn;
+#syn {
+local
+	f : Optional<Declaration>;
+    d : Declaration;
+do
+	HeritageInterface^superClasses := SuiteHeritageInterface^superClasses;
+	
+	if (HeritageInterface^tds.knows(identificateur_type^txt)) then
+		f := HeritageInterface^tds.get(identificateur_type^txt);
+		d := f.get();
+		match d
+			with ClasseDeclarationImpl then HeritageInterface^superClasses.add(d.getClasse());
+		else
+			error(MiniJava_Heritage_NonExist, identificateur_type^txt);
+		end
+	else
+		error(MiniJava_Heritage_NonExist, identificateur_type^txt);
+	end
+end
+}
+
+#inh {
+do
+	SuiteHeritageInterface^tds := HeritageInterface^tds;
+end
+}
+
+HeritageInterface -> #syn;
+#syn {
+do
+	HeritageInterface^superClasses := new LinkedList<Classe>();
+end
+}
 
 
-SuiteHeritageInterface -> virgule identificateur_type InstanceGenericite SuiteHeritageInterface ;
+SuiteHeritageInterface -> virgule identificateur_type InstanceGenericite #inh SuiteHeritageInterface #syn ;
+#inh {
+do
+	SuiteHeritageInterface1^tds := SuiteHeritageInterface^tds;	
+end
+}
 
-SuiteHeritageInterface -> ;
+#syn {
+local
+	f : Optional<Declaration>;
+    d : Declaration;
+do
+	SuiteHeritageInterface^superClasses := SuiteHeritageInterface1^superClasses;
+	if (SuiteHeritageInterface^tds.knows(identificateur_type^txt)) then
+		f := SuiteHeritageInterface^tds.get(identificateur_type^txt);
+		d := f.get();
+		match d
+			with ClasseDeclarationImpl then SuiteHeritageInterface^superClasses.add(d.getClasse());
+		else
+			error(MiniJava_Heritage_NonExist, identificateur_type^txt);
+		end
+	else
+		error(MiniJava_Heritage_NonExist, identificateur_type^txt);
+	end
+end
+}
 
+
+SuiteHeritageInterface -> #syn;
+#syn {
+do
+	SuiteHeritageInterface^superClasses := new LinkedList<Classe>();
+end
+}
 
 ElementsInterface -> #tds #inh ElementInterface ElementsInterface ;
 #tds {
@@ -391,7 +460,7 @@ end
 }
 
 
-Classe -> classe  identificateur_type Genericite HeritageClasse ImplantationInterface accolade_ouvrante #ast_inh ElementsClasse accolade_fermante ;
+Classe -> classe  identificateur_type Genericite HeritageClasse #inh ImplantationInterface accolade_ouvrante #ast_inh ElementsClasse accolade_fermante ;
 #ast_inh {
 local
     prg : ProgramFactoryImpl;
@@ -429,6 +498,12 @@ do
 end
 }
 
+#inh {
+do
+	ImplantationInterface^tds := Classe^tds;
+end
+}
+
 HeritageClasse -> extension identificateur_type #syn InstanceGenericite ;
 #syn {
 do
@@ -444,7 +519,12 @@ do
 end
 }
 
-ImplantationInterface -> implantation identificateur_type InstanceGenericite SuiteHeritageInterface ;
+ImplantationInterface -> implantation identificateur_type InstanceGenericite #inh SuiteHeritageInterface ;
+#inh {
+do 
+	SuiteHeritageInterface^tds := ImplantationInterface^tds;
+end
+}
 
 ImplantationInterface -> ;
 

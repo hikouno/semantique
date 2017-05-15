@@ -37,7 +37,7 @@ public interface ProgramFactory {
 	 * @param name The name of the interface.
 	 * @return Abstract Syntax Tree node for the Interface type.
 	 */
-	public Interface createInterface(String name);
+	public Interface createInterface(String name, LinkedList<Classe> superClasses);
 	
 	
 	/**
