@@ -18,7 +18,7 @@ import fr.n7.stl.tam.ast.TAMFactory;
  *
  */
 public class ProgramImpl implements Program {
-
+	
 	/**
 	 * Interfaces contained in the program.
 	 */
@@ -64,7 +64,12 @@ public class ProgramImpl implements Program {
 		text += this.principale;
 		return text;
 	}
-
+	
+	@Override
+	public ScopeCheckResult scopeCheck() {
+		return new ScopeCheckResult(true, "Mamen");
+	}
+	
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Block#checkType()
 	 */

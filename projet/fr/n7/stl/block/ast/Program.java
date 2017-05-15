@@ -3,6 +3,8 @@
  */
 package fr.n7.stl.block.ast;
 
+import fr.n7.stl.block.ast.impl.ScopeCheckResult;
+
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
@@ -17,7 +19,15 @@ import fr.n7.stl.tam.ast.TAMFactory;
  *
  */
 public interface Program {
-
+	
+	/**
+	 * Synthesized Semantics attribute to check if the AST is well formed according
+	 * to the scope.
+	 * @return The new AST with undeclared references replaces by actual ones.
+	 * Exceptions will be thrown if a problem is encountered.
+	 */	
+	public ScopeCheckResult scopeCheck();
+	
 	/**
 	 * Synthesized Semantics attribute to check that an instruction if well typed.
 	 * @return Synthesized True if the instruction is well typed, False if not.

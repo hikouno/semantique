@@ -6,6 +6,8 @@ import mg.egg.eggc.runtime.libjava.problem.ProblemReporter;
 import mg.egg.eggc.runtime.libjava.problem.ProblemRequestor;
 import java.io.*;
 
+import fr.n7.stl.block.ast.impl.ScopeCheckResult;
+
 import fr.n7.stl.tam.ast.*;
 import fr.n7.stl.tam.ast.impl.TAMFactoryImpl;
 
@@ -19,6 +21,7 @@ public class Main{
 		  ProblemReporter prp = new ProblemReporter(cu);
 		  ProblemRequestor prq = new ProblemRequestor(true);
 		  
+		  /// AST ///
 		  MiniJava bloc = new MiniJava(prp);
 		  prq.beginReporting();
 		  bloc.set_eval(true);
@@ -28,7 +31,15 @@ public class Main{
 			prq.acceptProblem(problem );
 			
 		  prq.endReporting();
-		  System.out.println("AST :\n"+bloc.get_ast());
+		  System.out.println("AST :\n"+bloc.get_ast()+"\n");
+		  
+		  /// SCOPE CHECK ///
+		  ScopeCheckResult scopeCheck = bloc.get_ast().scopeCheck();
+		  if (scopeCheck.wasSuccessful()) {
+			  System.out.println("Scope check réussi :\n" + scopeCheck.getResult());
+		  } else {
+			  System.out.println("Erreur dans le scope check :\n" + scopeCheck.getResult());
+		  }
 		  
 		  /*if (bloc.get_ast().checkType()) {
 			System.out.println( "Correctement typé." );
