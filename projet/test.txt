@@ -106,7 +106,9 @@ public class Test {
         Poisson poisson = new Poisson(5 + 2, 4, true);
         print ordi.est_incroyable(1, 2, 3).cinq_nageoires;
         
-        ordi = new Ordi(2);
+        ordi = new Poisson(2);
+        ordi.p = new Poisson(2);
+        ordi.p.cinq_nageoires = new Poisson(2);
         
         EtreVivant test = 3;
         test = 3;

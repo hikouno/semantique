@@ -294,6 +294,15 @@ public class BlockFactoryImpl implements BlockFactory {
 	public Assignable createInstanceAssignment_dec(ClasseInstanceDeclaration _declaration) {
         return new InstanceAssignmentImpl(_declaration);
     }
+    
+    /**
+	* Create a node for an instance assignment expression in the Abstract Syntax Tree.
+	* with resolving the reference with the Symbol Table.	 
+	* @return Abstract Syntax Tree node for the assignment.
+	*/
+	public Assignable createInstanceAssignment_rec(InstanceAccessImpl _access) {
+        return new InstanceAssignmentImpl(_access);
+    }
 
 
     /* (non-Javadoc)

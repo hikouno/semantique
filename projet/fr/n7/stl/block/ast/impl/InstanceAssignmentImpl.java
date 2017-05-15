@@ -15,12 +15,16 @@ public class InstanceAssignmentImpl extends InstanceAccessImpl implements Assign
 	/**
 	 * Creates a variable assignment expression Abstract Syntax Tree node.
 	 */
-	public InstanceAssignmentImpl(InstanceAssignmentImpl _assignement) {
-		super(_assignement);
+	public InstanceAssignmentImpl(InstanceAccessImpl _access) {
+		super( (InstanceAccessImpl)_access );
 	}
 	
 	public InstanceAssignmentImpl(ClasseInstanceDeclaration _declaration) {
 		super( new InstanceUseImpl(_declaration) );
+	}
+	
+	public InstanceUseImpl getInstanceUse() {
+		return new InstanceUseImpl( super.getDeclaration() );
 	}
 	
 	@Override

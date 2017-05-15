@@ -1241,12 +1241,47 @@ do
 end  
 }
 
---SuiteAffectable -> point identificateur #tds AppelOuAcces ;
---#tds {
---do
---    AppelOuAcces^tds := SuiteAffectable^tds;
---end
---}
+SuiteAffectable -> point identificateur #tds #inh AppelOuAcces #ast ;
+#tds {
+do
+    AppelOuAcces^tds := SuiteAffectable^tds;
+end
+}
+
+#inh {
+local
+    supp : Assignable;
+    supp_appel_acces : Optional<Expression>;
+do
+    supp := SuiteAffectable^support;
+    match supp
+        with InstanceAssignmentImpl then
+            supp_appel_acces := SuiteAffectable^factory.createInstanceAccess_use(supp.getInstanceUse(), identificateur^txt);
+            
+            if (supp_appel_acces.isPresent()) then
+                AppelOuAcces^support := supp_appel_acces.get();
+            else
+                error(MiniJava_Acces_NonImplemente);
+            end
+       
+        else error(MiniJava_Acces_NonImplemente);
+    end
+end
+}
+
+#ast {
+local
+    obtained_ast : Expression;
+do
+    obtained_ast := AppelOuAcces^ast;
+    match obtained_ast
+        with InstanceAccessImpl then
+            SuiteAffectable^ast := SuiteAffectable^factory.createInstanceAssignment_rec( obtained_ast );
+       
+        else error(MiniJava_Acces_NonImplemente);
+    end
+end
+}
 
 --SuiteAffectable -> crochet_ouvrant #tds Expression crochet_fermant #inh SuiteAffectable #ast ;
 --#tds {

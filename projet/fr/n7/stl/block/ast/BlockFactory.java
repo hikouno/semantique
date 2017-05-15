@@ -123,6 +123,14 @@ public interface BlockFactory extends ExpressionFactory, InstructionFactory, Typ
 	
 	
 	/**
+	* Create a node for an instance assignment expression in the Abstract Syntax Tree.
+	* with resolving the reference with the Symbol Table.	 
+	* @return Abstract Syntax Tree node for the assignment.
+	*/
+	public Assignable createInstanceAssignment_rec(InstanceAccessImpl _access);
+	
+	
+	/**
 	 * Create a node for a return in the Abstract Syntax Tree 
 	 * @return ReturnImpl instruction.
 	 */
