@@ -11,6 +11,8 @@ import java.util.Optional;
 import fr.n7.stl.block.ast.Classe;
 import fr.n7.stl.block.ast.Block;
 import fr.n7.stl.block.ast.Type;
+import fr.n7.stl.block.ast.Interface;
+
 
 import fr.n7.stl.block.ast.impl.ClasseImpl;
 
@@ -26,19 +28,23 @@ import fr.n7.stl.tam.ast.TAMFactory;
 public class ClasseImplementantImpl extends ClasseImpl {
 	
 	
-	protected List<InterfaceImpl> interfacesImplementees;
-	
+	protected List<Interface> interfacesImplementees;
 	
 	public ClasseImplementantImpl(String name) {
 		super(name);
-		this.interfacesImplementees = new LinkedList<InterfaceImpl>();
+		this.interfacesImplementees = new LinkedList<Interface>();
+	}
+	
+	public ClasseImplementantImpl(String name, LinkedList<Interface> interfaces) {
+		super(name);
+		this.interfacesImplementees = interfaces;
 	}
 	
 	/** 
 	 * Ajouter une interface implémentée à la classe.
 	 */
 	public boolean ajouterInterface(InterfaceImpl interfac) {
-		for (InterfaceImpl _interf : this.interfacesImplementees) {
+		for (Interface _interf : this.interfacesImplementees) {
 			if (interfac.getNom().equals(_interf.getNom()) )
 					return false; //Une interface similaire existe déjà
 		}
@@ -53,7 +59,7 @@ public class ClasseImplementantImpl extends ClasseImpl {
 	 * Renvoie les interfaces de la classe.
 	 * @return Les interfaces de la classe.
 	 */
-	public List<InterfaceImpl> getClassesImplementees() {
+	public List<Interface> getClassesImplementees() {
 		return this.interfacesImplementees;
 	}
 	
@@ -68,7 +74,7 @@ public class ClasseImplementantImpl extends ClasseImpl {
 			
 			text += " implements ";
 		
-			for (InterfaceImpl interf : interfacesImplementees) {
+			for (Interface interf : interfacesImplementees) {
 				if(this.interfacesImplementees.indexOf(interf) == 
 					this.interfacesImplementees.size()-1) {
 						text += interf.getNom();

@@ -16,11 +16,17 @@ interface Caillou {
     final static String ch = "test";
 }
 
+interface Crabe {
+}
+
+interface Algues {
+}
+
 class EtreVivant {
 
 }
 
-class Poisson {
+class Poisson implements EtreVivant, Caillou, Crabe, Algues {
     
     public Poisson() {
     
@@ -74,7 +80,7 @@ class AvecConstructeur {
 	}
 }
 
-class Ordi extends SansConstructeur {
+class Ordi extends SansConstructeur implements EtreVivant, Crabe {
     
     private boolean pc;
     public int pc;

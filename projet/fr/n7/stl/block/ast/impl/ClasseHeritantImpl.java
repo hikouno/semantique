@@ -9,6 +9,7 @@ import java.util.Optional;
 import fr.n7.stl.block.ast.Classe;
 import fr.n7.stl.block.ast.Block;
 import fr.n7.stl.block.ast.Type;
+import fr.n7.stl.block.ast.Interface;
 
 import fr.n7.stl.block.ast.impl.ClasseImpl;
 import fr.n7.stl.block.ast.impl.ClasseImplementantImpl;
@@ -29,6 +30,11 @@ import fr.n7.stl.tam.ast.TAMFactory;
 	 
 	 public ClasseHeritantImpl (String name, Classe superClasse) {
 		 super(name);
+		 this.superClasse = superClasse;
+	 }
+	 
+	 public ClasseHeritantImpl (String name, Classe superClasse, LinkedList<Interface> interfaces) {
+		 super(name, interfaces);
 		 this.superClasse = superClasse;
 	 }
 	 
@@ -54,7 +60,7 @@ import fr.n7.stl.tam.ast.TAMFactory;
 			
 			text += " implements ";
 		
-			for (InterfaceImpl interf : interfacesImplementees) {
+			for (Interface interf : interfacesImplementees) {
 				if(this.interfacesImplementees.indexOf(interf) == 
 					this.interfacesImplementees.size()-1) {
 						text += interf.getNom();

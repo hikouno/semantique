@@ -24,7 +24,7 @@ inh tds : SymbolTable for Bloc, Instructions, Instruction, Expression, SuiteCond
                     Principale, MethodePrincipale, Interfaces, Interface, ElementsInterface,
                     ElementInterface, Signature, Classes, Classe, ElementsClasse, ElementClasse,
                     Constructeur, AttributOuMethode, SuiteAttributOuMethode, Arguments, HeritageInterface,
-                    SuiteHeritageInterface, ImplantationInterface;
+                    SuiteHeritageInterface, ImplantationInterface, SuiteImplantationInterface;
 
 inh blocParent	: Block for Instructions;
 
@@ -56,7 +56,7 @@ syn bloc    : Block for MethodePrincipale;
 
 --Interfaces
 syn ast        : Interface for Interface;
-syn interfaces : LinkedList<Interface> for Interfaces;
+syn interfaces : LinkedList<Interface> for Interfaces, ImplantationInterface, SuiteImplantationInterface;
 inh interface_mere : Interface for ElementsInterface, ElementInterface;
 
 --Signatures d'interfaces
@@ -72,6 +72,7 @@ inh classe_mere : Classe for ElementsClasse, ElementClasse;
 --Héritage
 syn superClasse		: String for HeritageClasse;
 syn superClasses	: LinkedList<Classe> for HeritageInterface, SuiteHeritageInterface;
+
 
 --Methodes et arguments de classe
 syn type            : Optional<Type> for AttributOuMethode;
@@ -471,9 +472,14 @@ local
 do
     --AST
     prg := new ProgramFactoryImpl();
-    if (HeritageClasse^superClasse = null) then
-		classe := prg.createClasse(identificateur_type^txt);
-	else
+    if (HeritageClasse^superClasse = null) then					-- S'il n'y a pas d'héritage.
+		if (ImplantationInterface^interfaces.size() != 0) then		-- S'il y a implantation d'interfaces.
+			Collections.reverse(ImplantationInterface^interfaces);
+			classe := prg.createClasseImplementant(identificateur_type^txt, ImplantationInterface^interfaces);
+		else
+			classe := prg.createClasse(identificateur_type^txt);	-- S'il n'y a pas implantation.
+		end
+	else														-- S'il y a héritage.
 		if (Classe^tds.knows(HeritageClasse^superClasse)) then
 			f := Classe^tds.get(HeritageClasse^superClasse);
 			d := f.get();
@@ -483,7 +489,12 @@ do
 				error(MiniJava_Heritage_NonExist, HeritageClasse^superClasse);
 				superClasse := null;
 			end
-			classe := prg.createClasseHeritant(identificateur_type^txt, superClasse);
+			if (ImplantationInterface^interfaces.size() = 0) then		-- Pas d'implantation
+			    classe := prg.createClasseHeritant(identificateur_type^txt, superClasse);
+			else
+				Collections.reverse(ImplantationInterface^interfaces);
+				classe := prg.createClasseHeritant(identificateur_type^txt, superClasse, ImplantationInterface^interfaces);
+			end
 		else
 			error(MiniJava_Heritage_NonExist, HeritageClasse^superClasse);
 			classe := null;
@@ -519,14 +530,75 @@ do
 end
 }
 
-ImplantationInterface -> implantation identificateur_type InstanceGenericite #inh SuiteHeritageInterface ;
-#inh {
-do 
-	SuiteHeritageInterface^tds := ImplantationInterface^tds;
+ImplantationInterface -> implantation identificateur_type InstanceGenericite #inh SuiteImplantationInterface #syn;
+#syn {
+local
+	f : Optional<Declaration>;
+    d : Declaration;
+do
+	ImplantationInterface^interfaces := SuiteImplantationInterface^interfaces;
+	
+	if (ImplantationInterface^tds.knows(identificateur_type^txt)) then
+		f := ImplantationInterface^tds.get(identificateur_type^txt);
+		d := f.get();
+		match d
+			with InterfaceDeclarationImpl then ImplantationInterface^interfaces.add(d.getInterface());
+		else
+			error(MiniJava_Heritage_NonExist, identificateur_type^txt);
+		end
+	else
+		error(MiniJava_Heritage_NonExist, identificateur_type^txt);
+	end
 end
 }
 
-ImplantationInterface -> ;
+#inh {
+do 
+	SuiteImplantationInterface^tds := ImplantationInterface^tds;
+end
+}
+
+ImplantationInterface -> #syn;
+#syn {
+do
+	ImplantationInterface^interfaces := new LinkedList<Interface>();
+end 
+}
+
+SuiteImplantationInterface -> virgule identificateur_type InstanceGenericite #inh SuiteImplantationInterface #syn ;
+#inh {
+do
+	SuiteImplantationInterface1^tds := SuiteImplantationInterface^tds;	
+end
+}
+
+#syn {
+local
+	f : Optional<Declaration>;
+    d : Declaration;
+do
+	SuiteImplantationInterface^interfaces := SuiteImplantationInterface1^interfaces;
+	if (SuiteImplantationInterface^tds.knows(identificateur_type^txt)) then
+		f := SuiteImplantationInterface^tds.get(identificateur_type^txt);
+		d := f.get();
+		match d
+			with InterfaceDeclarationImpl then SuiteImplantationInterface^interfaces.add(d.getInterface());
+		else
+			error(MiniJava_Heritage_NonExist, identificateur_type^txt);
+		end
+	else
+		error(MiniJava_Heritage_NonExist, identificateur_type^txt);
+	end
+end
+}
+
+
+SuiteImplantationInterface -> #syn;
+#syn {
+do
+	SuiteImplantationInterface^interfaces := new LinkedList<Interface>();
+end
+}
 
 
 Principale -> public classe identificateur_type accolade_ouvrante #tds MethodePrincipale accolade_fermante #ast ;

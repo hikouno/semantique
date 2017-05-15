@@ -66,11 +66,27 @@ public class ProgramFactoryImpl implements ProgramFactory {
 	}
 	
 	/**
+	 * Create an Abstract Syntax Tree node for the ClasseImplementant type.
+	 * @return Abstract Syntax Tree node for the ClasseImplementant type.
+	 */
+	public Classe createClasseImplementant(String name, LinkedList<Interface> interfaces) {
+	    return new ClasseImplementantImpl(name, interfaces);
+	}
+	
+	/**
 	 * Create an Abstract Syntax Tree node for the ClasseHeritant type.
 	 * @return Abstract Syntax Tree node for the ClasseHeritant type.
 	 */
 	public Classe createClasseHeritant(String name, Classe superClasse) {
 	    return new ClasseHeritantImpl(name, superClasse);
+	}
+	
+	/**
+	 * Create an Abstract Syntax Tree node for the ClasseHeritant type.
+	 * @return Abstract Syntax Tree node for the ClasseHeritant type.
+	 */
+	public Classe createClasseHeritant(String name, Classe superClasse, LinkedList<Interface> interfaces) {
+	    return new ClasseHeritantImpl(name, superClasse, interfaces);
 	}
 	
 	/**
