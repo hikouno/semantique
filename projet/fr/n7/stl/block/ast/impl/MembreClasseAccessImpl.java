@@ -18,29 +18,35 @@ import fr.n7.stl.tam.ast.TAMFactory;
  * Declares the various semantics attributes for the node.
  *
  */
-public class UndeclaredAccessImpl implements Expression {
+public class MembreClasseAccessImpl implements Expression {
     
-    protected UndeclaredInstanceUseImpl use;
-    protected UndeclaredAccessImpl access;
+    public enum Identifier {THIS, SUPER};
+    
+    protected Identifier base;
+    protected MembreClasseAccessImpl access;
     
     protected AppelOuAcces membreAccede;
     
-    public UndeclaredAccessImpl(UndeclaredInstanceUseImpl _use) {
-        this.use = _use;
+    public MembreClasseAccessImpl(Identifier _base) {
+        this.base = _base;
         this.access = null;
         
         this.membreAccede = new AppelOuAcces();
     }
     
-    public UndeclaredAccessImpl(UndeclaredAccessImpl _access) {
+    public MembreClasseAccessImpl(MembreClasseAccessImpl _access) {
         this.access = _access;
-        this.use = null;
+        this.base = null;
         
         this.membreAccede = new AppelOuAcces();
     }
     
     public void setNomAcces(String _nom) {
         this.membreAccede.setNom(_nom);
+    }
+    
+    public boolean isNameDeclared() {
+        return this.membreAccede.getNom() != null;
     }
     
     public void setArgumentsAcces(LinkedList<Expression> _args) {
@@ -52,7 +58,7 @@ public class UndeclaredAccessImpl implements Expression {
      */
     @Override
     public String toString() {
-        String text = (this.use != null) ? use.toString() : access.toString();
+        String text = (this.base != null) ? ((this.base == Identifier.THIS) ? "(???) this" : "(???) super") : access.toString();
         text += "." + membreAccede.getNom();
         
         if (membreAccede.getArguments() != null) {
@@ -75,7 +81,7 @@ public class UndeclaredAccessImpl implements Expression {
      */
     @Override
     public Type getType() {
-        throw new RuntimeException("UndeclaredAccessImpl getType ne devrait pas être appelé");
+        throw new RuntimeException("MembreClasseAccessImpl getType non implémentée");
     }
 
     /* (non-Javadoc)
@@ -83,6 +89,6 @@ public class UndeclaredAccessImpl implements Expression {
      */
     @Override
     public Fragment getCode(TAMFactory _factory) {
-        throw new RuntimeException("UndeclaredAccessImpl getCode ne devrait pas être appelé");
+        throw new RuntimeException("MembreClasseAccessImpl getCode non implémentée");
     }
 }

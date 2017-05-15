@@ -18,4 +18,5 @@
     
     <!--Ajout pour le projet-->
     <import    lib="fr.n7.stl.block.ast.MembreClasse.DroitAcces"/>
+    <import    lib="fr.n7.stl.block.ast.impl.MembreClasseAccessImpl.Identifier"/>
   </egg>

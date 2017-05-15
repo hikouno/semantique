@@ -2,6 +2,7 @@
 interface EtreVivant {
     final static int const1 = 2;
     
+    
 
     void exister();
     boolean exister();
@@ -12,6 +13,7 @@ interface EtreVivant {
 
 interface Caillou {
     int couleur();
+    final static String ch = "test";
 }
 
 class EtreVivant {
@@ -82,7 +84,10 @@ class Ordi extends SansConstructeur {
         int test = 4;
         Poisson tee = 2;
         
-        print pc.methode(2, true).deux;
+        
+        print super.pikachu.et.magicarpe(zdze);
+        
+        print this.pc.methode(2, attaque.trempette(2)).deux;
         return 7;
     }
 }
@@ -97,7 +102,7 @@ public class Test {
         
         EtreVivant test = 3;
         test = 3;
-        print 1;
+        print Caillou.ch;
         
         Poissond wesh = new Poissond();
         print wesh.cinq_nageoires;

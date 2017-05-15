@@ -11,6 +11,7 @@ import fr.n7.stl.block.ast.Classe;
 import fr.n7.stl.block.ast.Type;
 import fr.n7.stl.block.ast.Expression;
 import fr.n7.stl.block.ast.ClasseInstanceDeclaration;
+import fr.n7.stl.block.ast.impl.AccessTools.AppelOuAcces;
 
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
@@ -22,34 +23,6 @@ import fr.n7.stl.tam.ast.TAMFactory;
  *
  */
 public class InstanceAccessImpl implements Expression {
-    
-    private class AppelOuAcces {
-        
-        private String nom;
-        private LinkedList<Expression> arguments;
-        
-        public AppelOuAcces() {
-            this.nom = null;
-            this.arguments = null;
-        }
-        
-        public void setNom(String _nom) {
-            this.nom = _nom;
-        }
-        
-        public String getNom() {
-            return nom;
-        }
-        
-        public void setArguments(LinkedList<Expression> _args) {
-            this.arguments = _args;
-        }
-        
-        public LinkedList<Expression> getArguments() {
-            return arguments;
-        }
-    }
-    
     
     protected InstanceUseImpl use;
     protected InstanceAccessImpl access;
@@ -93,16 +66,6 @@ public class InstanceAccessImpl implements Expression {
         return history;
     }
     
-    @SuppressWarnings("unchecked")
-    public LinkedList<AppelOuAcces> getCallHistory(AppelOuAcces _acces) {
-        
-        LinkedList<AppelOuAcces> history = (this.use != null) ? new LinkedList<AppelOuAcces>() :
-                            (LinkedList<AppelOuAcces>) (this.access.getCallHistory().clone());
-        
-        history.add(_acces);
-        return history;
-    }
-    
     public void setNomAcces(String _nom) {
         this.membreAccede.setNom(_nom);
     }
@@ -113,65 +76,18 @@ public class InstanceAccessImpl implements Expression {
     }
     
     public boolean update(boolean fullCheck) {
-        LinkedList<AppelOuAcces> history = this.getCallHistory();
         
-        Classe classe = this.getClasse();
-        AppelOuAcces elementAccede = history.get(0); //Tableau de taille > 0
-        int depth = 0;
+        Optional<Type> _type = AccessTools.getType(this.getClasse(), 
+                                                    this.getCallHistory(), 
+                                                    fullCheck,
+                                                    false);
         
-        
-        while (depth < history.size()) {
-            Optional<AttributImpl> attribut = classe.getAttribut(elementAccede.getNom());
-            Optional<MethodImpl> methode = classe.getMethode(elementAccede.getNom());
-            
-            //Last argument.
-            if (depth == history.size() - 1) {
-                if (attribut.isPresent() && elementAccede.getArguments() == null) {
-                    
-                    if (attribut.get().getDroitAcces() != DroitAcces.PUBLIC)
-                        return false;
-                    
-                    this.type = attribut.get().getType();
-                }
-                else if (methode.isPresent() && (!fullCheck || elementAccede.getArguments() != null)) {
-                    
-                    if (methode.get().getDroitAcces() != DroitAcces.PUBLIC)
-                        return false;
-                    
-                    this.type = methode.get().getTypeRetour().isPresent() ? 
-                                methode.get().getTypeRetour().get() : null;
-                } else {
-                    return false;
-                }
-            
-            } else { //Browsing access history.
-            
-                if (attribut.isPresent() && elementAccede.getArguments() == null) {
-                    
-                    if (!(attribut.get().getType() instanceof ClasseTypeImpl) || attribut.get().getDroitAcces() != DroitAcces.PUBLIC)
-                        return false;
-                    
-                    classe = ((ClasseTypeImpl) attribut.get().getType()).getClasse();
-                    elementAccede = history.get(depth + 1);
-                    
-                } else if (methode.isPresent() && (!fullCheck || elementAccede.getArguments() != null)) {
-                    
-                    Optional<Type> retour = methode.get().getTypeRetour();
-                    if (!retour.isPresent() || !(retour.get() instanceof ClasseTypeImpl) || methode.get().getDroitAcces() != DroitAcces.PUBLIC)
-                        return false;
-                    
-                    classe = ((ClasseTypeImpl) retour.get()).getClasse();
-                    elementAccede = history.get(depth + 1);
-                } else {
-                    return false;
-                }
-            
-            }
-            
-            depth++;
+        if (_type.isPresent()) {
+            this.type = _type.get();
+            return true;
         }
         
-        return true;
+        return false;
     }
     
     /* (non-Javadoc)

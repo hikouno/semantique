@@ -6,6 +6,8 @@ package fr.n7.stl.block.ast.impl;
 import java.util.LinkedList;
 import java.util.Optional;
 
+import fr.n7.stl.block.ast.impl.MembreClasseAccessImpl.Identifier;
+
 import fr.n7.stl.block.ast.Assignable;
 import fr.n7.stl.block.ast.AtomicType;
 import fr.n7.stl.block.ast.BinaryOperator;
@@ -241,6 +243,30 @@ public class BlockFactoryImpl implements BlockFactory {
             return Optional.of(access);
         
         return Optional.empty();
+    }
+    
+    /**
+	* Create a node for a variable use expression in the Abstract Syntax Tree.
+	* with resolving the reference with the Symbol Table.	 
+	* @return Abstract Syntax Tree node for the access to a variable.
+	*/
+	public Expression createMembreClasseAccess_identifier(Identifier _identifier, String nom) {
+        MembreClasseAccessImpl access = new MembreClasseAccessImpl(_identifier);
+        if (!nom.equals("")) access.setNomAcces(nom);
+        
+        return access;
+    }
+    
+    /**
+	* Create a node for a variable use expression in the Abstract Syntax Tree.
+	* with resolving the reference with the Symbol Table.	 
+	* @return Abstract Syntax Tree node for the access to a variable.
+	*/
+	public Expression createMembreClasseAccess_access(MembreClasseAccessImpl _access, String nom) {
+        MembreClasseAccessImpl access = new MembreClasseAccessImpl(_access);
+        access.setNomAcces(nom);
+        
+        return access;
     }
     
     /**
