@@ -13,11 +13,11 @@ import fr.n7.stl.tam.ast.TAMFactory;
 public class UndeclaredAccessAssignmentImpl extends UndeclaredAccessImpl implements Assignable {
 
 	public UndeclaredAccessAssignmentImpl(UndeclaredInstanceDeclaration _dec) {
-		super( _access );
+		super( new UndeclaredInstanceUseImpl(_dec) );
 	}
 	
-	public UndeclaredAccessAssignmentImpl(UndeclaredAccessImpl _base) {
-		super( _base );
+	public UndeclaredAccessAssignmentImpl(UndeclaredAccessImpl _access) {
+		super( _access );
 	}
 	
 	@Override

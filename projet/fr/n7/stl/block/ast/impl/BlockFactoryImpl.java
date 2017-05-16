@@ -291,6 +291,23 @@ public class BlockFactoryImpl implements BlockFactory {
 		return new MembreClasseAccessAssignmentImpl(_access);
 	}
     
+    /**
+	* Create a node for a variable use expression in the Abstract Syntax Tree.
+	* with resolving the reference with the Symbol Table.	 
+	* @return Abstract Syntax Tree node for the access to a variable.
+	*/
+	public Assignable createUndeclaredAccessAssignment_dec(UndeclaredInstanceDeclaration _dec) {
+		return new UndeclaredAccessAssignmentImpl(_dec);
+	}
+	
+	/**
+	* Create a node for a variable use expression in the Abstract Syntax Tree.
+	* with resolving the reference with the Symbol Table.	 
+	* @return Abstract Syntax Tree node for the access to a variable.
+	*/
+	public Assignable createUndeclaredAccessAssignment_access(UndeclaredAccessImpl _access) {
+		return new UndeclaredAccessAssignmentImpl(_access);
+	}
     
     /**
      * Create a node for an undeclared variable use expression in the Abstract Syntax Tree.
