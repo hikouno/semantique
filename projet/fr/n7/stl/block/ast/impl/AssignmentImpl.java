@@ -6,6 +6,7 @@ package fr.n7.stl.block.ast.impl;
 import java.util.List;
 
 import fr.n7.stl.block.ast.Assignable;
+import fr.n7.stl.block.ast.Classe;
 import fr.n7.stl.block.ast.Expression;
 import fr.n7.stl.block.ast.Instruction;
 import fr.n7.stl.block.ast.VariableDeclaration;
@@ -70,7 +71,7 @@ public class AssignmentImpl implements Instruction {
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Instruction#toDeclared()
 	 */
-	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes) {
+	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) {
 		return this;
 	}
 	

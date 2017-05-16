@@ -7,6 +7,7 @@ import java.util.List;
 
 import fr.n7.stl.block.ast.ClasseInstanceDeclaration;
 import fr.n7.stl.block.ast.ClasseInstance;
+import fr.n7.stl.block.ast.Classe;
 import fr.n7.stl.block.ast.Expression;
 import fr.n7.stl.block.ast.Type;
 import fr.n7.stl.block.ast.InterfaceDeclaration;
@@ -108,7 +109,7 @@ public class ClasseInstanceDeclarationImpl implements ClasseInstanceDeclaration 
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Instruction#toDeclared()
 	 */
-	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes) {
+	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) {
 		return this;
 	}
 

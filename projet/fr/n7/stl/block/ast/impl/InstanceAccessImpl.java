@@ -123,7 +123,7 @@ public class InstanceAccessImpl implements Expression {
      * @see fr.n7.stl.block.ast.Expression#toDeclared()
      */
     @Override
-    public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes) {
+    public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) {
         return this;
     }
     

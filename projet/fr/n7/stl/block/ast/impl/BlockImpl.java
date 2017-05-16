@@ -10,6 +10,7 @@ import java.util.Optional;
 import fr.n7.stl.block.ast.Block;
 import fr.n7.stl.block.ast.InterfaceDeclaration;
 import fr.n7.stl.block.ast.ClasseDeclaration;
+import fr.n7.stl.block.ast.Classe;
 import fr.n7.stl.block.ast.UndeclaredInstanceDeclaration;
 import fr.n7.stl.block.ast.Instruction;
 import fr.n7.stl.tam.ast.Fragment;
@@ -106,28 +107,17 @@ public class BlockImpl implements Block {
 	 * @return The new AST with undeclared references replaces by actual ones.
 	 */	
 	@Override
-	public ScopeCheckResult scopeCheck(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes) {
-		/*LinkedList<Instruction> nouvListe = new LinkedList<Instruction>();
+	public ScopeCheckResult scopeCheck(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) {
+		/*
+		 * LinkedList<Instruction> nouvListe = new LinkedList<Instruction>();
 	  	for(Instruction instr : instructions){
-			if(instr instanceof UndeclaredInstanceDeclaration) {
-			  	UndeclaredInstanceDeclaration newInstr = (UndeclaredInstanceDeclaration) instr;
-				String nom = newInstr.getUndeclaredTypeNom();
-				ClasseDeclaration nouvClasse = BlockImpl.nouvInstr(nom, classes);
-				if(nouvClasse == null){
-					return new ScopeCheckResult(false, nom + " non existante.");
-				}
-				else{
-					nouvListe.add(new ClasseInstanceDeclarationImpl(
-					      newInstr.getName()
-					      ,new ClasseTypeImpl(nouvClasse.getClasse())
-					      , newInstr.getValue()));
-				}
-			}
-			else{
-				nouvListe.add(instr);
+			try {
+				nouvListe.add( instr.toDeclared(interfaces, classes, classeMere) );
 			}
 		}
-		this.instructions = nouvListe;*/
+		* 
+		this.instructions = nouvListe;
+		* */
 		return new ScopeCheckResult(true, null);
 	}
 

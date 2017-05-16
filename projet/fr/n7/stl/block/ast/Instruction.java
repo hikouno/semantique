@@ -31,7 +31,7 @@ public interface Instruction {
 	 * Return the instruction if it is well declared.
 	 * @return the instruction if it is well declared.
 	 */
-	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes);
+	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere);
 	
 	/**
 	 * Inherited Semantics attribute to allocate memory for the variables declared in the instruction.

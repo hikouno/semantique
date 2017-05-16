@@ -10,6 +10,7 @@ import fr.n7.stl.block.ast.ClasseDeclaration;
 import fr.n7.stl.block.ast.InterfaceDeclaration;
 
 import fr.n7.stl.block.ast.Type;
+import fr.n7.stl.block.ast.Classe;
 import fr.n7.stl.block.ast.Expression;
 import fr.n7.stl.block.ast.impl.AccessTools.AppelOuAcces;
 
@@ -31,12 +32,9 @@ public class MembreClasseAccessImpl implements Expression {
     
     protected AppelOuAcces membreAccede;
     
-    protected ClasseDeclaration classeMere;
-    
     public MembreClasseAccessImpl(Identifier _base) {
         this.base = _base;
         this.access = null;
-        this.classeMere = null;
         
         this.membreAccede = new AppelOuAcces();
     }
@@ -44,13 +42,8 @@ public class MembreClasseAccessImpl implements Expression {
     public MembreClasseAccessImpl(MembreClasseAccessImpl _access) {
         this.access = _access;
         this.base = null;
-        this.classeMere = null;
         
         this.membreAccede = new AppelOuAcces();
-    }
-    
-    public void setClasseMere(ClasseDeclaration _mere) {
-        this.classeMere = _mere;
     }
     
     public void setNomAcces(String _nom) {
@@ -92,7 +85,7 @@ public class MembreClasseAccessImpl implements Expression {
 	 * @see fr.n7.stl.block.ast.Expression#toDeclared()
 	 */
 	@Override
-	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes) {
+	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) {
 		return this;
 	}
     

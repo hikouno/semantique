@@ -40,7 +40,7 @@ public interface Block {
 	 * to the scope.
 	 * @return The new AST with undeclared references replaces by actual ones.
 	 */	
-	public ScopeCheckResult scopeCheck(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes);
+	public ScopeCheckResult scopeCheck(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere);
 	
 	/**
 	 * Synthesized Semantics attribute to check that an instruction if well typed.

@@ -9,6 +9,7 @@ import fr.n7.stl.block.ast.ClasseDeclaration;
 import fr.n7.stl.block.ast.InterfaceDeclaration;
 
 import fr.n7.stl.block.ast.Expression;
+import fr.n7.stl.block.ast.Classe;
 import fr.n7.stl.block.ast.AtomicType;
 import fr.n7.stl.block.ast.IntegerValue;
 import fr.n7.stl.block.ast.Type;
@@ -49,7 +50,7 @@ public class CharValueImpl implements CharValue {
 	 * @see fr.n7.stl.block.ast.Expression#toDeclared()
 	 */
 	@Override
-	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes) {
+	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) {
 		return this;
 	}
 	
