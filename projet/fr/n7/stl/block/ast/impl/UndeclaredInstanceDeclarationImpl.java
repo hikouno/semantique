@@ -3,6 +3,8 @@
  */
 package fr.n7.stl.block.ast.impl;
 
+import java.util.List;
+
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
@@ -10,6 +12,12 @@ import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.block.ast.UndeclaredInstanceDeclaration;
 import fr.n7.stl.block.ast.Expression;
 import fr.n7.stl.block.ast.Type;
+import fr.n7.stl.block.ast.InterfaceDeclaration;
+import fr.n7.stl.block.ast.ClasseDeclaration;
+import fr.n7.stl.block.ast.Instruction;
+
+
+
 
 /**
  *
@@ -95,6 +103,13 @@ public class UndeclaredInstanceDeclarationImpl implements UndeclaredInstanceDecl
 	@Override
 	public boolean checkType() {
 		throw new RuntimeException("UndeclaredInstanceDeclarationImpl checkType ne doit pas être appelé");
+	}
+	
+	/* (non-Javadoc)
+	 * @see fr.n7.stl.block.ast.Instruction#toDeclared()
+	 */
+	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes) {
+		return this;
 	}
 
 	/* (non-Javadoc)
