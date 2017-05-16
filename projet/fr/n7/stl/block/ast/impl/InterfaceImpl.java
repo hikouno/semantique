@@ -79,13 +79,13 @@ public class InterfaceImpl implements Interface {
 	protected String name;
 	protected LinkedList<Signature> signatures;
 	protected LinkedList<Constante> constantes;
-	protected LinkedList<Classe> superClasses;
+	protected LinkedList<Interface> interfaces;
 	
-	public InterfaceImpl(String name, LinkedList<Classe> superClasses) {
+	public InterfaceImpl(String name, LinkedList<Interface> interfaces) {
 		this.name = name;
 		this.signatures = new LinkedList<Signature>();
 		this.constantes = new LinkedList<Constante>();
-		this.superClasses = superClasses;
+		this.interfaces = interfaces;
 	}
 	
 	public boolean ajouterSignature(Optional<Type> type, String nom, LinkedList<Argument> args) {
@@ -160,16 +160,16 @@ public class InterfaceImpl implements Interface {
 		
 		String text = "interface "+this.name;
 		
-		if(this.superClasses.size() != 0) {
+		if(this.interfaces.size() != 0) {
 			
 			text += " extends ";
 		
-			for (Classe classe : this.superClasses) {
-				if(this.superClasses.indexOf(classe) == 
-					this.superClasses.size()-1) {
-						text += classe.getNom();
+			for (Interface _interf : this.interfaces) {
+				if(this.interfaces.indexOf(_interf) == 
+					this.interfaces.size()-1) {
+						text += _interf.getNom();
 				} else {
-					text += classe.getNom() + ", ";
+					text += _interf.getNom() + ", ";
 				}
 			}
 		}
