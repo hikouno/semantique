@@ -1,0 +1,147 @@
+
+interface EtreVivant {
+    final static int const1 = 2;
+    
+    
+
+    void exister();
+    boolean exister();
+    
+    int age_en_ns(int test, boolean tes2, char tes3);
+    boolean age_en_ns(int testd, boolean tes2d, char teds);
+}
+
+interface Caillou {
+    int couleur();
+    final static String ch = "test";
+}
+
+interface Crabe {
+}
+
+interface Algues extends Caillou, Crabe {
+}
+
+class EtreVivant {
+
+}
+
+class Poisson implements EtreVivant, Caillou, Crabe, Algues {
+    
+    public Poisson() {
+    
+    }
+    
+    protected Poisson(int param1, int param2, boolean param3) {
+        int j = 2;
+        print j;
+        Poisson wesh = new Poisson();
+        print wesh.cinq_nageoires;
+    }
+    
+    public Poisson(int a, int b, boolean c, int e) {
+        print 4;
+    }
+    
+    protected void ma_methode_incroyable(int a, boolean e, char cc, boolean o) {
+        int salut = 58 + 5;
+        print salut;
+    }
+    
+    public static int ma_methode_incroyable2(int a) {
+        int j = 4;
+    }
+    
+    public int ma_methode_incroyable2(int b) {
+        int j = 4;
+    }
+    
+    public int ma_methode_incroyable2(int b) {
+        int j = 42;
+    }
+    
+    
+    private int mon_attribut;
+    private static int mon_attribut;
+    
+    
+    public boolean cinq_nageoires;
+}
+
+class Poisson {
+
+}
+
+class SansConstructeur {
+}
+
+class AvecConstructeur {
+	public AvecConstructeur() {
+	}
+}
+
+class Ordi extends SansConstructeur implements EtreVivant, Crabe {
+    
+    private boolean pc;
+    public int pc;
+    public Poisson p;
+    
+    public Poisson est_incroyable() {
+        int test = 4;
+        Poisson tee = 2;
+        
+        
+        print super.pikachu.et.magicarpe(zdze);
+        
+        super = 2;
+        
+        super.pikachu = 3;
+        super.pikachu(4,5,6) = 3;
+        super.pikachu(4,5,6).aa = 3;
+        
+        pikachu = 3;
+        pikachu.e(4,5,6) = 3;
+        pikachu.e(4,5,6).aa = 3;
+        
+        this.pikachu = 3;
+        this.pikachu(4,5,6) = 3;
+        this.pikachu(4,5,6).aa = 3;
+        
+        print this.pc.methode(2, attaque.trempette(2)).deux;
+        return 7;
+    }
+}
+
+public class Test {
+
+    public static void main(String[] args) {
+        
+        Ordi ordi = new Ordi();
+        Poisson poisson = new Poisson(5 + 2, 4, true);
+        print ordi.est_incroyable(1, 2, 3).cinq_nageoires;
+        
+        ordi = new Poisson(2);
+        ordi.est_incroyable(1,2,true).cinq_nageoires = new Poisson(2);
+        ordi.p.cinq_nageohhires = new Poisson(2);
+        
+        EtreVivant test = 3;
+        test = 3;
+        print Caillou.ch;
+        
+        Poissond wesh = new Poissond();
+        print wesh.cinq_nageoires;
+        
+        wesh.tzerzerze.f = 4;
+        
+        char osef = 'z';
+        
+        int j = 2;
+        int i = 4;
+        int k = EtreVivant.const1;
+        
+        String chaine = "chaine";
+        
+        j = i * 2 + 5;
+    }
+
+}

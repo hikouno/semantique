@@ -12,6 +12,8 @@ import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.block.ast.InterfaceDeclaration;
 import fr.n7.stl.block.ast.ClasseDeclaration;
 
+import fr.n7.stl.block.ast.impl.ToDeclaredException;
+
 /**
  * Represents an Instruction node in the Abstract Syntax Tree node for the Bloc language.
  * Declares the various semantics attributes for the node.
@@ -31,7 +33,7 @@ public interface Instruction {
 	 * Return the instruction if it is well declared.
 	 * @return the instruction if it is well declared.
 	 */
-	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere);
+	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) throws ToDeclaredException;
 	
 	/**
 	 * Inherited Semantics attribute to allocate memory for the variables declared in the instruction.

@@ -78,16 +78,6 @@ public class BlockImpl implements Block {
 			this.instructions.add(i);
 		}
 	}
-
-	/*private static ClasseDeclaration nouvInstr(String nom, List<ClasseDeclaration> classes){
-		
-		for(ClasseDeclaration classe : classes){
-			if(classe.getClasse().getNom().equals(nom)){
-				return classe;
-			}
-		}
-		return null;
-	}*/
 	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
@@ -108,16 +98,19 @@ public class BlockImpl implements Block {
 	 */	
 	@Override
 	public ScopeCheckResult scopeCheck(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) {
-		/*
-		 * LinkedList<Instruction> nouvListe = new LinkedList<Instruction>();
-	  	for(Instruction instr : instructions){
+		
+		LinkedList<Instruction> nouvListe = new LinkedList<Instruction>();
+	  	for(Instruction instr : instructions) {
+			
 			try {
 				nouvListe.add( instr.toDeclared(interfaces, classes, classeMere) );
+			} catch (ToDeclaredException e) {
+				return new ScopeCheckResult(false, e.getMessage());
 			}
+			
 		}
-		* 
+		
 		this.instructions = nouvListe;
-		* */
 		return new ScopeCheckResult(true, null);
 	}
 

@@ -5,6 +5,8 @@ import java.util.List;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.TAMFactory;
 
+import fr.n7.stl.block.ast.impl.ToDeclaredException;
+
 /**
  * Represents an Expression node in the Abstract Syntax Tree node for the Bloc language.
  * Declares the various semantics attributes for the node.
@@ -17,7 +19,7 @@ public interface Expression {
 	 * Synthesized Semantics attribute to compute the type of an expression.
 	 * @return Synthesized Type of the expression.
 	 */
-	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere);
+	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) throws ToDeclaredException;
 	
 	/**
 	 * Synthesized Semantics attribute to compute the type of an expression.
