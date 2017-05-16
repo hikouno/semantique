@@ -45,8 +45,8 @@ public class ProgramFactoryImpl implements ProgramFactory {
 	 * @param name The name of the interface.
 	 * @return Abstract Syntax Tree node for the Interface type.
 	 */
-	public Interface createInterface(String name, LinkedList<Classe> superClasses) {
-	    return new InterfaceImpl(name, superClasses);
+	public Interface createInterface(String name, LinkedList<Interface> interfaces) {
+	    return new InterfaceImpl(name, interfaces);
 	}
 	
 	/**

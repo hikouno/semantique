@@ -19,7 +19,7 @@ interface Caillou {
 interface Crabe {
 }
 
-interface Algues {
+interface Algues extends Caillou, Crabe {
 }
 
 class EtreVivant {
