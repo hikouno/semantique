@@ -12,10 +12,12 @@ import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.block.ast.UndeclaredInstanceDeclaration;
 import fr.n7.stl.block.ast.Expression;
 import fr.n7.stl.block.ast.Type;
-import fr.n7.stl.block.ast.Classe;
 import fr.n7.stl.block.ast.InterfaceDeclaration;
 import fr.n7.stl.block.ast.ClasseDeclaration;
 import fr.n7.stl.block.ast.Instruction;
+import fr.n7.stl.block.ast.Classe;
+
+
 
 
 /**
@@ -107,8 +109,26 @@ public class UndeclaredInstanceDeclarationImpl implements UndeclaredInstanceDecl
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Instruction#toDeclared()
 	 */
-	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeDeclaration) {
+	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) {
+		/*Instruction resultat = appartient(this.typeNom, classes);
+		if (resultat = null) {
+			throw new ToDeclaredException();
+		} else {
+				return resultat;
+		}*/
 		return this;
+	}
+	
+	/*
+	 * Return ClasseDeclaration from what typeNom comes.
+	 */
+	private static ClasseDeclaration appartient(String typeNom, List<ClasseDeclaration> classes) {
+		for(ClasseDeclaration classeDec : classes) {
+			if(classeDec.getClasse().getNom().equals(typeNom)) {
+				return classeDec;
+			}
+		}
+		return null;			
 	}
 
 	/* (non-Javadoc)
