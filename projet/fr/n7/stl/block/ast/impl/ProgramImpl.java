@@ -71,7 +71,36 @@ public class ProgramImpl implements Program {
 	@Override
 	public ScopeCheckResult scopeCheck() {
 		
-		return this.principale.scopeCheck(this.getInterfaceDecs(), this.getClasseDecs());
+		List<InterfaceDeclaration> interfacesDec = this.getInterfaceDecs();
+		List<ClasseDeclaration> classesDec = this.getClasseDecs();
+		
+		/** Parcours des interfaces */
+		for (Interface interf : this.interfaces) {
+			//ScopeCheckResult res = interf.scopeCheck(interfacesDec, classesDec);
+			
+			//if (!res.wasSuccessful()) {
+			//	return res;
+			//}
+			continue;
+		}
+		
+		/** Parcours des classes */
+		for (Classe classe : this.classes) {
+			//ScopeCheckResult res = classe.scopeCheck(interfacesDec, classesDec);
+			
+			//if (!res.wasSuccessful()) {
+			//	return res;
+			//}
+			continue;
+		}
+		
+		/** Parcours de la méthode principale */
+		ScopeCheckResult res = this.principale.scopeCheck(interfacesDec, classesDec);
+		if (!res.wasSuccessful()) {
+			return res;
+		}
+		
+		return new ScopeCheckResult(true, this.toString());
 	}
 	
 	private List<ClasseDeclaration> getClasseDecs() {

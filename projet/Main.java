@@ -34,6 +34,10 @@ public class Main{
 		  System.out.println("AST :\n"+bloc.get_ast()+"\n");
 		  
 		  /// SCOPE CHECK ///
+		  System.out.println("\n\n=====================");
+		  System.out.println("=====SCOPE CHECK=====");
+		  System.out.println("=====================");
+		  
 		  ScopeCheckResult scopeCheck = bloc.get_ast().scopeCheck();
 		  if (scopeCheck.wasSuccessful()) {
 			  System.out.println("Scope check réussi :\n" + scopeCheck.getResult());
