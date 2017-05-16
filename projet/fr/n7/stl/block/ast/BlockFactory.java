@@ -113,6 +113,33 @@ public interface BlockFactory extends ExpressionFactory, InstructionFactory, Typ
 	*/
 	public Expression createMembreClasseAccess_access(MembreClasseAccessImpl _access, String nom);
 	
+	/**
+	* Create a node for a variable use expression in the Abstract Syntax Tree.
+	* with resolving the reference with the Symbol Table.	 
+	* @return Abstract Syntax Tree node for the access to a variable.
+	*/
+	public Assignable createMembreClasseAccessAssignment_identifier(Identifier _identifier, String nom);
+	
+	/**
+	* Create a node for a variable use expression in the Abstract Syntax Tree.
+	* with resolving the reference with the Symbol Table.	 
+	* @return Abstract Syntax Tree node for the access to a variable.
+	*/
+	public Assignable createMembreClasseAccessAssignment_access(MembreClasseAccessImpl _access);
+	
+	/**
+	* Create a node for a variable use expression in the Abstract Syntax Tree.
+	* with resolving the reference with the Symbol Table.	 
+	* @return Abstract Syntax Tree node for the access to a variable.
+	*/
+	public Assignable createUndeclaredAccessAssignment_dec(UndeclaredInstanceDeclaration _dec);
+	
+	/**
+	* Create a node for a variable use expression in the Abstract Syntax Tree.
+	* with resolving the reference with the Symbol Table.	 
+	* @return Abstract Syntax Tree node for the access to a variable.
+	*/
+	public Assignable createUndeclaredAccessAssignment_access(UndeclaredAccessImpl _access);
 	
 	/**
 	* Create a node for an instance assignment expression in the Abstract Syntax Tree.
@@ -120,7 +147,6 @@ public interface BlockFactory extends ExpressionFactory, InstructionFactory, Typ
 	* @return Abstract Syntax Tree node for the assignment.
 	*/
 	public Assignable createInstanceAssignment_dec(ClasseInstanceDeclaration _declaration);
-	
 	
 	/**
 	* Create a node for an instance assignment expression in the Abstract Syntax Tree.

@@ -19,7 +19,7 @@ interface Caillou {
 interface Crabe {
 }
 
-interface Algues {
+interface Algues extends Caillou, Crabe {
 }
 
 class EtreVivant {
@@ -93,6 +93,20 @@ class Ordi extends SansConstructeur implements EtreVivant, Crabe {
         
         print super.pikachu.et.magicarpe(zdze);
         
+        super = 2;
+        
+        super.pikachu = 3;
+        super.pikachu(4,5,6) = 3;
+        super.pikachu(4,5,6).aa = 3;
+        
+        pikachu = 3;
+        pikachu.e(4,5,6) = 3;
+        pikachu.e(4,5,6).aa = 3;
+        
+        this.pikachu = 3;
+        this.pikachu(4,5,6) = 3;
+        this.pikachu(4,5,6).aa = 3;
+        
         print this.pc.methode(2, attaque.trempette(2)).deux;
         return 7;
     }
@@ -107,8 +121,8 @@ public class Test {
         print ordi.est_incroyable(1, 2, 3).cinq_nageoires;
         
         ordi = new Poisson(2);
-        ordi.p = new Poisson(2);
-        ordi.p.cinq_nageoires = new Poisson(2);
+        ordi.est_incroyable(1,2,true).cinq_nageoires = new Poisson(2);
+        ordi.p.cinq_nageohhires = new Poisson(2);
         
         EtreVivant test = 3;
         test = 3;
@@ -116,6 +130,8 @@ public class Test {
         
         Poissond wesh = new Poissond();
         print wesh.cinq_nageoires;
+        
+        wesh.tzerzerze.f = 4;
         
         char osef = 'z';
         

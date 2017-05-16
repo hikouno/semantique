@@ -24,7 +24,7 @@ inh tds : SymbolTable for Bloc, Instructions, Instruction, Expression, SuiteCond
                     Principale, MethodePrincipale, Interfaces, Interface, ElementsInterface,
                     ElementInterface, Signature, Classes, Classe, ElementsClasse, ElementClasse,
                     Constructeur, AttributOuMethode, SuiteAttributOuMethode, Arguments, HeritageInterface,
-                    SuiteHeritageInterface, ImplantationInterface, SuiteImplantationInterface;
+                    SuiteHeritageInterface, ImplantationInterface;
 
 inh blocParent	: Block for Instructions;
 
@@ -56,7 +56,7 @@ syn bloc    : Block for MethodePrincipale;
 
 --Interfaces
 syn ast        : Interface for Interface;
-syn interfaces : LinkedList<Interface> for Interfaces, ImplantationInterface, SuiteImplantationInterface;
+syn interfaces : LinkedList<Interface> for Interfaces, ImplantationInterface, HeritageInterface, SuiteHeritageInterface;
 inh interface_mere : Interface for ElementsInterface, ElementInterface;
 
 --Signatures d'interfaces
@@ -71,7 +71,6 @@ inh classe_mere : Classe for ElementsClasse, ElementClasse;
 
 --Héritage
 syn superClasse		: String for HeritageClasse;
-syn superClasses	: LinkedList<Classe> for HeritageInterface, SuiteHeritageInterface;
 
 
 --Methodes et arguments de classe
@@ -236,7 +235,7 @@ local
 do
     --AST
     prg := new ProgramFactoryImpl();
-    interface := prg.createInterface(identificateur_type^txt, HeritageInterface^superClasses);
+    interface := prg.createInterface(identificateur_type^txt, HeritageInterface^interfaces);
     
     Interface^ast := interface;
     
@@ -258,13 +257,13 @@ local
 	f : Optional<Declaration>;
     d : Declaration;
 do
-	HeritageInterface^superClasses := SuiteHeritageInterface^superClasses;
+	HeritageInterface^interfaces := SuiteHeritageInterface^interfaces;
 	
 	if (HeritageInterface^tds.knows(identificateur_type^txt)) then
 		f := HeritageInterface^tds.get(identificateur_type^txt);
 		d := f.get();
 		match d
-			with ClasseDeclarationImpl then HeritageInterface^superClasses.add(d.getClasse());
+			with InterfaceDeclarationImpl then HeritageInterface^interfaces.add(d.getInterface());
 		else
 			error(MiniJava_Heritage_NonExist, identificateur_type^txt);
 		end
@@ -283,7 +282,7 @@ end
 HeritageInterface -> #syn;
 #syn {
 do
-	HeritageInterface^superClasses := new LinkedList<Classe>();
+	HeritageInterface^interfaces := new LinkedList<Interface>();
 end
 }
 
@@ -300,12 +299,12 @@ local
 	f : Optional<Declaration>;
     d : Declaration;
 do
-	SuiteHeritageInterface^superClasses := SuiteHeritageInterface1^superClasses;
+	SuiteHeritageInterface^interfaces := SuiteHeritageInterface1^interfaces;
 	if (SuiteHeritageInterface^tds.knows(identificateur_type^txt)) then
 		f := SuiteHeritageInterface^tds.get(identificateur_type^txt);
 		d := f.get();
 		match d
-			with ClasseDeclarationImpl then SuiteHeritageInterface^superClasses.add(d.getClasse());
+			with InterfaceDeclarationImpl then SuiteHeritageInterface^interfaces.add(d.getInterface());
 		else
 			error(MiniJava_Heritage_NonExist, identificateur_type^txt);
 		end
@@ -319,9 +318,10 @@ end
 SuiteHeritageInterface -> #syn;
 #syn {
 do
-	SuiteHeritageInterface^superClasses := new LinkedList<Classe>();
+	SuiteHeritageInterface^interfaces := new LinkedList<Interface>();
 end
 }
+
 
 ElementsInterface -> #tds #inh ElementInterface ElementsInterface ;
 #tds {
@@ -530,13 +530,13 @@ do
 end
 }
 
-ImplantationInterface -> implantation identificateur_type InstanceGenericite #inh SuiteImplantationInterface #syn;
+ImplantationInterface -> implantation identificateur_type InstanceGenericite #inh SuiteHeritageInterface #syn;
 #syn {
 local
 	f : Optional<Declaration>;
     d : Declaration;
 do
-	ImplantationInterface^interfaces := SuiteImplantationInterface^interfaces;
+	ImplantationInterface^interfaces := SuiteHeritageInterface^interfaces;
 	
 	if (ImplantationInterface^tds.knows(identificateur_type^txt)) then
 		f := ImplantationInterface^tds.get(identificateur_type^txt);
@@ -554,7 +554,7 @@ end
 
 #inh {
 do 
-	SuiteImplantationInterface^tds := ImplantationInterface^tds;
+	SuiteHeritageInterface^tds := ImplantationInterface^tds;
 end
 }
 
@@ -565,40 +565,7 @@ do
 end 
 }
 
-SuiteImplantationInterface -> virgule identificateur_type InstanceGenericite #inh SuiteImplantationInterface #syn ;
-#inh {
-do
-	SuiteImplantationInterface1^tds := SuiteImplantationInterface^tds;	
-end
-}
 
-#syn {
-local
-	f : Optional<Declaration>;
-    d : Declaration;
-do
-	SuiteImplantationInterface^interfaces := SuiteImplantationInterface1^interfaces;
-	if (SuiteImplantationInterface^tds.knows(identificateur_type^txt)) then
-		f := SuiteImplantationInterface^tds.get(identificateur_type^txt);
-		d := f.get();
-		match d
-			with InterfaceDeclarationImpl then SuiteImplantationInterface^interfaces.add(d.getInterface());
-		else
-			error(MiniJava_Heritage_NonExist, identificateur_type^txt);
-		end
-	else
-		error(MiniJava_Heritage_NonExist, identificateur_type^txt);
-	end
-end
-}
-
-
-SuiteImplantationInterface -> #syn;
-#syn {
-do
-	SuiteImplantationInterface^interfaces := new LinkedList<Interface>();
-end
-}
 
 
 Principale -> public classe identificateur_type accolade_ouvrante #tds MethodePrincipale accolade_fermante #ast ;
@@ -1218,11 +1185,21 @@ do
         d := o.get();
         match d
             with ClasseInstanceDeclaration then SuiteAffectable^support := Affectable^factory.createInstanceAssignment_dec( d );
+            with UndeclaredInstanceDeclaration then SuiteAffectable^support := Affectable^factory.createUndeclaredAccessAssignment_dec( d );
             with VariableDeclaration then SuiteAffectable^support := Affectable^factory.createVariableAssignment( d );
             with ConstantDeclaration then error(MiniJava_not_a_variable, identificateur^txt);
         end
     else
-        error(MiniJava_undefined_ident, identificateur^txt);
+        --On le définit comme une tentative (dans un premier temps) d'accès à un membre de classe.
+        if (identificateur^txt.equals("this")) then
+            SuiteAffectable^support := Affectable^factory.createMembreClasseAccessAssignment_identifier(Identifier.THIS, "");
+        else
+            if (identificateur^txt.equals("super")) then
+                SuiteAffectable^support := Affectable^factory.createMembreClasseAccessAssignment_identifier(Identifier.SUPER, "");
+            else
+                SuiteAffectable^support := Affectable^factory.createMembreClasseAccessAssignment_identifier(Identifier.THIS, identificateur^txt);
+            end
+        end
     end
 end
 }
@@ -1263,6 +1240,14 @@ do
             else
                 error(MiniJava_Acces_NonImplemente);
             end
+        
+        with MembreClasseAccessAssignmentImpl then
+            supp.setNomAcces(identificateur^txt);
+            AppelOuAcces^support := supp;
+        
+        with UndeclaredAccessAssignmentImpl then
+            supp.setNomAcces(identificateur^txt);
+            AppelOuAcces^support := supp;
        
         else error(MiniJava_Acces_NonImplemente);
     end
@@ -1277,7 +1262,13 @@ do
     match obtained_ast
         with InstanceAccessImpl then
             SuiteAffectable^ast := SuiteAffectable^factory.createInstanceAssignment_rec( obtained_ast );
-       
+        
+        with MembreClasseAccessImpl then
+            SuiteAffectable^ast := SuiteAffectable^factory.createMembreClasseAccessAssignment_access( obtained_ast );
+        
+        with UndeclaredAccessImpl then
+            SuiteAffectable^ast := SuiteAffectable^factory.createUndeclaredAccessAssignment_access( obtained_ast );
+    
         else error(MiniJava_Acces_NonImplemente);
     end
 end
