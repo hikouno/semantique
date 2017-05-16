@@ -3,7 +3,11 @@
  */
 package fr.n7.stl.block.ast.impl;
 
+import java.util.List;
 import java.util.LinkedList;
+
+import fr.n7.stl.block.ast.ClasseDeclaration;
+import fr.n7.stl.block.ast.InterfaceDeclaration;
 
 import fr.n7.stl.block.ast.Expression;
 import fr.n7.stl.block.ast.Classe;
@@ -54,7 +58,15 @@ public class ClasseInstanceAllocationImpl implements Expression {
 		
 		return text;
 	}
-
+	
+	/* (non-Javadoc)
+	 * @see fr.n7.stl.block.ast.Expression#toDeclared()
+	 */
+	@Override
+	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes) {
+		return this;
+	}
+	
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Expression#getType()
 	 */

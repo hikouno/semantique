@@ -3,7 +3,11 @@
  */
 package fr.n7.stl.block.ast.impl;
 
+import java.util.List;
+
 import fr.n7.stl.block.ast.Expression;
+import fr.n7.stl.block.ast.ClasseDeclaration;
+import fr.n7.stl.block.ast.InterfaceDeclaration;
 import fr.n7.stl.block.ast.Type;
 import fr.n7.stl.block.ast.ClasseInstanceDeclaration;
 import fr.n7.stl.tam.ast.Fragment;
@@ -37,7 +41,15 @@ public class InstanceUseImpl implements Expression {
 	public String toString() {
 		return ("@_instance{" + this.declaration.getName() + "}");
 	}
-
+	
+	/* (non-Javadoc)
+	 * @see fr.n7.stl.block.ast.Expression#toDeclared()
+	 */
+	@Override
+	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes) {
+		return this;
+	}
+	
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Expression#getType()
 	 */

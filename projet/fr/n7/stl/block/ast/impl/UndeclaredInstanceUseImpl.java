@@ -3,7 +3,12 @@
  */
 package fr.n7.stl.block.ast.impl;
 
+import java.util.List;
+
 import fr.n7.stl.block.ast.UndeclaredInstanceDeclaration;
+
+import fr.n7.stl.block.ast.ClasseDeclaration;
+import fr.n7.stl.block.ast.InterfaceDeclaration;
 
 import fr.n7.stl.block.ast.Expression;
 import fr.n7.stl.block.ast.Type;
@@ -36,6 +41,14 @@ public class UndeclaredInstanceUseImpl implements Expression {
 	@Override
 	public String toString() {
 		return ("@???{" + this.declaration.getName() + "}");
+	}
+
+	/* (non-Javadoc)
+	 * @see fr.n7.stl.block.ast.Expression#toDeclared()
+	 */
+	@Override
+	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes) {
+		return this;
 	}
 
 	/* (non-Javadoc)
