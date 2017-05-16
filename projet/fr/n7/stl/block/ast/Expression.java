@@ -1,5 +1,7 @@
 package fr.n7.stl.block.ast;
 
+import java.util.List;
+
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.TAMFactory;
 
@@ -10,6 +12,12 @@ import fr.n7.stl.tam.ast.TAMFactory;
  *
  */
 public interface Expression {
+	
+	/**
+	 * Synthesized Semantics attribute to compute the type of an expression.
+	 * @return Synthesized Type of the expression.
+	 */
+	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes);
 	
 	/**
 	 * Synthesized Semantics attribute to compute the type of an expression.

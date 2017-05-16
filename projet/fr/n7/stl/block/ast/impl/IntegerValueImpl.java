@@ -3,6 +3,12 @@
  */
 package fr.n7.stl.block.ast.impl;
 
+import java.util.List;
+
+import fr.n7.stl.block.ast.ClasseDeclaration;
+import fr.n7.stl.block.ast.InterfaceDeclaration;
+
+import fr.n7.stl.block.ast.Expression;
 import fr.n7.stl.block.ast.AtomicType;
 import fr.n7.stl.block.ast.IntegerValue;
 import fr.n7.stl.block.ast.Type;
@@ -33,7 +39,15 @@ public class IntegerValueImpl implements IntegerValue {
 	public String toString() {
 		return "" + this.value;
 	}
-
+	
+	/* (non-Javadoc)
+	 * @see fr.n7.stl.block.ast.Expression#toDeclared()
+	 */
+	@Override
+	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes) {
+		return this;
+	}
+	
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Expression#getType()
 	 */

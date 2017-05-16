@@ -3,6 +3,11 @@
  */
 package fr.n7.stl.block.ast;
 
+import java.util.List;
+
+import fr.n7.stl.block.ast.ClasseDeclaration;
+import fr.n7.stl.block.ast.InterfaceDeclaration;
+
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.TAMFactory;
 
@@ -27,6 +32,14 @@ public enum BooleanValue implements Value {
 	@Override
 	public Type getType() {
 		return AtomicType.BooleanType;
+	}
+	
+	/* (non-Javadoc)
+	 * @see fr.n7.stl.block.ast.Expression#toDeclared()
+	 */
+	@Override
+	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes) {
+		return this;
 	}
 	
 	/* (non-Javadoc)
