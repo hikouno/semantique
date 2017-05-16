@@ -1222,7 +1222,16 @@ do
             with ConstantDeclaration then error(MiniJava_not_a_variable, identificateur^txt);
         end
     else
-        error(MiniJava_undefined_ident, identificateur^txt);
+        --On le définit comme une tentative (dans un premier temps) d'accès à un membre de classe.
+        if (identificateur^txt.equals("this")) then
+            SuiteAffectable^support := Affectable^factory.createMembreClasseAccessAssignment_identifier(Identifier.THIS, "");
+        else
+            if (identificateur^txt.equals("super")) then
+                SuiteAffectable^support := Affectable^factory.createMembreClasseAccessAssignment_identifier(Identifier.SUPER, "");
+            else
+                SuiteAffectable^support := Affectable^factory.createMembreClasseAccessAssignment_identifier(Identifier.THIS, identificateur^txt);
+            end
+        end
     end
 end
 }
@@ -1263,6 +1272,10 @@ do
             else
                 error(MiniJava_Acces_NonImplemente);
             end
+        
+        with MembreClasseAccessAssignmentImpl then
+            supp.setNomAcces(identificateur^txt);
+            AppelOuAcces^support := supp;
        
         else error(MiniJava_Acces_NonImplemente);
     end
@@ -1277,6 +1290,9 @@ do
     match obtained_ast
         with InstanceAccessImpl then
             SuiteAffectable^ast := SuiteAffectable^factory.createInstanceAssignment_rec( obtained_ast );
+        
+        with MembreClasseAccessImpl then
+            SuiteAffectable^ast := SuiteAffectable^factory.createMembreClasseAccessAssignment_access( obtained_ast );
        
         else error(MiniJava_Acces_NonImplemente);
     end

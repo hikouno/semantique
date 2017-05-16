@@ -59,7 +59,7 @@ public class MembreClasseAccessImpl implements Expression {
     @Override
     public String toString() {
         String text = (this.base != null) ? ((this.base == Identifier.THIS) ? "(???) this" : "(???) super") : access.toString();
-        text += "." + membreAccede.getNom();
+        if (membreAccede.getNom() != null) text += "." + membreAccede.getNom();
         
         if (membreAccede.getArguments() != null) {
             text += "(";
