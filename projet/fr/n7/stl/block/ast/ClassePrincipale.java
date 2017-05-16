@@ -7,6 +7,9 @@ import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
 
+import fr.n7.stl.block.ast.impl.ScopeCheckResult;
+import java.util.LinkedList;
+
 /**
  * Represents an Instruction node in the Abstract Syntax Tree node for the Bloc language.
  * Declares the various semantics attributes for the node.
@@ -37,5 +40,7 @@ public interface ClassePrincipale {
 	 * @return Synthesized AST for the generated TAM code.
 	 */
 	public Fragment getCode(TAMFactory _factory);
+
+	public ScopeCheckResult scopeCheck(LinkedList<Interface> interfaces, LinkedList<ClasseDeclaration> classes);
 
 }

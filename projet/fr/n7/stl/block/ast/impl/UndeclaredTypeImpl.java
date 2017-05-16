@@ -27,7 +27,7 @@ public class UndeclaredTypeImpl implements Type {
 	 */
 	@Override
 	public boolean equalsTo(Type _other) {
-		throw new SemanticsUndefinedException("Semantics equalsTo should not be implemented in ClasseTypeImpl.");
+		throw new SemanticsUndefinedException("Semantics equalsTo should not be implemented in UndeclaredTypeImpl.");
 	}
 
 	/* (non-Javadoc)
@@ -35,7 +35,7 @@ public class UndeclaredTypeImpl implements Type {
 	 */
 	@Override
 	public boolean compatibleWith(Type _other) {
-		throw new SemanticsUndefinedException("Semantics compatibleWith should not be implemented in ClasseTypeImpl.");
+		throw new SemanticsUndefinedException("Semantics compatibleWith should not be implemented in UndeclaredTypeImpl.");
 	}
 
 	/* (non-Javadoc)
@@ -43,7 +43,7 @@ public class UndeclaredTypeImpl implements Type {
 	 */
 	@Override
 	public Type merge(Type _other) {
-		throw new SemanticsUndefinedException("Semantics merge should not be implemented in ClasseTypeImpl.");
+		throw new SemanticsUndefinedException("Semantics merge should not be implemented in UndeclaredTypeImpl.");
 	}
 
 	/* (non-Javadoc)
@@ -51,7 +51,7 @@ public class UndeclaredTypeImpl implements Type {
 	 */
 	@Override
 	public int length() {
-		throw new SemanticsUndefinedException("Semantics length should not be implemented in ClasseTypeImpl.");
+		throw new SemanticsUndefinedException("Semantics length should not be implemented in UndeclaredTypeImpl.");
 	}
 
 	/* (non-Javadoc)

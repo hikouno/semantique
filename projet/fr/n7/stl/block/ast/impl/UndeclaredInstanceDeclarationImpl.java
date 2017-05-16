@@ -45,6 +45,17 @@ public class UndeclaredInstanceDeclarationImpl implements UndeclaredInstanceDecl
 	public String getUndeclaredTypeNom() {
 		return this.typeNom;
 	}
+
+	/**
+	 * Provide the value of the expression
+	 * @return Value
+	 */
+	@Override
+	public Expression getValue() {
+		return this.value;
+	}
+
+
 	
 	/* (non-Javadoc)
 	 * @see fr.n7.block.ast.Declaration#getName()

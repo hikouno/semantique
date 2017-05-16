@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.Optional;
 
 import fr.n7.stl.block.ast.Block;
+import fr.n7.stl.block.ast.Interface;
+import fr.n7.stl.block.ast.ClasseDeclaration;
+import fr.n7.stl.block.ast.UndeclaredInstanceDeclaration;
 import fr.n7.stl.block.ast.Instruction;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
@@ -73,6 +76,41 @@ public class BlockImpl implements Block {
 		for (Instruction i : _instructions) {
 			this.instructions.add(i);
 		}
+	}
+
+	public ScopeCheckResult scopeCheck(LinkedList<Interface> interfaces, LinkedList<ClasseDeclaration> classes){
+		LinkedList<Instruction> nouvListe = new LinkedList<Instruction>();
+	  	for(Instruction instr : instructions){
+			if(instr instanceof UndeclaredInstanceDeclaration) {
+			  	UndeclaredInstanceDeclaration newInstr = (UndeclaredInstanceDeclaration) instr;
+				String nom = newInstr.getUndeclaredTypeNom();
+				ClasseDeclaration nouvClasse = BlockImpl.nouvInstr(nom, classes);
+				if(nouvClasse == null){
+					return new ScopeCheckResult(false, nom + " non existante.");
+				}
+				else{
+					nouvListe.add(new ClasseInstanceDeclarationImpl(
+					      newInstr.getName()
+					      ,new ClasseTypeImpl(nouvClasse.getClasse())
+					      , newInstr.getValue()));
+				}
+			}
+			else{
+				nouvListe.add(instr);
+			}
+		}
+		this.instructions = nouvListe;
+		return new ScopeCheckResult(true, null);
+	}
+
+	private static ClasseDeclaration nouvInstr(String nom, List<ClasseDeclaration> classes){
+		
+		for(ClasseDeclaration classe : classes){
+			if(classe.getClasse().getNom().equals(nom)){
+				return classe;
+			}
+		}
+		return null;
 	}
 	
 	/* (non-Javadoc)

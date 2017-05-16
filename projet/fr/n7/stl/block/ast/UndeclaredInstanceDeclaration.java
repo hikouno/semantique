@@ -15,6 +15,8 @@ public interface UndeclaredInstanceDeclaration extends VariableDeclaration {
 	 * @return Value from the declaration.
 	 */
 	public String getUndeclaredTypeNom();
+
+	public Expression getValue();
 	
 
 }

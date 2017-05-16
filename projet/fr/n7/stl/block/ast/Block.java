@@ -4,6 +4,12 @@
 package fr.n7.stl.block.ast;
 
 import java.util.Iterator;
+import java.util.LinkedList;
+
+import fr.n7.stl.block.ast.impl.ScopeCheckResult;
+
+import fr.n7.stl.block.ast.Interface;
+import fr.n7.stl.block.ast.Classe;
 
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
@@ -54,5 +60,8 @@ public interface Block {
 	 * @return Synthesized AST for the generated TAM code.
 	 */
 	public Fragment getCode(TAMFactory _factory);
+
+
+	public ScopeCheckResult scopeCheck(LinkedList<Interface> interfaces, LinkedList<ClasseDeclaration> classes);
 
 }

@@ -7,6 +7,7 @@ import java.util.LinkedList;
 
 import fr.n7.stl.block.ast.Program;
 import fr.n7.stl.block.ast.ClassePrincipale;
+import fr.n7.stl.block.ast.ClasseDeclaration;
 import fr.n7.stl.block.ast.Interface;
 import fr.n7.stl.block.ast.Classe;
 import fr.n7.stl.tam.ast.Fragment;
@@ -67,7 +68,12 @@ public class ProgramImpl implements Program {
 	
 	@Override
 	public ScopeCheckResult scopeCheck() {
-		return new ScopeCheckResult(true, "Mamen");
+	  	LinkedList<ClasseDeclaration> classesDec = new LinkedList<ClasseDeclaration>();
+		for(Classe classe : this.classes){
+			classesDec.add(new ClasseDeclarationImpl(classe));
+		}
+		return this.principale.scopeCheck(this.interfaces, classesDec);
+		
 	}
 	
 	/* (non-Javadoc)
