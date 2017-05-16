@@ -3,10 +3,14 @@
  */
 package fr.n7.stl.block.ast.impl;
 
+import java.util.List;
+
 import fr.n7.stl.block.ast.Assignable;
 import fr.n7.stl.block.ast.Expression;
 import fr.n7.stl.block.ast.Instruction;
 import fr.n7.stl.block.ast.VariableDeclaration;
+import fr.n7.stl.block.ast.InterfaceDeclaration;
+import fr.n7.stl.block.ast.ClasseDeclaration;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
@@ -62,6 +66,14 @@ public class AssignmentImpl implements Instruction {
 		return (this.declaration != null) ? declaration.getType().equalsTo(value.getType()) :
 											assignable.getType().equalsTo(value.getType());
 	}
+	
+	/* (non-Javadoc)
+	 * @see fr.n7.stl.block.ast.Instruction#toDeclared()
+	 */
+	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes) {
+		return this;
+	}
+	
 
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Instruction#allocateMemory(fr.n7.stl.tam.ast.Register, int)

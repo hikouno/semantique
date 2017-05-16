@@ -3,10 +3,15 @@
  */
 package fr.n7.stl.block.ast.impl;
 
+import java.util.List;
+
 import fr.n7.stl.block.ast.ClasseInstanceDeclaration;
 import fr.n7.stl.block.ast.ClasseInstance;
 import fr.n7.stl.block.ast.Expression;
 import fr.n7.stl.block.ast.Type;
+import fr.n7.stl.block.ast.InterfaceDeclaration;
+import fr.n7.stl.block.ast.ClasseDeclaration;
+import fr.n7.stl.block.ast.Instruction;
 
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
@@ -98,6 +103,13 @@ public class ClasseInstanceDeclarationImpl implements ClasseInstanceDeclaration 
 	@Override
 	public boolean checkType() {
 		throw new RuntimeException("ClasseInstanceDeclarationImpl checkType à implémenter");
+	}
+	
+	/* (non-Javadoc)
+	 * @see fr.n7.stl.block.ast.Instruction#toDeclared()
+	 */
+	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes) {
+		return this;
 	}
 
 	/* (non-Javadoc)

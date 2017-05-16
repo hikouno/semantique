@@ -3,9 +3,14 @@
  */
 package fr.n7.stl.block.ast;
 
+import java.util.List;
+
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
+
+import fr.n7.stl.block.ast.InterfaceDeclaration;
+import fr.n7.stl.block.ast.ClasseDeclaration;
 
 /**
  * Represents an Instruction node in the Abstract Syntax Tree node for the Bloc language.
@@ -20,6 +25,13 @@ public interface Instruction {
 	 * @return Synthesized True if the instruction is well typed, False if not.
 	 */
 	public boolean checkType();
+	
+	
+	/**
+	 * Return the instruction if it is well declared.
+	 * @return the instruction if it is well declared.
+	 */
+	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes);
 	
 	/**
 	 * Inherited Semantics attribute to allocate memory for the variables declared in the instruction.
