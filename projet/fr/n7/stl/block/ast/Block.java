@@ -4,12 +4,9 @@
 package fr.n7.stl.block.ast;
 
 import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.List;
 
 import fr.n7.stl.block.ast.impl.ScopeCheckResult;
-
-import fr.n7.stl.block.ast.Interface;
-import fr.n7.stl.block.ast.Classe;
 
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
@@ -39,6 +36,13 @@ public interface Block {
 	public void addAll(Iterable<Instruction> _instructions);
 	
 	/**
+	 * Synthesized Semantics attribute to check if the AST is well formed according
+	 * to the scope.
+	 * @return The new AST with undeclared references replaces by actual ones.
+	 */	
+	public ScopeCheckResult scopeCheck(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes);
+	
+	/**
 	 * Synthesized Semantics attribute to check that an instruction if well typed.
 	 * @return Synthesized True if the instruction is well typed, False if not.
 	 */	
@@ -60,8 +64,5 @@ public interface Block {
 	 * @return Synthesized AST for the generated TAM code.
 	 */
 	public Fragment getCode(TAMFactory _factory);
-
-
-	public ScopeCheckResult scopeCheck(LinkedList<Interface> interfaces, LinkedList<ClasseDeclaration> classes);
 
 }

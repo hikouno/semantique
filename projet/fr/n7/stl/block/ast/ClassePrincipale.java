@@ -3,12 +3,14 @@
  */
 package fr.n7.stl.block.ast;
 
+import java.util.List;
+
+import fr.n7.stl.block.ast.impl.ScopeCheckResult;
+
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
 
-import fr.n7.stl.block.ast.impl.ScopeCheckResult;
-import java.util.LinkedList;
 
 /**
  * Represents an Instruction node in the Abstract Syntax Tree node for the Bloc language.
@@ -17,6 +19,13 @@ import java.util.LinkedList;
  *
  */
 public interface ClassePrincipale {
+	
+	/**
+	 * Synthesized Semantics attribute to check if the AST is well formed according
+	 * to the scope.
+	 * @return The new AST with undeclared references replaces by actual ones.
+	 */	
+	public ScopeCheckResult scopeCheck(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes);
 	
 	/**
 	 * Synthesized Semantics attribute to check that an instruction if well typed.
@@ -41,6 +50,6 @@ public interface ClassePrincipale {
 	 */
 	public Fragment getCode(TAMFactory _factory);
 
-	public ScopeCheckResult scopeCheck(LinkedList<Interface> interfaces, LinkedList<ClasseDeclaration> classes);
+	
 
 }

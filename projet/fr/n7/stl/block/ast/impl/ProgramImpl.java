@@ -3,11 +3,13 @@
  */
 package fr.n7.stl.block.ast.impl;
 
+import java.util.List;
 import java.util.LinkedList;
 
 import fr.n7.stl.block.ast.Program;
 import fr.n7.stl.block.ast.ClassePrincipale;
 import fr.n7.stl.block.ast.ClasseDeclaration;
+import fr.n7.stl.block.ast.InterfaceDeclaration;
 import fr.n7.stl.block.ast.Interface;
 import fr.n7.stl.block.ast.Classe;
 import fr.n7.stl.tam.ast.Fragment;
@@ -68,12 +70,27 @@ public class ProgramImpl implements Program {
 	
 	@Override
 	public ScopeCheckResult scopeCheck() {
-	  	LinkedList<ClasseDeclaration> classesDec = new LinkedList<ClasseDeclaration>();
-		for(Classe classe : this.classes){
-			classesDec.add(new ClasseDeclarationImpl(classe));
-		}
-		return this.principale.scopeCheck(this.interfaces, classesDec);
 		
+		return this.principale.scopeCheck(this.getInterfaceDecs(), this.getClasseDecs());
+	}
+	
+	private List<ClasseDeclaration> getClasseDecs() {
+		
+		LinkedList<ClasseDeclaration> classesDec = new LinkedList<ClasseDeclaration>();
+		
+		for(Classe classe : this.classes)
+			classesDec.add(new ClasseDeclarationImpl(classe));
+		
+		return classesDec;
+	}
+	
+	private List<InterfaceDeclaration> getInterfaceDecs() {
+		LinkedList<InterfaceDeclaration> interfacesDec = new LinkedList<InterfaceDeclaration>();
+		
+		for(Interface interf : this.interfaces)
+			interfacesDec.add(new InterfaceDeclarationImpl(interf));
+		
+		return interfacesDec;
 	}
 	
 	/* (non-Javadoc)

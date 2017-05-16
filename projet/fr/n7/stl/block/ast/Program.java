@@ -24,7 +24,6 @@ public interface Program {
 	 * Synthesized Semantics attribute to check if the AST is well formed according
 	 * to the scope.
 	 * @return The new AST with undeclared references replaces by actual ones.
-	 * Exceptions will be thrown if a problem is encountered.
 	 */	
 	public ScopeCheckResult scopeCheck();
 	

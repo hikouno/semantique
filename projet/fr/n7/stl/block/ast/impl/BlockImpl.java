@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 import fr.n7.stl.block.ast.Block;
-import fr.n7.stl.block.ast.Interface;
+import fr.n7.stl.block.ast.InterfaceDeclaration;
 import fr.n7.stl.block.ast.ClasseDeclaration;
 import fr.n7.stl.block.ast.UndeclaredInstanceDeclaration;
 import fr.n7.stl.block.ast.Instruction;
@@ -78,8 +78,36 @@ public class BlockImpl implements Block {
 		}
 	}
 
-	public ScopeCheckResult scopeCheck(LinkedList<Interface> interfaces, LinkedList<ClasseDeclaration> classes){
-		LinkedList<Instruction> nouvListe = new LinkedList<Instruction>();
+	/*private static ClasseDeclaration nouvInstr(String nom, List<ClasseDeclaration> classes){
+		
+		for(ClasseDeclaration classe : classes){
+			if(classe.getClasse().getNom().equals(nom)){
+				return classe;
+			}
+		}
+		return null;
+	}*/
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		String _local = "";
+		for (Instruction _instruction : this.instructions) {
+			_local += "    " + _instruction;
+		}
+		return "{\n" + _local + "}\n" ;
+	}
+
+	/**
+	 * Synthesized Semantics attribute to check if the AST is well formed according
+	 * to the scope.
+	 * @return The new AST with undeclared references replaces by actual ones.
+	 */	
+	@Override
+	public ScopeCheckResult scopeCheck(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes) {
+		/*LinkedList<Instruction> nouvListe = new LinkedList<Instruction>();
 	  	for(Instruction instr : instructions){
 			if(instr instanceof UndeclaredInstanceDeclaration) {
 			  	UndeclaredInstanceDeclaration newInstr = (UndeclaredInstanceDeclaration) instr;
@@ -99,30 +127,8 @@ public class BlockImpl implements Block {
 				nouvListe.add(instr);
 			}
 		}
-		this.instructions = nouvListe;
+		this.instructions = nouvListe;*/
 		return new ScopeCheckResult(true, null);
-	}
-
-	private static ClasseDeclaration nouvInstr(String nom, List<ClasseDeclaration> classes){
-		
-		for(ClasseDeclaration classe : classes){
-			if(classe.getClasse().getNom().equals(nom)){
-				return classe;
-			}
-		}
-		return null;
-	}
-	
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		String _local = "";
-		for (Instruction _instruction : this.instructions) {
-			_local += "    " + _instruction;
-		}
-		return "{\n" + _local + "}\n" ;
 	}
 
 	/* (non-Javadoc)

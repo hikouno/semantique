@@ -3,15 +3,17 @@
  */
 package fr.n7.stl.block.ast.impl;
 
+import java.util.List;
+
 import fr.n7.stl.block.ast.ClassePrincipale;
 import fr.n7.stl.block.ast.ClasseDeclaration;
-import fr.n7.stl.block.ast.Interface;
+import fr.n7.stl.block.ast.InterfaceDeclaration;
 import fr.n7.stl.block.ast.Block;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
 
-import java.util.LinkedList;
+
 
 /**
  * Une classe principale MiniJava
@@ -43,10 +45,14 @@ public class ClassePrincipaleImpl implements ClassePrincipale {
 				"\n}";
 	}
 
+	/**
+	 * Synthesized Semantics attribute to check if the AST is well formed according
+	 * to the scope.
+	 * @return The new AST with undeclared references replaces by actual ones.
+	 */	
 	@Override
-	public ScopeCheckResult scopeCheck(LinkedList<Interface> interfaces, LinkedList<ClasseDeclaration> classes) {
+	public ScopeCheckResult scopeCheck(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes) {
 		return this.methodePrinc.scopeCheck(interfaces, classes);
-		
 	}
 
 	/* (non-Javadoc)
