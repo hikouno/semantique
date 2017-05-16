@@ -31,9 +31,12 @@ public class MembreClasseAccessImpl implements Expression {
     
     protected AppelOuAcces membreAccede;
     
+    protected ClasseDeclaration classeMere;
+    
     public MembreClasseAccessImpl(Identifier _base) {
         this.base = _base;
         this.access = null;
+        this.classeMere = null;
         
         this.membreAccede = new AppelOuAcces();
     }
@@ -41,8 +44,13 @@ public class MembreClasseAccessImpl implements Expression {
     public MembreClasseAccessImpl(MembreClasseAccessImpl _access) {
         this.access = _access;
         this.base = null;
+        this.classeMere = null;
         
         this.membreAccede = new AppelOuAcces();
+    }
+    
+    public void setClasseMere(ClasseDeclaration _mere) {
+        this.classeMere = _mere;
     }
     
     public void setNomAcces(String _nom) {
