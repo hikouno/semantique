@@ -125,7 +125,37 @@ public class ClasseImpl implements Classe {
 	 * @return The new AST with undeclared references replaces by actual ones.
 	 */	
 	public ScopeCheckResult scopeCheck(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes) {
-		return new ScopeCheckResult(true, null);
+		
+		//Parcours des attributs
+		String errorMsg = "";
+		LinkedList<AttributImpl> nouv_attributs = new LinkedList<AttributImpl>();
+		
+		for (AttributImpl att : this.attributs) {
+			AttributImpl nouv_att;
+			
+			if (att.getType() instanceof UndeclaredTypeImpl) {
+				
+				String nomType = ((UndeclaredTypeImpl) att.getType()).getNom();
+				if (ClasseDeclaration.appartient(nomType, classes) != null) {
+					
+					nouv_att = att;
+				} else {
+					errorMsg += "Classe " + getNom() + ", Attribut " + att.getNom() +
+										": Le type " + nomType + " est inconnu !\n";
+					
+					nouv_att = att;
+				}
+			}
+			else {
+				nouv_att = att;
+			}
+			
+			nouv_attributs.add(nouv_att);
+		}
+		
+		this.attributs = nouv_attributs;
+		
+		return new ScopeCheckResult(errorMsg.equals(""), errorMsg);
 	}
 	
 	/**
