@@ -97,7 +97,10 @@ public class BlockImpl implements Block {
 	 * @return The new AST with undeclared references replaces by actual ones.
 	 */	
 	@Override
-	public ScopeCheckResult scopeCheck(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) {
+	public Block toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) throws ToDeclaredException {
+		
+		//Try to build a new declared instruction list.
+		String errorMsg = "";
 		
 		LinkedList<Instruction> nouvListe = new LinkedList<Instruction>();
 	  	for(Instruction instr : instructions) {
@@ -105,13 +108,24 @@ public class BlockImpl implements Block {
 			try {
 				nouvListe.add( instr.toDeclared(interfaces, classes, classeMere) );
 			} catch (ToDeclaredException e) {
-				return new ScopeCheckResult(false, e.getMessage());
+				errorMsg += e.getMessage() + "\n";
 			}
-			
 		}
 		
-		this.instructions = nouvListe;
-		return new ScopeCheckResult(true, null);
+		if (!errorMsg.equals("")) //Exception ?
+			throw new ToDeclaredException(errorMsg);
+		
+		//Create the new declared block with the list
+		Block block_declared;
+		if (context.isPresent()) {
+			block_declared = new BlockImpl(context.get());
+		} else {
+			block_declared = new BlockImpl();
+		}
+		
+		block_declared.addAll(nouvListe);
+		
+		return block_declared;
 	}
 
 	/* (non-Javadoc)

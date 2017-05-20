@@ -52,7 +52,15 @@ public class ClassePrincipaleImpl implements ClassePrincipale {
 	 */	
 	@Override
 	public ScopeCheckResult scopeCheck(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes) {
-		return this.methodePrinc.scopeCheck(interfaces, classes, null);
+		try {
+			Block nouv_methodePrinc = methodePrinc.toDeclared(interfaces, classes, null);
+			this.methodePrinc = nouv_methodePrinc;
+			
+		} catch (ToDeclaredException e) {
+			return new ScopeCheckResult(false, e.getMessage());
+		}
+		
+		return new ScopeCheckResult(true, "");
 	}
 
 	/* (non-Javadoc)

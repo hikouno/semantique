@@ -6,7 +6,7 @@ package fr.n7.stl.block.ast;
 import java.util.Iterator;
 import java.util.List;
 
-import fr.n7.stl.block.ast.impl.ScopeCheckResult;
+import fr.n7.stl.block.ast.impl.ToDeclaredException;
 
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
@@ -40,7 +40,7 @@ public interface Block {
 	 * to the scope.
 	 * @return The new AST with undeclared references replaces by actual ones.
 	 */	
-	public ScopeCheckResult scopeCheck(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere);
+	public Block toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) throws ToDeclaredException;
 	
 	/**
 	 * Synthesized Semantics attribute to check that an instruction if well typed.
