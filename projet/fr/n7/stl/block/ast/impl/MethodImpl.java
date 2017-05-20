@@ -3,9 +3,13 @@
  */
 package fr.n7.stl.block.ast.impl;
 
+import java.util.List;
+
 import fr.n7.stl.block.ast.MembreClasse;
 import fr.n7.stl.block.ast.MembreClasse.DroitAcces;
 import fr.n7.stl.block.ast.Classe;
+import fr.n7.stl.block.ast.ClasseDeclaration;
+import fr.n7.stl.block.ast.InterfaceDeclaration;
 import fr.n7.stl.block.ast.Block;
 import fr.n7.stl.block.ast.Type;
 
@@ -69,6 +73,38 @@ public class MethodImpl extends MembreClasse {
 	
 	public Optional<Type> getTypeRetour() {
 		return this.retour;
+	}
+	
+	/**
+	 * Synthesized Semantics attribute to compute the type of an expression.
+	 * @return Synthesized Type of the expression.
+	 */
+	public MethodImpl toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) throws ToDeclaredException {
+		
+		/*MethodImpl method_declared;
+		
+		if (this.getTypeRetour() instanceof UndeclaredTypeImpl) {
+			
+			String nomType = ((UndeclaredTypeImpl) this.getType()).getNom();
+			ClasseDeclaration dec = ClasseDeclaration.appartient(nomType, classes);
+			if (dec != null) {
+				
+				//On reconstruit un nouvel attribut bien déclaré cette fois.
+				method_declared = new AttributImpl(classeMere, new ClasseTypeImpl(dec.getClasse()),
+								this.getNom(), this.getDroitAcces(), this.estStatique());
+				
+			} else {
+				throw new ToDeclaredException("Classe " + classeMere.getNom() + ", Attribut " + this.getNom() +
+									": Le type " + nomType + " est inconnu !");
+			}
+		}
+		else {
+			method_declared = this;
+		}
+		
+		return method_declared;*/
+		
+		return null;
 	}
 	
 	/* (non-Javadoc)
