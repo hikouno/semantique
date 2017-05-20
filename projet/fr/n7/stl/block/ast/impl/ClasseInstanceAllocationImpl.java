@@ -63,8 +63,12 @@ public class ClasseInstanceAllocationImpl implements Expression {
 	 * @see fr.n7.stl.block.ast.Expression#toDeclared()
 	 */
 	@Override
-	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) {
-		return this;
+	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) throws ToDeclaredException {
+		LinkedList<Expression> nouvListe = new LinkedList<Expression>();
+		for(Expression expr : this.arguments){
+			nouvListe.add(expr.toDeclared(interfaces, classes, classeMere));
+		}
+		return (new ClasseInstanceAllocationImpl(this.classe, nouvListe));
 	}
 	
 	/* (non-Javadoc)
