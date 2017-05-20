@@ -41,22 +41,12 @@ public class Argument {
 		
 		Argument argument_declared;
 		
-		if (this.type instanceof UndeclaredTypeImpl) {
+		try {
+			//On reconstruit un nouvel argument bien déclaré cette fois.
+			argument_declared = new Argument(this.type.toDeclared(interfaces, classes, classeMere), name);
 			
-			String nomType = ((UndeclaredTypeImpl) this.type).getNom();
-			ClasseDeclaration dec = ClasseDeclaration.appartient(nomType, classes);
-			if (dec != null) {
-				
-				//On reconstruit un nouvel argument bien déclaré cette fois.
-				argument_declared = new Argument(new ClasseTypeImpl(dec.getClasse()), name);
-				
-			} else {
-				throw new ToDeclaredException("Argument " + this.getName() +
-									": Le type " + nomType + " est inconnu !");
-			}
-		
-		} else {
-			argument_declared = this;
+		} catch (ToDeclaredException e) {
+			throw new ToDeclaredException("Argument " + this.getName() + ": " + e.getMessage());
 		}
 		
 		return argument_declared;

@@ -60,23 +60,13 @@ public class AttributImpl extends MembreClasse {
 		
 		AttributImpl att_declared;
 		
-		if (this.getType() instanceof UndeclaredTypeImpl) {
-			
-			String nomType = ((UndeclaredTypeImpl) this.getType()).getNom();
-			ClasseDeclaration dec = ClasseDeclaration.appartient(nomType, classes);
-			if (dec != null) {
-				
-				//On reconstruit un nouvel attribut bien déclaré cette fois.
-				att_declared = new AttributImpl(classeMere, new ClasseTypeImpl(dec.getClasse()),
+		try {
+			att_declared = new AttributImpl(classeMere,
+								this.getType().toDeclared(interfaces, classes, classeMere),
 								this.getNom(), this.getDroitAcces(), this.estStatique());
-				
-			} else {
-				throw new ToDeclaredException("Classe " + classeMere.getNom() + ", Attribut " + this.getNom() +
-									": Le type " + nomType + " est inconnu !");
-			}
-		}
-		else {
-			att_declared = this;
+		} catch (ToDeclaredException e) {
+			throw new ToDeclaredException("Classe " + classeMere.getNom() + ", Attribut " + this.getNom() +
+									": " + e.getMessage());
 		}
 		
 		return att_declared;
