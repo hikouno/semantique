@@ -109,14 +109,19 @@ public class UndeclaredInstanceDeclarationImpl implements UndeclaredInstanceDecl
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Instruction#toDeclared()
 	 */
-	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) {
-		/*Instruction resultat = ClasseDeclaration.appartient(this.typeNom, classes);
-		if (resultat = null) {
-			throw new ToDeclaredException();
+	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) throws ToDeclaredException {
+		
+		Instruction declared;
+		
+		ClasseDeclaration dec = ClasseDeclaration.appartient(this.typeNom, classes);
+		if (dec != null) {
+			declared = new ClasseInstanceDeclarationImpl(this.nom, new ClasseTypeImpl(dec.getClasse()),
+							this.value.toDeclared(interfaces, classes, classeMere));
 		} else {
-				return resultat;
-		}*/
-		return this;
+			throw new ToDeclaredException("Ligne " + "???" + this.typeNom + " " + this.nom + " = " + this.value + ": " + this.typeNom + " inconnu.");
+		}
+		
+		return declared;
 	}
 
 	/* (non-Javadoc)

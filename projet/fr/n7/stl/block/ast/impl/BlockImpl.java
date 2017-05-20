@@ -109,6 +109,8 @@ public class BlockImpl implements Block {
 				nouvListe.add( instr.toDeclared(interfaces, classes, classeMere) );
 			} catch (ToDeclaredException e) {
 				errorMsg += e.getMessage() + "\n";
+			} catch (NullPointerException e) {
+				errorMsg += "Instruction nulle dans le bloc.\n";
 			}
 		}
 		
