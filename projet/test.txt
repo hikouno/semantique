@@ -3,6 +3,8 @@ class EtreVivant {
     public int t;
     
     public Poisson poiss;
+    public VaisseauSpatial espace;
+    public VaisseauSpatial espace2;
 }
 
 class Poisson {
