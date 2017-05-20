@@ -48,8 +48,34 @@ public class UndeclaredAllocationImpl implements Expression {
 	 * @see fr.n7.stl.block.ast.Expression#toDeclared()
 	 */
 	@Override
-	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) {
-		return this;
+	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) throws ToDeclaredException {
+		
+		Expression declared;
+		
+		//Déclaration des arguments.
+		String errorMsg = "";
+		
+		LinkedList<Expression> nouv_args = new LinkedList<Expression>();
+		for (Expression expr : arguments) {
+			try {
+				nouv_args.add( expr.toDeclared(interfaces, classes, classeMere) );
+			} catch (ToDeclaredException e) {
+				errorMsg += e.getMessage() + "\n";
+			}
+		}
+		
+		if (!errorMsg.equals(""))
+			throw new ToDeclaredException(errorMsg);
+		
+		//Déclaration du Type
+		ClasseDeclaration dec = ClasseDeclaration.appartient(this.nom, classes);
+		if (dec != null) {
+			declared = new ClasseInstanceAllocationImpl(dec.getClasse(), nouv_args);
+		} else {
+			throw new ToDeclaredException("new ???" + this.nom + ": " + this.nom + " inconnu.");
+		}
+		
+		return declared;
 	}
 
 	/* (non-Javadoc)
