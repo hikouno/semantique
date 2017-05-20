@@ -145,6 +145,24 @@ public class ClasseImpl implements Classe {
 		
 		this.attributs = nouv_attributs;
 		
+		//Parcours des méthodes
+		LinkedList<MethodImpl> nouv_methodes = new LinkedList<MethodImpl>();
+		
+		for (MethodImpl methode : this.methods) {
+			MethodImpl nouv_methode;
+			
+			try {
+				nouv_methode = methode.toDeclared(interfaces, classes, this);
+			} catch (ToDeclaredException e) {
+				errorMsg += e.getMessage() + "\n";
+				nouv_methode = methode;
+			}
+			
+			nouv_methodes.add(nouv_methode);
+		}
+		
+		this.methods = nouv_methodes;
+		
 		return new ScopeCheckResult(errorMsg.equals(""), errorMsg);
 	}
 	

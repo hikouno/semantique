@@ -3,8 +3,6 @@ class EtreVivant {
     public int t;
     
     public Poisson poiss;
-    public VaisseauSpatial espace;
-    public VaisseauSpatial espace2;
 }
 
 class Poisson {
@@ -13,7 +11,7 @@ class Poisson {
         print 4;
     }
     
-    public int ma_methode_incroyable2(int b) {
+    public Ordi ma_methode_incroyable2(Ordi b, Poisson c) {
         int j = 42;
     }
     

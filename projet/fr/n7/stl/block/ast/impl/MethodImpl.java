@@ -81,30 +81,44 @@ public class MethodImpl extends MembreClasse {
 	 */
 	public MethodImpl toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) throws ToDeclaredException {
 		
-		/*MethodImpl method_declared;
+		MethodImpl method_declared;
 		
-		if (this.getTypeRetour() instanceof UndeclaredTypeImpl) {
-			
-			String nomType = ((UndeclaredTypeImpl) this.getType()).getNom();
-			ClasseDeclaration dec = ClasseDeclaration.appartient(nomType, classes);
-			if (dec != null) {
+		//DÉCLARATION DU TYPE
+		Optional<Type> nouv_type;
+		
+		if (this.getTypeRetour().isPresent()) {
+		
+			if (this.getTypeRetour().get() instanceof UndeclaredTypeImpl) {
 				
-				//On reconstruit un nouvel attribut bien déclaré cette fois.
-				method_declared = new AttributImpl(classeMere, new ClasseTypeImpl(dec.getClasse()),
-								this.getNom(), this.getDroitAcces(), this.estStatique());
-				
-			} else {
-				throw new ToDeclaredException("Classe " + classeMere.getNom() + ", Attribut " + this.getNom() +
-									": Le type " + nomType + " est inconnu !");
+				String nomType = ((UndeclaredTypeImpl) this.getTypeRetour().get()).getNom();
+				ClasseDeclaration dec = ClasseDeclaration.appartient(nomType, classes);
+				if (dec != null) {
+					
+					nouv_type = Optional.of( new ClasseTypeImpl(dec.getClasse()) );
+					
+				} else {
+					throw new ToDeclaredException("Classe " + classeMere.getNom() + ", Méthode " + this.getNom() +
+										": Le type " + nomType + " est inconnu !");
+				}
 			}
-		}
-		else {
-			method_declared = this;
+			else {
+				nouv_type = getTypeRetour();
+			}
+		
+		} else {
+			nouv_type = getTypeRetour();
 		}
 		
-		return method_declared;*/
+		//DÉCLARATION DES ARGUMENTS
+		LinkedList<Argument> nouv_arguments = Argument.toDeclared_list(interfaces, classes, classeMere,
+						"Classe " + classeMere.getNom() + ", Méthode " + this.getNom() + ": ", this.args);
 		
-		return null;
+		//DÉCLARATION DE LA MÉTHODE
+		method_declared = new MethodImpl(classeMere, getNom(), nouv_arguments,
+											corps.toDeclared(interfaces, classes, classeMere),
+											this.getDroitAcces(), this.estStatique(), nouv_type);
+		
+		return method_declared;
 	}
 	
 	/* (non-Javadoc)
