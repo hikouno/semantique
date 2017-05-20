@@ -3,6 +3,8 @@
  */
 package fr.n7.stl.block.ast.impl;
 
+import java.util.List;
+
 import fr.n7.stl.block.ast.ClasseDeclaration;
 import fr.n7.stl.block.ast.Classe;
 

@@ -110,25 +110,13 @@ public class UndeclaredInstanceDeclarationImpl implements UndeclaredInstanceDecl
 	 * @see fr.n7.stl.block.ast.Instruction#toDeclared()
 	 */
 	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) {
-		/*Instruction resultat = appartient(this.typeNom, classes);
+		/*Instruction resultat = ClasseDeclaration.appartient(this.typeNom, classes);
 		if (resultat = null) {
 			throw new ToDeclaredException();
 		} else {
 				return resultat;
 		}*/
 		return this;
-	}
-	
-	/*
-	 * Return ClasseDeclaration from what typeNom comes.
-	 */
-	private static ClasseDeclaration appartient(String typeNom, List<ClasseDeclaration> classes) {
-		for(ClasseDeclaration classeDec : classes) {
-			if(classeDec.getClasse().getNom().equals(typeNom)) {
-				return classeDec;
-			}
-		}
-		return null;			
 	}
 
 	/* (non-Javadoc)
