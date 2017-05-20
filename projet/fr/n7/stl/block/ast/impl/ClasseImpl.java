@@ -136,9 +136,13 @@ public class ClasseImpl implements Classe {
 			if (att.getType() instanceof UndeclaredTypeImpl) {
 				
 				String nomType = ((UndeclaredTypeImpl) att.getType()).getNom();
-				if (ClasseDeclaration.appartient(nomType, classes) != null) {
+				ClasseDeclaration dec = ClasseDeclaration.appartient(nomType, classes);
+				if (dec != null) {
 					
-					nouv_att = att;
+					//On reconstruit un nouvel attribut bien déclaré cette fois.
+					nouv_att = new AttributImpl(this, new ClasseTypeImpl(dec.getClasse()),
+									att.getNom(), att.getDroitAcces(), att.estStatique());
+					
 				} else {
 					errorMsg += "Classe " + getNom() + ", Attribut " + att.getNom() +
 										": Le type " + nomType + " est inconnu !\n";
