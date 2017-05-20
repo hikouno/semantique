@@ -84,29 +84,23 @@ public class MethodImpl extends MembreClasse {
 		MethodImpl method_declared;
 		
 		//DÉCLARATION DU TYPE
-		Optional<Type> nouv_type;
+		Optional<Type> nouv_opt_type;
 		
 		if (this.getTypeRetour().isPresent()) {
-		
-			if (this.getTypeRetour().get() instanceof UndeclaredTypeImpl) {
-				
-				String nomType = ((UndeclaredTypeImpl) this.getTypeRetour().get()).getNom();
-				ClasseDeclaration dec = ClasseDeclaration.appartient(nomType, classes);
-				if (dec != null) {
-					
-					nouv_type = Optional.of( new ClasseTypeImpl(dec.getClasse()) );
-					
-				} else {
-					throw new ToDeclaredException("Classe " + classeMere.getNom() + ", Méthode " + this.getNom() +
-										": Le type " + nomType + " est inconnu !");
-				}
+			
+			Type nouv_type;
+			
+			try {
+				nouv_type = this.getTypeRetour().get().toDeclared(interfaces, classes, classeMere);
+			} catch (ToDeclaredException e) {
+				throw new ToDeclaredException("Classe " + classeMere.getNom() + ", Méthode " + this.getNom() +
+										": " + e.getMessage());
 			}
-			else {
-				nouv_type = getTypeRetour();
-			}
+			
+			nouv_opt_type = Optional.of( nouv_type );
 		
 		} else {
-			nouv_type = getTypeRetour();
+			nouv_opt_type = getTypeRetour();
 		}
 		
 		//DÉCLARATION DES ARGUMENTS
@@ -116,7 +110,7 @@ public class MethodImpl extends MembreClasse {
 		//DÉCLARATION DE LA MÉTHODE
 		method_declared = new MethodImpl(classeMere, getNom(), nouv_arguments,
 											corps.toDeclared(interfaces, classes, classeMere),
-											this.getDroitAcces(), this.estStatique(), nouv_type);
+											this.getDroitAcces(), this.estStatique(), nouv_opt_type);
 		
 		return method_declared;
 	}

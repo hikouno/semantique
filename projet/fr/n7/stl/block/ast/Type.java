@@ -3,6 +3,10 @@
  */
 package fr.n7.stl.block.ast;
 
+import java.util.List;
+
+import fr.n7.stl.block.ast.impl.ToDeclaredException;
+
 /**
  * Gathers the common services provided by types.
  * Must be implemented by all the classes representing types in the language.
@@ -10,6 +14,12 @@ package fr.n7.stl.block.ast;
  *
  */
 public interface Type {
+	
+	/**
+	 * Synthesized Semantics attribute to compute the type of an expression.
+	 * @return Synthesized Type of the expression.
+	 */
+	public Type toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) throws ToDeclaredException;
 	
 	/**
 	 * Check if two types are equals.

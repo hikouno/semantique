@@ -3,9 +3,14 @@
  */
 package fr.n7.stl.block.ast.impl;
 
+import java.util.List;
+
+import fr.n7.stl.block.ast.Classe;
+import fr.n7.stl.block.ast.ClasseDeclaration;
+import fr.n7.stl.block.ast.InterfaceDeclaration;
+
 import fr.n7.stl.block.ast.AtomicType;
 import fr.n7.stl.block.ast.Type;
-import fr.n7.stl.block.ast.Classe;
 
 /**
  * Type d'instance de classe.
@@ -20,6 +25,14 @@ public class ClasseTypeImpl implements Type {
 	
 	public Classe getClasse() {
 		return this.classe;
+	}
+	
+	/**
+	 * Synthesized Semantics attribute to compute the type of an expression.
+	 * @return Synthesized Type of the expression.
+	 */
+	public Type toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) throws ToDeclaredException {
+		return this;
 	}
 	
 	/* (non-Javadoc)

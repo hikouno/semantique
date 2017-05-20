@@ -3,6 +3,10 @@
  */
 package fr.n7.stl.block.ast;
 
+import java.util.List;
+
+import fr.n7.stl.block.ast.impl.ToDeclaredException;
+
 /**
  * Elementary types in the Bloc language.
  * @author Marc Pantel
@@ -17,7 +21,15 @@ public enum AtomicType implements Type {
 	VoidType,
 	ErrorType
 	;
-
+	
+	/**
+	 * Synthesized Semantics attribute to compute the type of an expression.
+	 * @return Synthesized Type of the expression.
+	 */
+	public Type toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) throws ToDeclaredException {
+		return this;
+	}
+	
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Type#equalsTo(fr.n7.stl.block.ast.Type)
 	 */
