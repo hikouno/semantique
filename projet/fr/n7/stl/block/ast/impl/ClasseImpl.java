@@ -3,8 +3,12 @@
  */
 package fr.n7.stl.block.ast.impl;
 
+import java.util.List;
 import java.util.LinkedList;
 import java.util.Optional;
+
+import fr.n7.stl.block.ast.ClasseDeclaration;
+import fr.n7.stl.block.ast.InterfaceDeclaration;
 
 import fr.n7.stl.block.ast.Classe;
 import fr.n7.stl.block.ast.Block;
@@ -113,6 +117,15 @@ public class ClasseImpl implements Classe {
 		
 		return Optional.empty();
 		
+	}
+	
+	/**
+	 * Synthesized Semantics attribute to check if the AST is well formed according
+	 * to the scope.
+	 * @return The new AST with undeclared references replaces by actual ones.
+	 */	
+	public ScopeCheckResult scopeCheck(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes) {
+		return new ScopeCheckResult(true, null);
 	}
 	
 	/**

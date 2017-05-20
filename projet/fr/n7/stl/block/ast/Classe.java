@@ -3,12 +3,14 @@
  */
 package fr.n7.stl.block.ast;
 
+import java.util.List;
 import java.util.LinkedList;
 import java.util.Optional;
 
 import fr.n7.stl.block.ast.impl.Constructeur;
 import fr.n7.stl.block.ast.impl.AttributImpl;
 import fr.n7.stl.block.ast.impl.MethodImpl;
+import fr.n7.stl.block.ast.impl.ScopeCheckResult;
 
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
@@ -72,6 +74,13 @@ public interface Classe {
 	 * @return Le résultat.
 	 */
 	public Optional<MethodImpl> getMethode(String nom);
+	
+	/**
+	 * Synthesized Semantics attribute to check if the AST is well formed according
+	 * to the scope.
+	 * @return The new AST with undeclared references replaces by actual ones.
+	 */	
+	public ScopeCheckResult scopeCheck(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes);
 	
 	/**
 	 * Teste l'égalité de deux classes.

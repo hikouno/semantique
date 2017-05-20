@@ -86,11 +86,11 @@ public class ProgramImpl implements Program {
 		
 		/** Parcours des classes */
 		for (Classe classe : this.classes) {
-			//ScopeCheckResult res = classe.scopeCheck(interfacesDec, classesDec);
+			ScopeCheckResult res = classe.scopeCheck(interfacesDec, classesDec);
 			
-			//if (!res.wasSuccessful()) {
-			//	return res;
-			//}
+			if (!res.wasSuccessful()) {
+				return res;
+			}
 			continue;
 		}
 		
