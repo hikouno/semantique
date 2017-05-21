@@ -48,8 +48,8 @@ public class VariableUseImpl implements Expression {
 	 * @see fr.n7.stl.block.ast.Expression#toDeclared()
 	 */
 	@Override
-	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) {
-		return this;
+	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) throws ToDeclaredException {
+		return new VariableUseImpl((VariableDeclaration) this.declaration.toDeclared(interfaces, classes, classeMere));
 	}
 
 	/* (non-Javadoc)
