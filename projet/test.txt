@@ -16,6 +16,7 @@ class Poisson {
         
         Poisson b = new Poisson(new Ordi(), new Ordi(new Poisson()));
         Ordi c = 2;
+        return new Ordi();
     }
     
     private int mon_attribut;
