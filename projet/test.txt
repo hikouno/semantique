@@ -19,7 +19,7 @@ class Poisson {
     public Ordi ma_methode_incroyable2(Ordi b, Poisson c) {
         int j = 42;
         
-        EtreVivant be = new EtreVivant(new Ordi(), new Ordi(new Poisson()));
+        Ordi be = new EtreVivant(new Ordi(), new Ordi(new Poisson()));
         Ordi c = 2;
         
         print be.est_incroyable(new Ordi(new Poisson()));
