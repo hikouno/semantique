@@ -1,0 +1,56 @@
+class EtreVivant {
+
+    public int t;
+    
+    public Poisson poiss;
+    
+    public Poisson est_incroyable() {
+        int test = 4;
+        Poisson tee = 2;
+    }
+}
+
+class Poisson {
+
+    public Poisson(int a, int b, boolean c, int e) {
+        print 4;
+    }
+    
+    public Ordi ma_methode_incroyable2(Ordi b, Poisson c) {
+        int j = 42;
+        
+        Ordi be = new EtreVivant(new Ordi(), new Ordi(new Poisson()));
+        Ordi c = 2;
+        
+        print be.est_incroyable(new Ordi(new Poisson()));
+    }
+    
+    private int mon_attribut;
+    private static Ordi mon_attribut;
+    
+    public boolean nageoires;
+}
+
+
+class Ordi {
+    
+    public int pc;
+    public Poisson p;
+    
+    public Poisson est_incroyable() {
+        int test = 4;
+        Poisson tee = 2;
+    }
+}
+
+public class Test {
+
+    public static void main(String[] args) {
+        
+        Ordi ordi = new Ordi();
+        Poisson poisson = new Poisson(5 + 2, 4, true);
+        print ordi.est_incroyable(new Poisson(3), 2, 3).nageoires;
+        
+    }
+
+}
