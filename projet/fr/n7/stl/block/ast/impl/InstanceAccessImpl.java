@@ -75,8 +75,35 @@ public class InstanceAccessImpl implements Expression {
     }
     
     public void setArgumentsAcces(LinkedList<Expression> _args) {
-        
         this.membreAccede.setArguments(_args);
+    }
+    
+    public String getNomAcces() {
+        return this.membreAccede.getNom();
+    }
+    
+    public LinkedList<Expression> getArgumentsAcces() {
+        return this.membreAccede.getArguments();
+    }
+    
+    /** Declare return Type & method access arguments. */
+    private void declare(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) throws ToDeclaredException {
+        
+        //Déclaration des arguments.
+        if (membreAccede.getArguments() != null) {
+            
+            LinkedList<Expression> nouv_expr = new LinkedList<Expression>();
+            for (Expression expr : membreAccede.getArguments()) {
+                nouv_expr.add( expr.toDeclared( interfaces, classes, classeMere ) );
+            }
+        
+            membreAccede.setArguments(nouv_expr);
+        }
+        
+        //Déclaration du type.
+         if (type != null) {
+            this.type = type.toDeclared(interfaces, classes, classeMere);
+        }
     }
     
     public boolean update(boolean fullCheck) {
@@ -123,8 +150,17 @@ public class InstanceAccessImpl implements Expression {
      * @see fr.n7.stl.block.ast.Expression#toDeclared()
      */
     @Override
-    public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) {
-        return this;
+    public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) throws ToDeclaredException {
+        
+        InstanceAccessImpl declared = (this.use != null) ?
+        new InstanceAccessImpl((InstanceUseImpl) this.use.toDeclared(interfaces, classes, classeMere)) :
+        new InstanceAccessImpl((InstanceAccessImpl) this.access.toDeclared(interfaces, classes, classeMere));
+        
+        declared.setNomAcces(this.getNomAcces());
+        declared.setArgumentsAcces(this.getArgumentsAcces());
+        
+        declared.declare(interfaces, classes, classeMere);
+        return declared;
     }
     
     /* (non-Javadoc)

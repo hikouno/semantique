@@ -46,6 +46,19 @@ public class ClasseInstanceDeclarationImpl implements ClasseInstanceDeclaration 
 		this.instance = new ClasseInstanceImpl( ((ClasseTypeImpl) _type).getClasse() );
 	}
 	
+	private ClasseInstanceDeclarationImpl(String _nom, Type _type, Expression _value, ClasseInstance _instance) {
+		this.nom = _nom;
+		this.type = _type;
+		
+		if (!(_type instanceof ClasseTypeImpl))
+			throw new RuntimeException("ClasseInstanceDeclaration demande un type ClasseType");
+		
+		this.value = _value;
+		
+		//Récupération de l'instance de classe.
+		this.instance = instance;
+	}
+	
 	/**
 	 * Provide the value associated to a name in a type declaration.
 	 * @return Value from the declaration.
@@ -109,8 +122,11 @@ public class ClasseInstanceDeclarationImpl implements ClasseInstanceDeclaration 
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Instruction#toDeclared()
 	 */
-	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) {
-		return this;
+	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) throws ToDeclaredException {
+		
+		return new ClasseInstanceDeclarationImpl(this.nom, this.type.toDeclared(interfaces, classes, classeMere),
+												this.value.toDeclared(interfaces, classes, classeMere),
+												this.instance);
 	}
 
 	/* (non-Javadoc)
