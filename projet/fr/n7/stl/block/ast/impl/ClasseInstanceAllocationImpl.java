@@ -68,7 +68,8 @@ public class ClasseInstanceAllocationImpl implements Expression {
 		for(Expression expr : this.arguments){
 			nouvListe.add(expr.toDeclared(interfaces, classes, classeMere));
 		}
-		return (new ClasseInstanceAllocationImpl(this.classe, nouvListe));
+		
+		return new ClasseInstanceAllocationImpl(this.classe, nouvListe);
 	}
 	
 	/* (non-Javadoc)

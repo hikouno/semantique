@@ -3,6 +3,11 @@ class EtreVivant {
     public int t;
     
     public Poisson poiss;
+    
+    public Poisson est_incroyable() {
+        int test = 4;
+        Poisson tee = 2;
+    }
 }
 
 class Poisson {
@@ -14,8 +19,10 @@ class Poisson {
     public Ordi ma_methode_incroyable2(Ordi b, Poisson c) {
         int j = 42;
         
-        Poisson b = new Poisson(new Ordi(), new Ordi(new Poisson()));
+        EtreVivant be = new EtreVivant(new Ordi(), new Ordi(new Poisson()));
         Ordi c = 2;
+        
+        print be.est_incroyable(new Ordi(new Poisson()));
     }
     
     private int mon_attribut;
@@ -42,7 +49,7 @@ public class Test {
         
         Ordi ordi = new Ordi();
         Poisson poisson = new Poisson(5 + 2, 4, true);
-        print ordi.est_incroyable(1, 2, 3).nageoires;
+        print ordi.est_incroyable(new Poisson(3), 2, 3).nageoires;
         
     }
 
