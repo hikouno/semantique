@@ -112,12 +112,22 @@ public class UndeclaredInstanceDeclarationImpl implements UndeclaredInstanceDecl
 	 */
 	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, Block blocPere) throws ToDeclaredException {
 		
-		Instruction declared;
+		ClasseInstanceDeclarationImpl declared;
 		
 		ClasseDeclaration dec = ClasseDeclaration.appartient(this.typeNom, classes);
 		if (dec != null) {
 			declared = new ClasseInstanceDeclarationImpl(this.nom, new ClasseTypeImpl(dec.getClasse()),
 							this.value.toDeclared(interfaces, classes, classeMere, blocPere));
+			
+			if (blocPere.postScope_contains(this.nom))
+				throw new ToDeclaredException(this.nom + "déjà défini dans le scope courant !");
+			
+			try {
+				blocPere.postScope_register(declared);
+			} catch (Exception e) {
+				throw new ToDeclaredException("Erreur postScope_register : " + e.getMessage());
+			}
+			
 		} else {
 			throw new ToDeclaredException("Ligne " + "???" + this.typeNom + " " + this.nom + " = " + this.value + ": " + this.typeNom + " inconnu.");
 		}

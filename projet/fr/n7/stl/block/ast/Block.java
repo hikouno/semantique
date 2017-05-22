@@ -51,6 +51,8 @@ public interface Block {
 	
 	public boolean postScope_knows(String _name);
 	
+	public boolean postScope_contains(String _name);
+	
 	public Optional<Declaration> postScope_get(String _name);
 	
 	/**
