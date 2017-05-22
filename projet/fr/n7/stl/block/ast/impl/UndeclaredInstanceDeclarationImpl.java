@@ -16,6 +16,7 @@ import fr.n7.stl.block.ast.InterfaceDeclaration;
 import fr.n7.stl.block.ast.ClasseDeclaration;
 import fr.n7.stl.block.ast.Instruction;
 import fr.n7.stl.block.ast.Classe;
+import fr.n7.stl.block.ast.Block;
 
 
 
@@ -109,14 +110,14 @@ public class UndeclaredInstanceDeclarationImpl implements UndeclaredInstanceDecl
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Instruction#toDeclared()
 	 */
-	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) throws ToDeclaredException {
+	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, Block blocPere) throws ToDeclaredException {
 		
 		Instruction declared;
 		
 		ClasseDeclaration dec = ClasseDeclaration.appartient(this.typeNom, classes);
 		if (dec != null) {
 			declared = new ClasseInstanceDeclarationImpl(this.nom, new ClasseTypeImpl(dec.getClasse()),
-							this.value.toDeclared(interfaces, classes, classeMere));
+							this.value.toDeclared(interfaces, classes, classeMere, blocPere));
 		} else {
 			throw new ToDeclaredException("Ligne " + "???" + this.typeNom + " " + this.nom + " = " + this.value + ": " + this.typeNom + " inconnu.");
 		}

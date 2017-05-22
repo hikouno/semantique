@@ -13,6 +13,7 @@ import fr.n7.stl.block.ast.Classe;
 import fr.n7.stl.block.ast.Instruction;
 import fr.n7.stl.block.ast.InterfaceDeclaration;
 import fr.n7.stl.block.ast.ClasseDeclaration;
+import fr.n7.stl.block.ast.Block;
 
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
@@ -63,10 +64,10 @@ public class ConditionalImpl implements Instruction {
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Instruction#toDeclared()
 	 */
-	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) throws ToDeclaredException {
+	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, Block blocPere) throws ToDeclaredException {
 		ConditionalImpl nouveau;
 		Block nouvThen = this.thenBranch.toDeclared(interfaces, classes, classeMere);
-		Expression nouvCondition = this.condition.toDeclared(interfaces, classes, classeMere);
+		Expression nouvCondition = this.condition.toDeclared(interfaces, classes, classeMere, blocPere);
 		if(this.elseBranch.isPresent()){
 			nouveau = new ConditionalImpl(nouvCondition, nouvThen, this.elseBranch.get().toDeclared(interfaces, classes, classeMere));
 		}

@@ -10,6 +10,7 @@ import fr.n7.stl.block.ast.Instruction;
 import fr.n7.stl.block.ast.InterfaceDeclaration;
 import fr.n7.stl.block.ast.ClasseDeclaration;
 import fr.n7.stl.block.ast.Classe;
+import fr.n7.stl.block.ast.Block;
 
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
@@ -50,8 +51,8 @@ public class PrinterImpl implements Instruction {
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Instruction#toDeclared()
 	 */
-	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) throws ToDeclaredException {
-		return new PrinterImpl((parameter != null) ? parameter.toDeclared(interfaces, classes, classeMere) : null);
+	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, Block blocPere) throws ToDeclaredException {
+		return new PrinterImpl((parameter != null) ? parameter.toDeclared(interfaces, classes, classeMere, blocPere) : null);
 	}
 
 	/* (non-Javadoc)

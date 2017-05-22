@@ -13,6 +13,7 @@ import fr.n7.stl.block.ast.Type;
 import fr.n7.stl.block.ast.InterfaceDeclaration;
 import fr.n7.stl.block.ast.ClasseDeclaration;
 import fr.n7.stl.block.ast.Instruction;
+import fr.n7.stl.block.ast.Block;
 
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
@@ -122,10 +123,10 @@ public class ClasseInstanceDeclarationImpl implements ClasseInstanceDeclaration 
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Instruction#toDeclared()
 	 */
-	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) throws ToDeclaredException {
+	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, Block blocPere) throws ToDeclaredException {
 		
 		return new ClasseInstanceDeclarationImpl(this.nom, this.type.toDeclared(interfaces, classes, classeMere),
-												this.value.toDeclared(interfaces, classes, classeMere),
+												this.value.toDeclared(interfaces, classes, classeMere, blocPere),
 												this.instance);
 	}
 

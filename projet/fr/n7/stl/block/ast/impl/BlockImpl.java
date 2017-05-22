@@ -106,7 +106,7 @@ public class BlockImpl implements Block {
 	  	for(Instruction instr : instructions) {
 			
 			try {
-				nouvListe.add( instr.toDeclared(interfaces, classes, classeMere) );
+				nouvListe.add( instr.toDeclared(interfaces, classes, classeMere, this) );
 			} catch (ToDeclaredException e) {
 				errorMsg += e.getMessage() + "\n";
 			} catch (NullPointerException e) {
