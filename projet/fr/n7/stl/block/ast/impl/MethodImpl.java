@@ -79,7 +79,7 @@ public class MethodImpl extends MembreClasse {
 	 * Synthesized Semantics attribute to compute the type of an expression.
 	 * @return Synthesized Type of the expression.
 	 */
-	public MethodImpl toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) throws ToDeclaredException {
+	public MethodImpl toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, Block blocPere) throws ToDeclaredException {
 		
 		MethodImpl method_declared;
 		

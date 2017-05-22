@@ -36,8 +36,8 @@ public class ConstanteImpl implements Constante {
 		 * @see fr.n7.stl.block.ast.Expression#toDeclared()
 		 */
 		@Override
-		public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) throws ToDeclaredException {
-			return (new ConstanteImpl(this.type.toDeclared(interfaces, classes, classeMere), this.nom, this.valeur.toDeclared(interfaces, classes, classeMere) ));
+		public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere,  Block blocPere) throws ToDeclaredException {
+			return (new ConstanteImpl(this.type.toDeclared(interfaces, classes, classeMere), this.nom, this.valeur.toDeclared(interfaces, classes, classeMere,  Block blocPere) ));
 		}
 		
 		/* (non-Javadoc)

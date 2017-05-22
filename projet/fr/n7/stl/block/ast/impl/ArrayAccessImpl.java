@@ -46,8 +46,8 @@ public class ArrayAccessImpl implements Expression {
 	 * @see fr.n7.stl.block.ast.Expression#toDeclared()
 	 */
 	@Override
-	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) throws ToDeclaredException {
-		return (new ArrayAccessImpl(this.array.toDeclared(interfaces, classes, classeMere), this.index.toDeclared(interfaces, classes, classeMere)));
+	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, Block blockPere) throws ToDeclaredException {
+		return (new ArrayAccessImpl(this.array.toDeclared(interfaces, classes, classeMere, blockPere), this.index.toDeclared(interfaces, classes, classeMere, blockPere)));
 	}
 	
 	/* (non-Javadoc)
