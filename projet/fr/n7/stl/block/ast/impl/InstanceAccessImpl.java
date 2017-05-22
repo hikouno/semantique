@@ -150,11 +150,11 @@ public class InstanceAccessImpl implements Expression {
      * @see fr.n7.stl.block.ast.Expression#toDeclared()
      */
     @Override
-    public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) throws ToDeclaredException {
+    public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, Block blocPere) throws ToDeclaredException {
         
         InstanceAccessImpl declared = (this.use != null) ?
-        new InstanceAccessImpl((InstanceUseImpl) this.use.toDeclared(interfaces, classes, classeMere)) :
-        new InstanceAccessImpl((InstanceAccessImpl) this.access.toDeclared(interfaces, classes, classeMere));
+        new InstanceAccessImpl((InstanceUseImpl) this.use.toDeclared(interfaces, classes, classeMere, Block blocPere)) :
+        new InstanceAccessImpl((InstanceAccessImpl) this.access.toDeclared(interfaces, classes, classeMere, , Block blocPere));
         
         declared.setNomAcces(this.getNomAcces());
         declared.setArgumentsAcces(this.getArgumentsAcces());

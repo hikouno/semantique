@@ -58,8 +58,8 @@ public class BinaryExpressionImpl implements Expression {
 	 * @see fr.n7.stl.block.ast.Expression#toDeclared()
 	 */
 	@Override
-	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) throws ToDeclaredException{
-		return new BinaryExpressionImpl(this.left.toDeclared(interfaces, classes, classeMere), this.operator, this.right.toDeclared(interfaces, classes, classeMere));
+	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere,  Block blocPere) throws ToDeclaredException{
+		return new BinaryExpressionImpl(this.left.toDeclared(interfaces, classes, classeMere,  Block blocPere), this.operator, this.right.toDeclared(interfaces, classes, classeMere, Block blocPere));
 	}
 	
 	/* (non-Javadoc)
