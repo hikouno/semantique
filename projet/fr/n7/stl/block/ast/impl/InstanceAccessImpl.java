@@ -88,8 +88,8 @@ public class InstanceAccessImpl implements Expression {
         return this.membreAccede.getArguments();
     }
     
-    /** Declare return Type & method access arguments. */
-    private void declare(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, Block blocPere) throws ToDeclaredException {
+    /** Declare return Type and method access arguments. */
+    public void declare(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, Block blocPere) throws ToDeclaredException {
         
         //Déclaration des arguments.
         if (membreAccede.getArguments() != null) {

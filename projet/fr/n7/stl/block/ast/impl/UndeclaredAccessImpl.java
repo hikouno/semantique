@@ -54,6 +54,14 @@ public class UndeclaredAccessImpl implements Expression {
         this.membreAccede.setArguments(_args);
     }
     
+    public String getNomAcces() {
+        return this.membreAccede.getNom();
+    }
+    
+    public LinkedList<Expression> getArgumentsAcces() {
+        return this.membreAccede.getArguments();
+    }
+    
     /* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
@@ -81,8 +89,16 @@ public class UndeclaredAccessImpl implements Expression {
 	 * @see fr.n7.stl.block.ast.Expression#toDeclared()
 	 */
 	@Override
-	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, Block blocPere) {
-		return this;
+	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, Block blocPere) throws ToDeclaredException {
+		InstanceAccessImpl declared = (this.use != null) ?
+        new InstanceAccessImpl((InstanceUseImpl) this.use.toDeclared(interfaces, classes, classeMere, blocPere)) :
+        new InstanceAccessImpl((InstanceAccessImpl) this.access.toDeclared(interfaces, classes, classeMere, blocPere));
+        
+        declared.setNomAcces(this.getNomAcces());
+        declared.setArgumentsAcces(this.getArgumentsAcces());
+        
+        declared.declare(interfaces, classes, classeMere, blocPere);
+        return declared;
 	}
 
     /* (non-Javadoc)

@@ -50,8 +50,20 @@ public class UndeclaredInstanceUseImpl implements Expression {
 	 * @see fr.n7.stl.block.ast.Expression#toDeclared()
 	 */
 	@Override
-	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, Block blocPere) {
-		return this;
+	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, Block blocPere) throws ToDeclaredException {
+		
+		if (!blocPere.postScope_knows( this.declaration.getName() )) {
+			throw new ToDeclaredException("UndeclaredInstanceUse : " + this.declaration.getName() + " non déclarée précédemment.");
+		}
+		
+		ClasseInstanceDeclarationImpl dec;
+		try {
+			dec = (ClasseInstanceDeclarationImpl) blocPere.postScope_get( this.declaration.getName() ).get();
+		} catch (Exception e) {
+			throw new ToDeclaredException("UndeclaredInstanceUse " + this.declaration.getName() + ": " + e.getMessage());
+		}
+		
+		return new InstanceUseImpl(dec);
 	}
 
 	/* (non-Javadoc)

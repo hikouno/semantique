@@ -120,7 +120,7 @@ public class UndeclaredInstanceDeclarationImpl implements UndeclaredInstanceDecl
 							this.value.toDeclared(interfaces, classes, classeMere, blocPere));
 			
 			if (blocPere.postScope_contains(this.nom))
-				throw new ToDeclaredException(this.nom + "déjà défini dans le scope courant !");
+				throw new ToDeclaredException(this.nom + " déjà défini dans le scope courant !");
 			
 			try {
 				blocPere.postScope_register(declared);
