@@ -13,6 +13,8 @@ import fr.n7.stl.block.ast.BinaryOperator;
 import fr.n7.stl.block.ast.Expression;
 import fr.n7.stl.block.ast.Classe;
 import fr.n7.stl.block.ast.Type;
+import fr.n7.stl.block.ast.Block;
+
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.util.Logger;
@@ -59,7 +61,7 @@ public class BinaryExpressionImpl implements Expression {
 	 */
 	@Override
 	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere,  Block blocPere) throws ToDeclaredException{
-		return new BinaryExpressionImpl(this.left.toDeclared(interfaces, classes, classeMere,  Block blocPere), this.operator, this.right.toDeclared(interfaces, classes, classeMere, Block blocPere));
+		return new BinaryExpressionImpl(this.left.toDeclared(interfaces, classes, classeMere,  blocPere), this.operator, this.right.toDeclared(interfaces, classes, classeMere, blocPere));
 	}
 	
 	/* (non-Javadoc)

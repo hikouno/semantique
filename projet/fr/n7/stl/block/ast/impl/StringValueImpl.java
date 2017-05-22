@@ -14,6 +14,8 @@ import fr.n7.stl.block.ast.AtomicType;
 import fr.n7.stl.block.ast.IntegerValue;
 import fr.n7.stl.block.ast.Type;
 import fr.n7.stl.block.ast.StringValue;
+import fr.n7.stl.block.ast.Block;
+
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.TAMFactory;
 
@@ -46,7 +48,7 @@ public class StringValueImpl implements StringValue {
 	 * @see fr.n7.stl.block.ast.Expression#toDeclared()
 	 */
 	@Override
-	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) {
+	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, Block blocPere) {
 		return this;
 	}
 	

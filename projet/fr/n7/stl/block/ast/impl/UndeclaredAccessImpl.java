@@ -13,6 +13,8 @@ import fr.n7.stl.block.ast.Type;
 import fr.n7.stl.block.ast.Classe;
 import fr.n7.stl.block.ast.Expression;
 import fr.n7.stl.block.ast.impl.AccessTools.AppelOuAcces;
+import fr.n7.stl.block.ast.Block;
+
 
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
@@ -79,7 +81,7 @@ public class UndeclaredAccessImpl implements Expression {
 	 * @see fr.n7.stl.block.ast.Expression#toDeclared()
 	 */
 	@Override
-	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) {
+	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, Block blocPere) {
 		return this;
 	}
 

@@ -12,6 +12,8 @@ import fr.n7.stl.block.ast.Type;
 import fr.n7.stl.block.ast.Classe;
 import fr.n7.stl.block.ast.Expression;
 import fr.n7.stl.block.ast.Constante;
+import fr.n7.stl.block.ast.Block;
+
 
 public class ConstanteImpl implements Constante {
 		private Type type;
@@ -37,7 +39,7 @@ public class ConstanteImpl implements Constante {
 		 */
 		@Override
 		public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere,  Block blocPere) throws ToDeclaredException {
-			return (new ConstanteImpl(this.type.toDeclared(interfaces, classes, classeMere), this.nom, this.valeur.toDeclared(interfaces, classes, classeMere,  Block blocPere) ));
+			return (new ConstanteImpl(this.type.toDeclared(interfaces, classes, classeMere), this.nom, this.valeur.toDeclared(interfaces, classes, classeMere, blocPere) ));
 		}
 		
 		/* (non-Javadoc)

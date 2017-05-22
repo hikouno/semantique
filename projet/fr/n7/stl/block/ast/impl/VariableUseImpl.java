@@ -12,6 +12,8 @@ import fr.n7.stl.block.ast.Expression;
 import fr.n7.stl.block.ast.Classe;
 import fr.n7.stl.block.ast.Type;
 import fr.n7.stl.block.ast.VariableDeclaration;
+import fr.n7.stl.block.ast.Block;
+
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.TAMFactory;
 
@@ -48,8 +50,8 @@ public class VariableUseImpl implements Expression {
 	 * @see fr.n7.stl.block.ast.Expression#toDeclared()
 	 */
 	@Override
-	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) throws ToDeclaredException {
-		return new VariableUseImpl((VariableDeclaration) this.declaration.toDeclared(interfaces, classes, classeMere));
+	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, Block blocPere) throws ToDeclaredException {
+		return new VariableUseImpl((VariableDeclaration) this.declaration.toDeclared(interfaces, classes, classeMere, blocPere));
 	}
 
 	/* (non-Javadoc)

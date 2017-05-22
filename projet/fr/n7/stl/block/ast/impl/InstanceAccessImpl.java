@@ -16,6 +16,8 @@ import fr.n7.stl.block.ast.Type;
 import fr.n7.stl.block.ast.Expression;
 import fr.n7.stl.block.ast.ClasseInstanceDeclaration;
 import fr.n7.stl.block.ast.impl.AccessTools.AppelOuAcces;
+import fr.n7.stl.block.ast.Block;
+
 
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
@@ -87,14 +89,14 @@ public class InstanceAccessImpl implements Expression {
     }
     
     /** Declare return Type & method access arguments. */
-    private void declare(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) throws ToDeclaredException {
+    private void declare(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, Block blocPere) throws ToDeclaredException {
         
         //Déclaration des arguments.
         if (membreAccede.getArguments() != null) {
             
             LinkedList<Expression> nouv_expr = new LinkedList<Expression>();
             for (Expression expr : membreAccede.getArguments()) {
-                nouv_expr.add( expr.toDeclared( interfaces, classes, classeMere ) );
+                nouv_expr.add( expr.toDeclared( interfaces, classes, classeMere, blocPere ) );
             }
         
             membreAccede.setArguments(nouv_expr);
@@ -153,13 +155,13 @@ public class InstanceAccessImpl implements Expression {
     public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, Block blocPere) throws ToDeclaredException {
         
         InstanceAccessImpl declared = (this.use != null) ?
-        new InstanceAccessImpl((InstanceUseImpl) this.use.toDeclared(interfaces, classes, classeMere, Block blocPere)) :
-        new InstanceAccessImpl((InstanceAccessImpl) this.access.toDeclared(interfaces, classes, classeMere, , Block blocPere));
+        new InstanceAccessImpl((InstanceUseImpl) this.use.toDeclared(interfaces, classes, classeMere, blocPere)) :
+        new InstanceAccessImpl((InstanceAccessImpl) this.access.toDeclared(interfaces, classes, classeMere, blocPere));
         
         declared.setNomAcces(this.getNomAcces());
         declared.setArgumentsAcces(this.getArgumentsAcces());
         
-        declared.declare(interfaces, classes, classeMere);
+        declared.declare(interfaces, classes, classeMere, blocPere);
         return declared;
     }
     

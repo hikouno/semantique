@@ -11,6 +11,8 @@ import fr.n7.stl.block.ast.InterfaceDeclaration;
 import fr.n7.stl.block.ast.Type;
 import fr.n7.stl.block.ast.Classe;
 import fr.n7.stl.block.ast.ClasseInstanceDeclaration;
+import fr.n7.stl.block.ast.Block;
+
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.TAMFactory;
 

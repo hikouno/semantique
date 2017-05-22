@@ -52,8 +52,8 @@ public class RepetitionImpl implements Instruction {
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Instruction#toDeclared()
 	 */
-	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, Block blocPere) {
-		return new RepetitionImpl(this.expression.toDeclared(interfaces, classes, classeMere, blocPere), this.body.toDeclared(interfaces, classes, classeMere));
+	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, Block blocPere) throws ToDeclaredException {
+		return new RepetitionImpl(this.condition.toDeclared(interfaces, classes, classeMere, blocPere), this.body.toDeclared(interfaces, classes, classeMere));
 	}
 
 

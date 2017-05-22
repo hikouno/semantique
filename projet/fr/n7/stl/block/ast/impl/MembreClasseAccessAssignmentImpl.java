@@ -4,6 +4,7 @@
 package fr.n7.stl.block.ast.impl;
 
 import fr.n7.stl.block.ast.Assignable;
+import fr.n7.stl.block.ast.Block;
 import fr.n7.stl.block.ast.impl.MembreClasseAccessImpl.Identifier;
 
 import fr.n7.stl.tam.ast.Fragment;

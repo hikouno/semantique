@@ -14,6 +14,8 @@ import fr.n7.stl.block.ast.Classe;
 import fr.n7.stl.block.ast.Type;
 import fr.n7.stl.block.ast.UnaryOperator;
 import fr.n7.stl.block.ast.VariableDeclaration;
+import fr.n7.stl.block.ast.Block;
+
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.util.Logger;
@@ -51,8 +53,8 @@ public class UnaryExpressionImpl implements Expression {
 	 * @see fr.n7.stl.block.ast.Expression#toDeclared()
 	 */
 	@Override
-	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) throws ToDeclaredException {
-		return new UnaryExpressionImpl(this.operator, this.parameter.toDeclared(interfaces, classes, classeMere));
+	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, Block blocPere) throws ToDeclaredException {
+		return new UnaryExpressionImpl(this.operator, this.parameter.toDeclared(interfaces, classes, classeMere, blocPere));
 	}
 	
 	/* (non-Javadoc)
