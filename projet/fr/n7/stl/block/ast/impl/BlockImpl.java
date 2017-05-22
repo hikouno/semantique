@@ -13,6 +13,11 @@ import fr.n7.stl.block.ast.ClasseDeclaration;
 import fr.n7.stl.block.ast.Classe;
 import fr.n7.stl.block.ast.UndeclaredInstanceDeclaration;
 import fr.n7.stl.block.ast.Instruction;
+import fr.n7.stl.block.ast.Declaration;
+import fr.n7.stl.block.ast.ForbiddenDeclarationException;
+
+import fr.n7.stl.util.SymbolTable;
+
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
@@ -36,6 +41,8 @@ public class BlockImpl implements Block {
 	 */
 	protected Optional<Block> context;
 	
+	protected SymbolTable postScope;
+	
 	private int memAllouee = 0;
 	
 	/**
@@ -47,8 +54,10 @@ public class BlockImpl implements Block {
 		this.instructions = new LinkedList<Instruction>();
 		if (_context == null) {
 			this.context = Optional.empty();
+			this.postScope = new SymbolTable();
 		} else {
 			this.context = Optional.of(_context);
+			this.postScope = new SymbolTable(_context.getPostScope());
 		}
 	}
 	
@@ -58,8 +67,29 @@ public class BlockImpl implements Block {
 	public BlockImpl() {
 		this.instructions = new LinkedList<Instruction>();
 		this.context = Optional.empty();
+		this.postScope = new SymbolTable();
 	}
-
+	
+	
+	/**
+	 * Renvoie la post scope.
+	 */
+	public SymbolTable getPostScope() {
+		return this.postScope;
+	}
+	
+	public void postScope_register(Declaration _declaration) throws ForbiddenDeclarationException {
+		this.postScope.register(_declaration);
+	}
+	
+	public boolean postScope_knows(String _name) {
+		return this.postScope.knows(_name);
+	}
+	
+	public Optional<Declaration> postScope_get(String _name) {
+		return this.postScope.get(_name);
+	}
+	
 	/* (non-Javadoc)
 	 * @see fr.n7.block.ast.Block#add(fr.n7.block.ast.Instruction)
 	 */

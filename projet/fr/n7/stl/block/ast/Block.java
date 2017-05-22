@@ -5,8 +5,11 @@ package fr.n7.stl.block.ast;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import fr.n7.stl.block.ast.impl.ToDeclaredException;
+
+import fr.n7.stl.util.SymbolTable;
 
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
@@ -41,6 +44,14 @@ public interface Block {
 	 * @return The new AST with undeclared references replaces by actual ones.
 	 */	
 	public Block toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) throws ToDeclaredException;
+	
+	public SymbolTable getPostScope();
+	
+	public void postScope_register(Declaration _declaration) throws ForbiddenDeclarationException;
+	
+	public boolean postScope_knows(String _name);
+	
+	public Optional<Declaration> postScope_get(String _name);
 	
 	/**
 	 * Synthesized Semantics attribute to check that an instruction if well typed.
