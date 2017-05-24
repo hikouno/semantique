@@ -110,14 +110,14 @@ public class UndeclaredInstanceDeclarationImpl implements UndeclaredInstanceDecl
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Instruction#toDeclared()
 	 */
-	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, Block blocPere) throws ToDeclaredException {
+	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, MethodImpl methodeMere, Block blocPere) throws ToDeclaredException {
 		
 		ClasseInstanceDeclarationImpl declared;
 		
 		ClasseDeclaration dec = ClasseDeclaration.appartient(this.typeNom, classes);
 		if (dec != null) {
 			declared = new ClasseInstanceDeclarationImpl(this.nom, new ClasseTypeImpl(dec.getClasse()),
-							this.value.toDeclared(interfaces, classes, classeMere, blocPere));
+							this.value.toDeclared(interfaces, classes, classeMere, methodeMere, blocPere));
 			
 			if (blocPere.postScope_contains(this.nom))
 				throw new ToDeclaredException(this.nom + " déjà défini dans le scope courant !");

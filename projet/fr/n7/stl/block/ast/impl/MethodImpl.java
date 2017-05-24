@@ -109,7 +109,7 @@ public class MethodImpl extends MembreClasse {
 		
 		//DÉCLARATION DE LA MÉTHODE
 		method_declared = new MethodImpl(classeMere, getNom(), nouv_arguments,
-											corps.toDeclared(interfaces, classes, classeMere),
+											corps.toDeclared(interfaces, classes, classeMere, this),
 											this.getDroitAcces(), this.estStatique(), nouv_opt_type);
 		
 		return method_declared;

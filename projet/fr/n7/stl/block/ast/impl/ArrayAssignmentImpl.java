@@ -30,14 +30,6 @@ public class ArrayAssignmentImpl extends ArrayAccessImpl implements Assignable {
 	public ArrayAssignmentImpl(Expression _array, Expression _index) {
 		super(_array, _index);
 	}
-
-	/* (non-Javadoc)
-	 * @see fr.n7.stl.block.ast.Expression#toDeclared()
-	 */
-	@Override
-	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, Block blocPere) {
-		return this;
-	}
 	
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.impl.ArrayAccessImpl#getCode(fr.n7.stl.tam.ast.TAMFactory)

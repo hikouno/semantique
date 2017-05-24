@@ -53,7 +53,7 @@ public class ClassePrincipaleImpl implements ClassePrincipale {
 	@Override
 	public ScopeCheckResult scopeCheck(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes) {
 		try {
-			Block nouv_methodePrinc = methodePrinc.toDeclared(interfaces, classes, null);
+			Block nouv_methodePrinc = methodePrinc.toDeclared(interfaces, classes, null, null);
 			this.methodePrinc = nouv_methodePrinc;
 			
 		} catch (ToDeclaredException e) {

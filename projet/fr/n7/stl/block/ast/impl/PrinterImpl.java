@@ -51,8 +51,8 @@ public class PrinterImpl implements Instruction {
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Instruction#toDeclared()
 	 */
-	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, Block blocPere) throws ToDeclaredException {
-		return new PrinterImpl((parameter != null) ? parameter.toDeclared(interfaces, classes, classeMere, blocPere) : null);
+	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, MethodImpl methodeMere, Block blocPere) throws ToDeclaredException {
+		return new PrinterImpl((parameter != null) ? parameter.toDeclared(interfaces, classes, classeMere, methodeMere, blocPere) : null);
 	}
 
 	/* (non-Javadoc)

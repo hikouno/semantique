@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
+import fr.n7.stl.block.ast.impl.MethodImpl;
 import fr.n7.stl.block.ast.impl.ToDeclaredException;
 
 import fr.n7.stl.util.SymbolTable;
@@ -43,7 +44,7 @@ public interface Block {
 	 * to the scope.
 	 * @return The new AST with undeclared references replaces by actual ones.
 	 */	
-	public Block toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) throws ToDeclaredException;
+	public Block toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, MethodImpl methodeMere) throws ToDeclaredException;
 	
 	public SymbolTable getPostScope();
 	

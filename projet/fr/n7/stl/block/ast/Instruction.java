@@ -9,6 +9,7 @@ import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
 
+import fr.n7.stl.block.ast.impl.MethodImpl;
 import fr.n7.stl.block.ast.impl.ToDeclaredException;
 
 /**
@@ -30,7 +31,7 @@ public interface Instruction {
 	 * Return the instruction if it is well declared.
 	 * @return the instruction if it is well declared.
 	 */
-	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, Block blocPere) throws ToDeclaredException;
+	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, MethodImpl methodeMere, Block blocPere) throws ToDeclaredException;
 	
 	/**
 	 * Inherited Semantics attribute to allocate memory for the variables declared in the instruction.

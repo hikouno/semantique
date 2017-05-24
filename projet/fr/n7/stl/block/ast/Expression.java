@@ -5,6 +5,7 @@ import java.util.List;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.TAMFactory;
 
+import fr.n7.stl.block.ast.impl.MethodImpl;
 import fr.n7.stl.block.ast.impl.ToDeclaredException;
 
 /**
@@ -19,7 +20,7 @@ public interface Expression {
 	 * Synthesized Semantics attribute to compute the type of an expression.
 	 * @return Synthesized Type of the expression.
 	 */
-	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, Block blocPere) throws ToDeclaredException;
+	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, MethodImpl methodeMere, Block blocPere) throws ToDeclaredException;
 	
 	/**
 	 * Synthesized Semantics attribute to compute the type of an expression.

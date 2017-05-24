@@ -123,10 +123,10 @@ public class ClasseInstanceDeclarationImpl implements ClasseInstanceDeclaration 
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Instruction#toDeclared()
 	 */
-	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, Block blocPere) throws ToDeclaredException {
+	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, MethodImpl methodeMere, Block blocPere) throws ToDeclaredException {
 		
 		return new ClasseInstanceDeclarationImpl(this.nom, this.type.toDeclared(interfaces, classes, classeMere),
-												this.value.toDeclared(interfaces, classes, classeMere, blocPere),
+												this.value.toDeclared(interfaces, classes, classeMere, methodeMere, blocPere),
 												this.instance);
 	}
 

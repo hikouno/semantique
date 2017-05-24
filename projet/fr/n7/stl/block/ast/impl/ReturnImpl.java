@@ -55,8 +55,8 @@ public class ReturnImpl implements Instruction {
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Instruction#toDeclared()
 	 */
-	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, Block blocPere) throws ToDeclaredException{
-		return new ReturnImpl(this.value.toDeclared(interfaces, classes, classeMere, blocPere));
+	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, MethodImpl methodeMere, Block blocPere) throws ToDeclaredException{
+		return new ReturnImpl(this.value.toDeclared(interfaces, classes, classeMere, methodeMere, blocPere));
 	}
 
 	/* (non-Javadoc)

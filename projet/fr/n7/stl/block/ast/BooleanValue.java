@@ -5,6 +5,8 @@ package fr.n7.stl.block.ast;
 
 import java.util.List;
 
+import fr.n7.stl.block.ast.impl.MethodImpl;
+
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.TAMFactory;
 
@@ -35,7 +37,7 @@ public enum BooleanValue implements Value {
 	 * @see fr.n7.stl.block.ast.Expression#toDeclared()
 	 */
 	@Override
-	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, Block blocPere) {
+	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, MethodImpl methodeMere, Block blocPere) {
 		return this;
 	}
 	

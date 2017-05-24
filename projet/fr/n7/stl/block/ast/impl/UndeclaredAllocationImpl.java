@@ -50,7 +50,7 @@ public class UndeclaredAllocationImpl implements Expression {
 	 * @see fr.n7.stl.block.ast.Expression#toDeclared()
 	 */
 	@Override
-	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, Block blocPere) throws ToDeclaredException {
+	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, MethodImpl methodeMere, Block blocPere) throws ToDeclaredException {
 		
 		Expression declared;
 		
@@ -60,7 +60,7 @@ public class UndeclaredAllocationImpl implements Expression {
 		LinkedList<Expression> nouv_args = new LinkedList<Expression>();
 		for (Expression expr : arguments) {
 			try {
-				nouv_args.add( expr.toDeclared(interfaces, classes, classeMere, blocPere) );
+				nouv_args.add( expr.toDeclared(interfaces, classes, classeMere, methodeMere, blocPere) );
 			} catch (ToDeclaredException e) {
 				errorMsg += e.getMessage() + "\n";
 			}

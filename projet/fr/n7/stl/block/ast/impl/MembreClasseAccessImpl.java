@@ -27,6 +27,7 @@ import fr.n7.stl.tam.ast.TAMFactory;
  */
 public class MembreClasseAccessImpl implements Expression {
     
+    protected String PREFIX = "";
     protected boolean verified = false;
     
     public enum Identifier {THIS, SUPER, ARGUMENT, UNKNOWN};
@@ -67,7 +68,7 @@ public class MembreClasseAccessImpl implements Expression {
      */
     @Override
     public String toString() {
-        String text = "";
+        String text = PREFIX;
         
         if (this.base != null) {
             text += ((!this.verified) ? "(???) " : "") + identifierToString(this.base);
@@ -103,8 +104,11 @@ public class MembreClasseAccessImpl implements Expression {
 	 * @see fr.n7.stl.block.ast.Expression#toDeclared()
 	 */
 	@Override
-	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, Block blocPere) {
-		return this;
+	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, MethodImpl methodeMere, Block blocPere) {
+		//We will now try to verify the access.
+        PREFIX = (methodeMere != null) ? methodeMere.getNom() : "[methodeMere nulle]";
+        
+        return this;
 	}
     
     /* (non-Javadoc)

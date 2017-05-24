@@ -72,14 +72,14 @@ public class AssignmentImpl implements Instruction {
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Instruction#toDeclared()
 	 */
-	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, Block blocPere) throws ToDeclaredException {
+	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, MethodImpl methodeMere, Block blocPere) throws ToDeclaredException {
 		AssignmentImpl nouveau;
-		Expression nouvValue = this.value.toDeclared(interfaces, classes, classeMere, blocPere);
+		Expression nouvValue = this.value.toDeclared(interfaces, classes, classeMere, methodeMere, blocPere);
 		if(this.assignable != null){
-			nouveau = new AssignmentImpl((Assignable) this.assignable.toDeclared(interfaces, classes, classeMere, blocPere), nouvValue);
+			nouveau = new AssignmentImpl((Assignable) this.assignable.toDeclared(interfaces, classes, classeMere, methodeMere, blocPere), nouvValue);
 		}
 		else{
-			nouveau = new AssignmentImpl((VariableDeclaration) this.declaration.toDeclared(interfaces, classes, classeMere, blocPere), nouvValue);
+			nouveau = new AssignmentImpl((VariableDeclaration) this.declaration.toDeclared(interfaces, classes, classeMere, methodeMere, blocPere), nouvValue);
 		}
 		return nouveau;
 	}

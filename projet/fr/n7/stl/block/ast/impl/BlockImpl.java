@@ -131,7 +131,7 @@ public class BlockImpl implements Block {
 	 * @return The new AST with undeclared references replaces by actual ones.
 	 */	
 	@Override
-	public Block toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) throws ToDeclaredException {
+	public Block toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, MethodImpl methodeMere) throws ToDeclaredException {
 		
 		//Try to build a new declared instruction list.
 		String errorMsg = "";
@@ -140,7 +140,7 @@ public class BlockImpl implements Block {
 	  	for(Instruction instr : instructions) {
 			
 			try {
-				nouvListe.add( instr.toDeclared(interfaces, classes, classeMere, this) );
+				nouvListe.add( instr.toDeclared(interfaces, classes, classeMere, methodeMere, this) );
 			} catch (ToDeclaredException e) {
 				errorMsg += e.getMessage() + "\n";
 			} catch (NullPointerException e) {

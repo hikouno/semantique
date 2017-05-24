@@ -64,12 +64,12 @@ public class ConditionalImpl implements Instruction {
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Instruction#toDeclared()
 	 */
-	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, Block blocPere) throws ToDeclaredException {
+	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, MethodImpl methodeMere, Block blocPere) throws ToDeclaredException {
 		ConditionalImpl nouveau;
-		Block nouvThen = this.thenBranch.toDeclared(interfaces, classes, classeMere);
-		Expression nouvCondition = this.condition.toDeclared(interfaces, classes, classeMere, blocPere);
+		Block nouvThen = this.thenBranch.toDeclared(interfaces, classes, classeMere, methodeMere);
+		Expression nouvCondition = this.condition.toDeclared(interfaces, classes, classeMere, methodeMere, blocPere);
 		if(this.elseBranch.isPresent()){
-			nouveau = new ConditionalImpl(nouvCondition, nouvThen, this.elseBranch.get().toDeclared(interfaces, classes, classeMere));
+			nouveau = new ConditionalImpl(nouvCondition, nouvThen, this.elseBranch.get().toDeclared(interfaces, classes, classeMere, methodeMere));
 		}
 		else{
 			nouveau = new ConditionalImpl(nouvCondition, nouvThen);

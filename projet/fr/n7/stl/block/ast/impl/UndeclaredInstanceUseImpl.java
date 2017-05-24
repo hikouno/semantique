@@ -50,7 +50,7 @@ public class UndeclaredInstanceUseImpl implements Expression {
 	 * @see fr.n7.stl.block.ast.Expression#toDeclared()
 	 */
 	@Override
-	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, Block blocPere) throws ToDeclaredException {
+	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, MethodImpl methodeMere, Block blocPere) throws ToDeclaredException {
 		
 		if (!blocPere.postScope_knows( this.declaration.getName() )) {
 			throw new ToDeclaredException("UndeclaredInstanceUse : " + this.declaration.getName() + " non déclarée précédemment.");

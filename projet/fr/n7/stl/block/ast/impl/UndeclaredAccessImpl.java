@@ -89,15 +89,15 @@ public class UndeclaredAccessImpl implements Expression {
 	 * @see fr.n7.stl.block.ast.Expression#toDeclared()
 	 */
 	@Override
-	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, Block blocPere) throws ToDeclaredException {
+	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, MethodImpl methodeMere, Block blocPere) throws ToDeclaredException {
 		InstanceAccessImpl declared = (this.use != null) ?
-        new InstanceAccessImpl((InstanceUseImpl) this.use.toDeclared(interfaces, classes, classeMere, blocPere)) :
-        new InstanceAccessImpl((InstanceAccessImpl) this.access.toDeclared(interfaces, classes, classeMere, blocPere));
+        new InstanceAccessImpl((InstanceUseImpl) this.use.toDeclared(interfaces, classes, classeMere, methodeMere, blocPere)) :
+        new InstanceAccessImpl((InstanceAccessImpl) this.access.toDeclared(interfaces, classes, classeMere, methodeMere, blocPere));
         
         declared.setNomAcces(this.getNomAcces());
         declared.setArgumentsAcces(this.getArgumentsAcces());
         
-        declared.declare(interfaces, classes, classeMere, blocPere);
+        declared.declare(interfaces, classes, classeMere, methodeMere, blocPere);
         return declared;
 	}
 
