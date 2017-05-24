@@ -27,7 +27,9 @@ import fr.n7.stl.tam.ast.TAMFactory;
  */
 public class MembreClasseAccessImpl implements Expression {
     
-    public enum Identifier {THIS, SUPER};
+    protected boolean verified = false;
+    
+    public enum Identifier {THIS, SUPER, ARGUMENT, UNKNOWN};
     
     protected Identifier base;
     protected MembreClasseAccessImpl access;
@@ -65,8 +67,15 @@ public class MembreClasseAccessImpl implements Expression {
      */
     @Override
     public String toString() {
-        String text = (this.base != null) ? ((this.base == Identifier.THIS) ? "(???) this" : "(???) super") : access.toString();
-        if (membreAccede.getNom() != null) text += "." + membreAccede.getNom();
+        String text = "";
+        
+        if (this.base != null) {
+            text += ((!this.verified) ? "(???) " : "") + identifierToString(this.base);
+        } else {
+            text += access.toString() + ".";
+        }
+        
+        if (membreAccede.getNom() != null) text += membreAccede.getNom();
         
         if (membreAccede.getArguments() != null) {
             text += "(";
@@ -81,6 +90,13 @@ public class MembreClasseAccessImpl implements Expression {
         
         
         return text;
+    }
+    
+    private String identifierToString(Identifier id) {
+        if (id == Identifier.THIS) return "this.";
+        else if (id == Identifier.SUPER) return "super.";
+        else if (id == Identifier.ARGUMENT) return "[arg] ";
+        else return "";
     }
     
     /* (non-Javadoc)

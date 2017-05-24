@@ -1197,7 +1197,7 @@ do
             if (identificateur^txt.equals("super")) then
                 SuiteAffectable^support := Affectable^factory.createMembreClasseAccessAssignment_identifier(Identifier.SUPER, "");
             else
-                SuiteAffectable^support := Affectable^factory.createMembreClasseAccessAssignment_identifier(Identifier.THIS, identificateur^txt);
+                SuiteAffectable^support := Affectable^factory.createMembreClasseAccessAssignment_identifier(Identifier.UNKNOWN, identificateur^txt);
             end
         end
     end
@@ -1855,7 +1855,7 @@ do
             if (identificateur^txt.equals("super")) then
                 AppelOuAcces^support := Facteur^factory.createMembreClasseAccess_identifier(Identifier.SUPER, "");
             else
-                AppelOuAcces^support := Facteur^factory.createMembreClasseAccess_identifier(Identifier.THIS, identificateur^txt);
+                AppelOuAcces^support := Facteur^factory.createMembreClasseAccess_identifier(Identifier.UNKNOWN, identificateur^txt);
             end
         end
    end
