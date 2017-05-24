@@ -12,11 +12,11 @@ class EtreVivant {
 
 class Poisson {
 
-    public Poisson(int a, int b, boolean c, int e) {
+    public Poisson(int a, int b, boolean c, int be) {
         print 4;
     }
     
-    public Ordi ma_methode_incroyable2(Ordi b, Poisson c) {
+    public Ordi ma_methode_incroyable2(Ordi b, Poisson c, int be) {
         int j = 42;
         
         if (1 == 1) {
@@ -28,7 +28,7 @@ class Poisson {
 		
         Ordi c = 2;
         
-        print be;
+        print this.be;
         print be.est_incroyable(new Ordi(new Poisson()));
     }
     
@@ -36,6 +36,7 @@ class Poisson {
     private static Ordi mon_attribut;
     
     public boolean nageoires;
+    private int be;
 }
 
 
