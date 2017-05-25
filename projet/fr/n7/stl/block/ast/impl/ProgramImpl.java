@@ -76,12 +76,8 @@ public class ProgramImpl implements Program {
 		
 		/** Parcours des interfaces */
 		for (Interface interf : this.interfaces) {
-<<<<<<< HEAD
-			ScopeCheckResult res = interf.scopeCheck(interfacesDec, classesDec);
-=======
 			ScopeCheckResult res = interf.scopeCheck(interfacesDec, classesDec, new LinkedList<String>());
 			
->>>>>>> 4cee480d4273ebe9e4ada16689e2b5cbb794732d
 			if (!res.wasSuccessful()) {
 				return res;
 			}
