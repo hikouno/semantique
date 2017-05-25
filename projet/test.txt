@@ -5,7 +5,7 @@ interface Soda extends Boisson {
 interface Boisson extends Liquide {
 }
 
-interface Liquide extends Soda {
+interface Liquide {
 }
 
 
