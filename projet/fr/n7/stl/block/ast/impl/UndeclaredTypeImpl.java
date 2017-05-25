@@ -1,4 +1,4 @@
-/**
+	/**
  * 
  */
 package fr.n7.stl.block.ast.impl;
@@ -34,17 +34,22 @@ public class UndeclaredTypeImpl implements Type {
 	public Type toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) throws ToDeclaredException {
 		
 		Type type_declared;
-		
-		ClasseDeclaration dec = ClasseDeclaration.appartient(this.nom, classes);
-		if (dec != null) {
+		InterfaceDeclaration interf = InterfaceDeclaration.appartient(this.nom, interfaces);
+		if (interf != null) {
 			
 			//On reconstruit un nouveau type bien déclaré cette fois.
-			type_declared = new ClasseTypeImpl(dec.getClasse());
+			type_declared = new InterfaceTypeImpl(interf.getInterface());
 			
 		} else {
-			throw new ToDeclaredException("Le type " + this.nom + " est inconnu !");
-		}
-		
+			ClasseDeclaration dec = ClasseDeclaration.appartient(this.nom, classes);
+			if (dec != null) {
+				
+				//On reconstruit un nouveau type bien déclaré cette fois.
+				type_declared = new ClasseTypeImpl(dec.getClasse());
+			} else {
+				throw new ToDeclaredException("Le type " + this.nom + " est inconnu !");
+			}
+		}		
 		return type_declared;
 	}
 	

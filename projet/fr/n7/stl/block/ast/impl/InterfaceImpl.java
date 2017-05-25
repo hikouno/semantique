@@ -93,12 +93,15 @@ public class InterfaceImpl implements Interface {
 	protected LinkedList<Signature> signatures;
 	protected LinkedList<Constante> constantes;
 	protected LinkedList<Interface> interfaces;
+	protected LinkedList<String> unknownInterfaces;
+
 	
-	public InterfaceImpl(String name, LinkedList<Interface> interfaces) {
+	public InterfaceImpl(String name, LinkedList<Interface> interfaces, LinkedList<String> unknownInterfaces) {
 		this.name = name;
 		this.signatures = new LinkedList<Signature>();
 		this.constantes = new LinkedList<Constante>();
 		this.interfaces = interfaces;
+		this.unknownInterfaces = unknownInterfaces;
 	}
 
 	public ScopeCheckResult scopeCheck(List<InterfaceDeclaration> interfacesDec, List<ClasseDeclaration> classesDec) {
@@ -121,12 +124,12 @@ public class InterfaceImpl implements Interface {
 					return result;
 				}
 			}
-
+			
 		} catch (ToDeclaredException e) {
 			return new ScopeCheckResult(false, e.getMessage());
 		}
-		
 		return new ScopeCheckResult(true, this.toString());
+		
 	}
 	
 	public boolean ajouterSignature(Optional<Type> type, String nom, LinkedList<Argument> args) {

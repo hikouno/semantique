@@ -1,3 +1,15 @@
+
+interface Soda extends Boisson {
+}
+
+interface Boisson {
+}
+
+interface Liquide {
+}
+
+
+
 class EtreVivant {
 
     public EtreVivant(int a, int b) {

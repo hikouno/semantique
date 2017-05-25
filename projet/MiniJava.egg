@@ -57,6 +57,7 @@ syn bloc    : Block for MethodePrincipale;
 --Interfaces
 syn ast        : Interface for Interface;
 syn interfaces : LinkedList<Interface> for Interfaces, ImplantationInterface, HeritageInterface, SuiteHeritageInterface;
+syn unknownInterfaces : LinkedList<String> for HeritageInterface, SuiteHeritageInterface;
 inh interface_mere : Interface for ElementsInterface, ElementInterface;
 
 --Signatures d'interfaces
@@ -235,7 +236,7 @@ local
 do
     --AST
     prg := new ProgramFactoryImpl();
-    interface := prg.createInterface(identificateur_type^txt, HeritageInterface^interfaces);
+    interface := prg.createInterface(identificateur_type^txt, HeritageInterface^interfaces, HeritageInterface^unknownInterfaces);
     
     Interface^ast := interface;
     
@@ -258,6 +259,7 @@ local
     d : Declaration;
 do
 	HeritageInterface^interfaces := SuiteHeritageInterface^interfaces;
+	HeritageInterface^unknownInterfaces := SuiteHeritageInterface^unknownInterfaces;
 	
 	if (HeritageInterface^tds.knows(identificateur_type^txt)) then
 		f := HeritageInterface^tds.get(identificateur_type^txt);
@@ -268,7 +270,7 @@ do
 			error(MiniJava_Heritage_NonExist, identificateur_type^txt);
 		end
 	else
-		error(MiniJava_Heritage_NonExist, identificateur_type^txt);
+		HeritageInterface^unknownInterfaces.add(identificateur_type^txt);
 	end
 end
 }
@@ -283,6 +285,7 @@ HeritageInterface -> #syn;
 #syn {
 do
 	HeritageInterface^interfaces := new LinkedList<Interface>();
+	HeritageInterface^unknownInterfaces := new LinkedList<String>();
 end
 }
 
@@ -300,6 +303,7 @@ local
     d : Declaration;
 do
 	SuiteHeritageInterface^interfaces := SuiteHeritageInterface1^interfaces;
+	SuiteHeritageInterface^unknownInterfaces := SuiteHeritageInterface1^unknownInterfaces;
 	if (SuiteHeritageInterface^tds.knows(identificateur_type^txt)) then
 		f := SuiteHeritageInterface^tds.get(identificateur_type^txt);
 		d := f.get();
@@ -309,7 +313,7 @@ do
 			error(MiniJava_Heritage_NonExist, identificateur_type^txt);
 		end
 	else
-		error(MiniJava_Heritage_NonExist, identificateur_type^txt);
+		SuiteHeritageInterface^unknownInterfaces.add(identificateur_type^txt);
 	end
 end
 }
@@ -319,6 +323,7 @@ SuiteHeritageInterface -> #syn;
 #syn {
 do
 	SuiteHeritageInterface^interfaces := new LinkedList<Interface>();
+	SuiteHeritageInterface^unknownInterfaces := new LinkedList<String>();
 end
 }
 
