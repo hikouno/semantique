@@ -8,7 +8,7 @@ class EtreVivant {
     
     public Poisson poiss;
     
-    public Poisson est_incroyable() {
+    public Poisson est_incroyable(Ordi o, int i) {
         int test = 4;
         Poisson tee = 2;
     }
@@ -24,10 +24,10 @@ class Poisson {
         int j = 42;
         
         if (1 == 1) {
-			Ordi be = new EtreVivant(1, 2);
+			EtreVivant be = new EtreVivant(1, 2);
 			
-			print be;
-			print be.est_incroyable(new Ordi(), 4).salut;
+			//print be;
+			print be.est_incroyable(new Ordi(), 4, 5).nageoires;
 		}
 		
         Ordi c = 2;
