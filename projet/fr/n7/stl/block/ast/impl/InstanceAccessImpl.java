@@ -88,6 +88,44 @@ public class InstanceAccessImpl implements Expression {
         return this.membreAccede.getArguments();
     }
     
+    public Type getPartialType() {
+        if (use != null) {
+            return use.getType();
+        } else { //assert (Access != null)
+            Type previousType = access.getPartialType();
+            String nomAcces = membreAccede.getNom();
+            
+            Classe classe;
+            if (previousType instanceof ClasseTypeImpl)
+                classe = ((ClasseTypeImpl) previousType).getClasse();
+            else
+                return null;
+            
+            Optional<MethodImpl> methode = classe.getMethode(membreAccede.getNom(), membreAccede.getArguments());
+            Optional<AttributImpl> attribut = classe.getAttribut(membreAccede.getNom());
+            
+            if (attribut.isPresent() && membreAccede.getArguments() == null) {
+                    
+                if (attribut.get().getDroitAcces() != DroitAcces.PUBLIC) {
+                    return null;
+                }
+                
+                return attribut.get().getType();
+                    
+            } else if (methode.isPresent() && (membreAccede.getArguments() != null)) {
+                    
+                Optional<Type> retour = methode.get().getTypeRetour();
+                if (!retour.isPresent() || (methode.get().getDroitAcces() != DroitAcces.PUBLIC)) {
+                    return null;
+                }
+                
+                return retour.get();
+            }
+        }
+        
+        return null;
+    }
+    
     /** Declare return Type and method access arguments. */
     public void declare(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, MethodImpl methodeMere, Block blocPere) throws ToDeclaredException {
         
@@ -103,12 +141,15 @@ public class InstanceAccessImpl implements Expression {
         }
         
         //Déclaration du type.
-         if (type != null) {
-            this.type = type.toDeclared(interfaces, classes, classeMere);
+        Type partialType = this.getPartialType();
+        if (partialType == null) {
+            throw new ToDeclaredException("Problème d'accès dans : " + toString());
         }
+        
+        this.type = partialType;
     }
     
-    public boolean update(boolean fullCheck) {
+    /*public boolean update(boolean fullCheck) {
         
         Optional<Type> _type = AccessTools.getType(this.getClasse(), 
                                                     this.getCallHistory(), 
@@ -121,7 +162,7 @@ public class InstanceAccessImpl implements Expression {
         }
         
         return false;
-    }
+    }*/
     
     /* (non-Javadoc)
      * @see java.lang.Object#toString()

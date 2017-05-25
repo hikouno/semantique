@@ -104,8 +104,13 @@ public class InterfaceImpl implements Interface {
 		this.unknownInterfaces = unknownInterfaces;
 	}
 
-	public ScopeCheckResult scopeCheck(List<InterfaceDeclaration> interfacesDec, List<ClasseDeclaration> classesDec) {
-
+	public ScopeCheckResult scopeCheck(List<InterfaceDeclaration> interfacesDec, List<ClasseDeclaration> classesDec, List<String> listePrecInterfaces) {
+		for(String nomInterface : listePrecInterfaces){
+			if(this.name.equals(nomInterface)){
+				return new ScopeCheckResult(false, this.name + " s'implémente lui même");
+			}
+		}
+		listePrecInterfaces.add(this.name);
 		try {
 			LinkedList<Signature> newSignatures = new LinkedList<Signature>();
 			for(Signature sign : this.signatures){
@@ -119,7 +124,7 @@ public class InterfaceImpl implements Interface {
 			this.constantes = newConstantes;
 			ScopeCheckResult result;
 			for(Interface interf : interfaces){
-				result = interf.scopeCheck(interfacesDec, classesDec);
+				result = interf.scopeCheck(interfacesDec, classesDec, listePrecInterfaces);
 				if(!result.wasSuccessful()){
 					return result;
 				}

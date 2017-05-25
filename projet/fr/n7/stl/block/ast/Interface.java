@@ -40,7 +40,7 @@ public interface Interface {
 	 * to the scope.
 	 * @return The new AST with undeclared references replaces by actual ones.
 	 */
-	public ScopeCheckResult scopeCheck(List<InterfaceDeclaration> interfacesDec, List<ClasseDeclaration> classesDec);
+	public ScopeCheckResult scopeCheck(List<InterfaceDeclaration> interfacesDec, List<ClasseDeclaration> classesDec, List<String> listePrecInterfaces);
 
 	/**
 	 * Renvoie le nom de l'interface.

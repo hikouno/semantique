@@ -220,14 +220,11 @@ public class BlockFactoryImpl implements BlockFactory {
      * with resolving the reference with the Symbol Table.   
      * @return Abstract Syntax Tree node for the access to a variable.
      */
-    public Optional<Expression> createInstanceAccess_use(InstanceUseImpl _use, String nom) {
+    public Expression createInstanceAccess_use(InstanceUseImpl _use, String nom) {
         InstanceAccessImpl access = new InstanceAccessImpl(_use);
         access.setNomAcces(nom);
         
-        if (access.update(false))
-            return Optional.of(access);
-        
-        return Optional.empty();
+        return access;
     }
     
     /**
@@ -235,14 +232,11 @@ public class BlockFactoryImpl implements BlockFactory {
      * with resolving the reference with the Symbol Table.   
      * @return Abstract Syntax Tree node for the access to a variable.
      */
-    public Optional<Expression> createInstanceAccess_access(InstanceAccessImpl _access, String nom) {
+    public Expression createInstanceAccess_access(InstanceAccessImpl _access, String nom) {
         InstanceAccessImpl access = new InstanceAccessImpl(_access);
         access.setNomAcces(nom);
         
-        if (access.update(false))
-            return Optional.of(access);
-        
-        return Optional.empty();
+        return access;
     }
     
     /**
