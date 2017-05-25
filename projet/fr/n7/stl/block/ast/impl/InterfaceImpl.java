@@ -4,13 +4,16 @@
 package fr.n7.stl.block.ast.impl;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 
 import fr.n7.stl.block.ast.Interface;
+import fr.n7.stl.block.ast.InterfaceDeclaration;
 import fr.n7.stl.block.ast.Type;
 import fr.n7.stl.block.ast.Expression;
 import fr.n7.stl.block.ast.Constante;
 import fr.n7.stl.block.ast.Classe;
+import fr.n7.stl.block.ast.ClasseDeclaration;
 
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
@@ -32,7 +35,17 @@ public class InterfaceImpl implements Interface {
 			this.nom = nom;
 			this.args = args;
 		}
-		
+
+		public Signature toDeclared(List<InterfaceDeclaration> interfacesDec, List<ClasseDeclaration> classesDec) throws ToDeclaredException{
+			LinkedList<Argument> newArg = new LinkedList<Argument>();
+			for(Argument arg : this.args){
+				newArg.add(arg.toDeclared(interfacesDec, classesDec, null));
+			}
+			return new Signature(this.type.isPresent()?Optional.of(this.type.get().toDeclared(interfacesDec, classesDec, null)):this.type,
+			 	this.nom,
+				 newArg);
+		}
+
 		/** Renvoie true si on a deux signatures ambigues
 		 * (même nom et types des paramètres dans l'ordre).
 		 */
@@ -86,6 +99,34 @@ public class InterfaceImpl implements Interface {
 		this.signatures = new LinkedList<Signature>();
 		this.constantes = new LinkedList<Constante>();
 		this.interfaces = interfaces;
+	}
+
+	public ScopeCheckResult scopeCheck(List<InterfaceDeclaration> interfacesDec, List<ClasseDeclaration> classesDec) {
+
+		try {
+			LinkedList<Signature> newSignatures = new LinkedList<Signature>();
+			for(Signature sign : this.signatures){
+				newSignatures.add(sign.toDeclared(interfacesDec, classesDec));
+			}
+			this.signatures = newSignatures;
+			LinkedList<Constante> newConstantes = new LinkedList<Constante>();
+			for(Constante cons : this.constantes){
+				newConstantes.add((Constante) cons.toDeclared(interfacesDec, classesDec, null, null, null));
+			}
+			this.constantes = newConstantes;
+			ScopeCheckResult result;
+			for(Interface interf : interfaces){
+				result = interf.scopeCheck(interfacesDec, classesDec);
+				if(!result.wasSuccessful()){
+					return result;
+				}
+			}
+
+		} catch (ToDeclaredException e) {
+			return new ScopeCheckResult(false, e.getMessage());
+		}
+		
+		return new ScopeCheckResult(true, this.toString());
 	}
 	
 	public boolean ajouterSignature(Optional<Type> type, String nom, LinkedList<Argument> args) {
