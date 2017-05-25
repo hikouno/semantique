@@ -52,7 +52,7 @@ public class UndeclaredAllocationImpl implements Expression {
 	@Override
 	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, MethodImpl methodeMere, Block blocPere) throws ToDeclaredException {
 		
-		Expression declared;
+		ClasseInstanceAllocationImpl declared;
 		
 		//Déclaration des arguments.
 		String errorMsg = "";
@@ -73,6 +73,11 @@ public class UndeclaredAllocationImpl implements Expression {
 		ClasseDeclaration dec = ClasseDeclaration.appartient(this.nom, classes);
 		if (dec != null) {
 			declared = new ClasseInstanceAllocationImpl(dec.getClasse(), nouv_args);
+			
+			//Application du test sémantique (post déclaration).
+			if (!declared.estCorrect())
+				throw new ToDeclaredException("new ???" + this.nom + ": Appel du constructeur incorrect.");
+			
 		} else {
 			throw new ToDeclaredException("new ???" + this.nom + ": " + this.nom + " inconnu.");
 		}

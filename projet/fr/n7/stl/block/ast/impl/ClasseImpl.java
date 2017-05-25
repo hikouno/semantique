@@ -11,6 +11,7 @@ import fr.n7.stl.block.ast.ClasseDeclaration;
 import fr.n7.stl.block.ast.InterfaceDeclaration;
 
 import fr.n7.stl.block.ast.Classe;
+import fr.n7.stl.block.ast.Expression;
 import fr.n7.stl.block.ast.Block;
 import fr.n7.stl.block.ast.Type;
 
@@ -88,6 +89,23 @@ public class ClasseImpl implements Classe {
 	 */
 	public LinkedList<AttributImpl> getAttributs() {
 		return this.attributs;
+	}
+	
+	/**
+	 * Renvoie si il existe le constructeur correspondant aux arguments
+	 * passés.
+	 * @return Le résultat.
+	 */
+	public Optional<Constructeur> getConstructeur(List<Expression> args_passes) {
+		
+		LinkedList<Constructeur> candidats = this.constructeurs;
+		
+		for (Constructeur _constr : this.constructeurs) {
+			if (_constr.match(args_passes))
+				return Optional.of(_constr);
+		}
+		
+		return Optional.empty();
 	}
 	
 	/**

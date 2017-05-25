@@ -31,18 +31,10 @@ public class ClasseInstanceAllocationImpl implements Expression {
 	}
 	
 	
-	/** Renvoie le constructeur appelé par l'utilisateur si il existe.
-	 * Renvoie une exception sinon.
-	 * */
-	private Constructeur constructeurAppele() {
-		LinkedList<Constructeur> constructeurs = this.classe.getConstructeurs();
+	/** Renvoie true si le constructeur que l'on essaie d'appeler existe. */
+	public boolean estCorrect() {
 		
-		//On a la garantie sémantique que la classe n'a que des constructeurs différents.
-		for (Constructeur constructeur : constructeurs) {
-			continue;
-		}
-		
-		return null;
+		return this.classe.getConstructeur(this.arguments).isPresent();
 	}
 	
 	/* (non-Javadoc)

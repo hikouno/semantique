@@ -1739,12 +1739,27 @@ end
 }
 
 #ast {
+local
+    alloc : Expression;
 do 
     match SuiteNouveau^type
         with ClasseTypeImpl then
-            SuiteNouveau^ast := SuiteNouveau^factory.createClasseInstanceAllocation(
+            alloc := SuiteNouveau^factory.createClasseInstanceAllocation(
                                 SuiteNouveau^type.getClasse(),
                                 Arguments^args);
+            
+            match alloc with ClasseInstanceAllocationImpl then
+                
+                if alloc.estCorrect() then
+                    SuiteNouveau^ast := alloc;
+                else
+                    SuiteNouveau^ast := null;
+                    error(MiniJava_allocation_incorrecte, SuiteNouveau^type.toString());
+                end
+            else
+                SuiteNouveau^ast := null;
+                error(MiniJava_allocation_incorrecte, SuiteNouveau^type.toString());
+            end
         
         with UndeclaredTypeImpl then
             SuiteNouveau^ast := SuiteNouveau^factory.createUndeclaredAllocation(

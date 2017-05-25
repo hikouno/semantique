@@ -1,5 +1,9 @@
 class EtreVivant {
 
+    public EtreVivant(int a, int b) {
+        
+    }
+    
     public int t;
     
     public Poisson poiss;
@@ -20,16 +24,17 @@ class Poisson {
         int j = 42;
         
         if (1 == 1) {
-			Ordi be = new EtreVivant(new Ordi(), new Ordi(new Poisson()));
+			Ordi be = new EtreVivant(1, 2);
 			
 			print be;
-			print be.est_incroyable(new Ordi(new Poisson()));
+			print be.est_incroyable(new Ordi(), 4).salut;
 		}
 		
         Ordi c = 2;
         
+        print super.be;
         print this.be;
-        print be.est_incroyable(new Ordi(new Poisson()));
+        print be.est_incroyable(new Ordi(), 4).salut;
     }
     
     private int mon_attribut;
@@ -45,6 +50,10 @@ class Ordi {
     public int pc;
     public Poisson p;
     
+    public Ordi() {
+    
+    }
+    
     public Poisson est_incroyable() {
         int test = 4;
         Poisson tee = 2;
@@ -56,7 +65,7 @@ public class Test {
     public static void main(String[] args) {
         
         Ordi ordi = new Ordi();
-        Poisson poisson = new Poisson(5 + 2, 4, true);
+        Poisson poisson = new Poisson(5 + 2, 4, true, 5);
         //print ordi.est_incroyable(new Poisson(3), 2, 3).nageoires;
         
     }
