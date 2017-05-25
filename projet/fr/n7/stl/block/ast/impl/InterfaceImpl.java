@@ -133,7 +133,7 @@ public class InterfaceImpl implements Interface {
 			for(String nomInter : this.unknownInterfaces) {
 				interf = appartient(nomInter, interfacesDec);
 				if(interf != null) {
-					this.interfaces.add(interf);
+					this.interfaces.add(interf.getInterface());
 				} else {
 					return new ScopeCheckResult(false, "L'Interface " + nomInter + " n'existe pas. ");
 				}
@@ -150,8 +150,8 @@ public class InterfaceImpl implements Interface {
 	 * la String passée en paramètre.
 	 */
 	 private InterfaceDeclaration appartient(String nomInter, List<InterfaceDeclaration> interfacesDec) {
-		 for(InterfaceDeclaration _interf : interfacedDec) {
-			 if (_interf.getNom().equals(nomInter)) {
+		 for(InterfaceDeclaration _interf : interfacesDec) {
+			 if (_interf.getName().equals(nomInter)) {
 				 return _interf;
 			 }
 		 }

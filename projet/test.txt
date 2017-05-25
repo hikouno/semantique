@@ -2,15 +2,15 @@
 interface Soda extends Boisson {
 }
 
-interface Boisson {
+interface Boisson extends Liquide {
 }
 
-interface Liquide {
+interface Liquide extends Soda {
 }
 
 
 
-class EtreVivant {
+class EtreVivant implements Boisson {
 
     public EtreVivant(int a, int b) {
         
@@ -39,7 +39,7 @@ class Poisson {
 			EtreVivant be = new EtreVivant(1, 2);
 			
 			//print be;
-			print be.est_incroyable(new Ordi(), 4, 5).nageoires;
+			//print be.est_incroyable(new Ordi(), 4, 5).nageoires;
 		}
 		
         Ordi c = 2;
