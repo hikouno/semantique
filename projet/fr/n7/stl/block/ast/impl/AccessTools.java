@@ -45,7 +45,7 @@ public abstract class AccessTools {
         }
     }
     
-    public static Optional<Type> getType(Classe _classe, LinkedList<AppelOuAcces> _acces, boolean checkMethods, boolean checkAuth) {
+    /*public static Optional<Type> getType(Classe _classe, LinkedList<AppelOuAcces> _acces, boolean checkMethods, boolean checkAuth) {
         LinkedList<AppelOuAcces> history = _acces;
         
         Classe classe = _classe;
@@ -118,5 +118,5 @@ public abstract class AccessTools {
             return Optional.empty();
         
         return Optional.of(obtainedType);
-    }
+    }*/
 }

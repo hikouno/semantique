@@ -1228,18 +1228,12 @@ end
 #inh {
 local
     supp : Assignable;
-    supp_appel_acces : Optional<Expression>;
 do
     supp := SuiteAffectable^support;
     match supp
         with InstanceAssignmentImpl then
-            supp_appel_acces := SuiteAffectable^factory.createInstanceAccess_use(supp.getInstanceUse(), identificateur^txt);
-            
-            if (supp_appel_acces.isPresent()) then
-                AppelOuAcces^support := supp_appel_acces.get();
-            else
-                error(MiniJava_Acces_NonImplemente);
-            end
+            AppelOuAcces^support := SuiteAffectable^factory.createInstanceAccess_use(supp.getInstanceUse(), identificateur^txt);
+
         
         with MembreClasseAccessAssignmentImpl then
             supp.setNomAcces(identificateur^txt);
@@ -1951,32 +1945,17 @@ end
 #inh {
 local
     supp : Expression;
-    d : Optional<Expression>;
     
     dec : ClasseInstanceDeclaration;
 do
     supp := Acces^support;
     match supp
         with InstanceUseImpl then
-            d := Acces^factory.createInstanceAccess_use(supp, identificateur^txt);
-            
-            if ( d.isPresent() ) then
-                AppelOuAcces^support := d.get();
-            else
-                dec := supp.getDeclaration();
-                error(MiniJava_Bad_Access, dec.getName(), identificateur^txt);
-            end
+            AppelOuAcces^support := Acces^factory.createInstanceAccess_use(supp, identificateur^txt);
         
         with InstanceAccessImpl then
-            d := Acces^factory.createInstanceAccess_access(supp, identificateur^txt);
+            AppelOuAcces^support := Acces^factory.createInstanceAccess_access(supp, identificateur^txt);
             
-            if ( d.isPresent() ) then
-                AppelOuAcces^support := d.get();
-            else
-                dec := supp.getDeclaration();
-                error(MiniJava_Bad_Access, dec.getName(), identificateur^txt);
-            end
-		
 		with UndeclaredInstanceUseImpl then
             AppelOuAcces^support := Acces^factory.createUndeclaredAccess_use(supp, identificateur^txt);
         
@@ -2022,9 +2001,6 @@ do
             dec := d.getDeclaration();
             
             d.setArgumentsAcces(Arguments^args);
-            if (!d.update(true)) then
-                error(MiniJava_Bad_Access_Appel, dec.getName());
-            end
             
             Acces^support := d;
         

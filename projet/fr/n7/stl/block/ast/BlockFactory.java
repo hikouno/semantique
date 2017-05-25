@@ -76,14 +76,14 @@ public interface BlockFactory extends ExpressionFactory, InstructionFactory, Typ
 	 * with resolving the reference with the Symbol Table.	 
 	 * @return Abstract Syntax Tree node for the access to a variable.
 	 */
-	public Optional<Expression> createInstanceAccess_use(InstanceUseImpl _use, String nom);
+	public Expression createInstanceAccess_use(InstanceUseImpl _use, String nom);
 	
 	/**
 	 * Create a node for a variable use expression in the Abstract Syntax Tree.
 	 * with resolving the reference with the Symbol Table.	 
 	 * @return Abstract Syntax Tree node for the access to a variable.
 	 */
-	public Optional<Expression> createInstanceAccess_access(InstanceAccessImpl _access, String nom);
+	public Expression createInstanceAccess_access(InstanceAccessImpl _access, String nom);
 	
 	/**
 	* Create a node for a variable use expression in the Abstract Syntax Tree.

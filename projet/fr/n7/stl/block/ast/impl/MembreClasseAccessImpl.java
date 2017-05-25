@@ -178,7 +178,7 @@ public class MembreClasseAccessImpl implements Expression {
     
     /** Renvoie true si nom est un nom d'attribut ou de méthode de la classe. */
     private boolean knownInClass(Classe classe, String nom) {
-        return (classe.getAttribut(nom).isPresent() || classe.getMethode(nom).isPresent());
+        return (classe.getAttribut(nom).isPresent() || classe.getMethode(nom).size() > 0);
     }
     
     /** Renvoie true si nom est un nom d'argument de la méthode. */

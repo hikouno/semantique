@@ -63,7 +63,7 @@ public class ClasseImpl implements Classe {
 	
 	public boolean ajouterMethode(MethodImpl method) {
 		for (MethodImpl _method : this.methods) {
-			if (method.match(_method) && method.estStatique() == _method.estStatique())
+			if (method.equals(_method) && method.estStatique() == _method.estStatique())
 					return false; //Une méthode similaire existe déjà
 		}
 		
@@ -126,11 +126,30 @@ public class ClasseImpl implements Classe {
 	 * Renvoie si elle existe la méthode de la classe associée au nom.
 	 * @return Le résultat.
 	 */
-	public Optional<MethodImpl> getMethode(String nom) {
+	public List<MethodImpl> getMethode(String nom) {
+		
+		List<MethodImpl> methodes = new LinkedList<MethodImpl>();
 		
 		for (MethodImpl _method : this.methods) {
 			if (_method.getNom().equals(nom))
-				return Optional.of(_method);
+				methodes.add(_method);
+		}
+		
+		return methodes;
+		
+	}
+	
+	/**
+	 * Renvoie si elle existe la méthode de la classe associée au nom.
+	 * @return Le résultat.
+	 */
+	public Optional<MethodImpl> getMethode(String nom, List<Expression> args_passes) {
+		
+		List<MethodImpl> candidates = this.getMethode(nom);
+		
+		for (MethodImpl _methode : candidates) {
+			if (_methode.match(args_passes))
+				return Optional.of(_methode);
 		}
 		
 		return Optional.empty();
