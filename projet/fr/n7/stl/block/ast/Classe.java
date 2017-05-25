@@ -80,7 +80,13 @@ public interface Classe {
 	 * Renvoie si elle existe la méthode de la classe associée au nom.
 	 * @return Le résultat.
 	 */
-	public Optional<MethodImpl> getMethode(String nom);
+	public List<MethodImpl> getMethode(String nom);
+	
+	/**
+	 * Renvoie si elle existe la méthode de la classe associée au nom.
+	 * @return Le résultat.
+	 */
+	public Optional<MethodImpl> getMethode(String nom, List<Expression> args_passes);
 	
 	/**
 	 * Synthesized Semantics attribute to check if the AST is well formed according

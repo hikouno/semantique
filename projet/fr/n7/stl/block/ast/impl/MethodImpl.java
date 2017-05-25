@@ -12,6 +12,7 @@ import fr.n7.stl.block.ast.ClasseDeclaration;
 import fr.n7.stl.block.ast.InterfaceDeclaration;
 import fr.n7.stl.block.ast.Block;
 import fr.n7.stl.block.ast.Type;
+import fr.n7.stl.block.ast.Expression;
 
 import java.util.Optional;
 import java.util.LinkedList;
@@ -45,7 +46,7 @@ public class MethodImpl extends MembreClasse {
 	 * Teste si la signature du constructeur correspond à celle du
 	 * constructeur passé en argument (équivalence des types et même nom).
 	 */
-	public boolean match(MethodImpl _method) {
+	public boolean equals(MethodImpl _method) {
 		
 		LinkedList<Argument> args_fournis = _method.getArguments();
 		
@@ -59,6 +60,25 @@ public class MethodImpl extends MembreClasse {
 			return false;
 		
 		//3. Arguments de même type.
+		for (int i = 0; i < this.args.size(); i++) {
+			if ( !this.args.get(i).getType().equalsTo(args_fournis.get(i).getType()) )
+				return false;
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * Teste si la signature du constructeur correspond à celle du
+	 * constructeur passé en argument (équivalence des types et même nom).
+	 */
+	public boolean match(List<Expression> args_fournis) {
+		
+		//1. Même nombre d'arguments
+		if (args_fournis.size() != this.args.size())
+			return false;
+		
+		//2. Arguments de même type.
 		for (int i = 0; i < this.args.size(); i++) {
 			if ( !this.args.get(i).getType().equalsTo(args_fournis.get(i).getType()) )
 				return false;
