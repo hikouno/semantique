@@ -129,13 +129,34 @@ public class InterfaceImpl implements Interface {
 					return result;
 				}
 			}
-			
+			InterfaceDeclaration interf;
+			for(String nomInter : this.unknownInterfaces) {
+				interf = appartient(nomInter, interfacesDec);
+				if(interf != null) {
+					this.interfaces.add(interf);
+				} else {
+					return new ScopeCheckResult(false, "L'Interface " + nomInter + " n'existe pas. ");
+				}
+			}
 		} catch (ToDeclaredException e) {
 			return new ScopeCheckResult(false, e.getMessage());
 		}
 		return new ScopeCheckResult(true, this.toString());
 		
 	}
+	
+	
+	/* Vérifie si une interface de la liste passée en paramètre a pour nom
+	 * la String passée en paramètre.
+	 */
+	 private InterfaceDeclaration appartient(String nomInter, List<InterfaceDeclaration> interfacesDec) {
+		 for(InterfaceDeclaration _interf : interfacedDec) {
+			 if (_interf.getNom().equals(nomInter)) {
+				 return _interf;
+			 }
+		 }
+		 return null;
+	 }
 	
 	public boolean ajouterSignature(Optional<Type> type, String nom, LinkedList<Argument> args) {
 		Signature signature = new Signature(type, nom, args);
