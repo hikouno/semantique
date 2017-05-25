@@ -76,11 +76,11 @@ public class ProgramImpl implements Program {
 		
 		/** Parcours des interfaces */
 		for (Interface interf : this.interfaces) {
-			//ScopeCheckResult res = interf.scopeCheck(interfacesDec, classesDec);
+			ScopeCheckResult res = interf.scopeCheck(interfacesDec, classesDec, new LinkedList<String>());
 			
-			//if (!res.wasSuccessful()) {
-			//	return res;
-			//}
+			if (!res.wasSuccessful()) {
+				return res;
+			}
 			continue;
 		}
 		
