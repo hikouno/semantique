@@ -64,6 +64,13 @@ public interface Classe {
 	public LinkedList<AttributImpl> getAttributs();
 	
 	/**
+	 * Renvoie si il existe le constructeur correspondant aux arguments
+	 * passés.
+	 * @return Le résultat.
+	 */
+	public Optional<Constructeur> getConstructeur(List<Expression> args_passes);
+	
+	/**
 	 * Renvoie si il existe l'attribut de la classe associé au nom.
 	 * @return Le résultat.
 	 */

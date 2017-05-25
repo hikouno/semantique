@@ -9,6 +9,7 @@ import fr.n7.stl.block.ast.Expression;
 import fr.n7.stl.block.ast.MembreClasse.DroitAcces;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
@@ -40,7 +41,7 @@ public class Constructeur {
 	 * Teste si un jeu d'expressions fourni correspond à la signature
 	 * du constructeur.
 	 */
-	public boolean match(LinkedList<Expression> args_fournis) {
+	public boolean match(List<Expression> args_fournis) {
 		
 		//1. Même nombre d'arguments
 		if (args_fournis.size() != this.args.size())
