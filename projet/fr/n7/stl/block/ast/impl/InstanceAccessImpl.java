@@ -141,9 +141,12 @@ public class InstanceAccessImpl implements Expression {
         }
         
         //Déclaration du type.
-         if (type != null) {
-            this.type = type.toDeclared(interfaces, classes, classeMere);
+        Type partialType = this.getPartialType();
+        if (partialType == null) {
+            throw new ToDeclaredException("Problème d'accès dans : " + toString());
         }
+        
+        this.type = partialType;
     }
     
     /*public boolean update(boolean fullCheck) {
