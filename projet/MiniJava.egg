@@ -67,6 +67,7 @@ syn args : LinkedList<Argument> for Signature;
 
 --Classes
 syn ast     : Classe for Classe;
+syn unknownClasse : String for Classe;
 syn classes : LinkedList<Classe> for Classes;
 inh classe_mere : Classe for ElementsClasse, ElementClasse;
 
@@ -503,6 +504,7 @@ do
 		else
 			error(MiniJava_Heritage_NonExist, HeritageClasse^superClasse);
 			classe := null;
+			Classe^unknownClasse := HeritageClasse^superClasse;
 		end    
     
     end

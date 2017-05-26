@@ -54,7 +54,11 @@ import fr.n7.stl.tam.ast.TAMFactory;
 	@Override
 	public String toString() {
 		
-		String text = "class "+ this.name + " extends " + this.superClasse.getNom();		
+		String text = "class "+ this.name;
+		
+		if (this.superClasse != null) {
+			text += " extends " + this.superClasse.getNom();
+		}
 		
 		if(this.interfacesImplementees.size() != 0) {
 			
