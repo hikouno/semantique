@@ -491,16 +491,22 @@ do
 			d := f.get();
 			match d 
 				with ClasseDeclarationImpl then superClasse := d.getClasse();
+				if (ImplantationInterface^interfaces.size() = 0) then		-- Pas d'implantation
+					classe := prg.createClasseHeritant(identificateur_type^txt, superClasse, null);
+				else
+					Collections.reverse(ImplantationInterface^interfaces);	-- Implantation d'interfaces
+					classe := prg.createClasseHeritant(identificateur_type^txt, superClasse, ImplantationInterface^interfaces, null);
+				end
 			else 
 				error(MiniJava_Heritage_NonExist, HeritageClasse^superClasse);
-				superClasse := null;
+				if (ImplantationInterface^interfaces.size() != 0) then		-- S'il y a implantation d'interfaces.
+					Collections.reverse(ImplantationInterface^interfaces);
+					classe := prg.createClasseImplementant(identificateur_type^txt, ImplantationInterface^interfaces);
+				else
+					classe := prg.createClasse(identificateur_type^txt);	-- S'il n'y a pas implantation.
+				end
 			end
-			if (ImplantationInterface^interfaces.size() = 0) then		-- Pas d'implantation
-			    classe := prg.createClasseHeritant(identificateur_type^txt, superClasse, null);
-			else
-				Collections.reverse(ImplantationInterface^interfaces);
-				classe := prg.createClasseHeritant(identificateur_type^txt, superClasse, ImplantationInterface^interfaces, null); 
-			end
+			
 		else
 			superClasse := null;
 			unknownClasse := HeritageClasse^superClasse;
