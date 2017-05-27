@@ -67,7 +67,6 @@ syn args : LinkedList<Argument> for Signature;
 
 --Classes
 syn ast     : Classe for Classe;
-syn unknownClasse : String for Classe;
 syn classes : LinkedList<Classe> for Classes;
 inh classe_mere : Classe for ElementsClasse, ElementClasse;
 
@@ -473,6 +472,7 @@ local
     prg : ProgramFactoryImpl;
     classe : Classe;
     superClasse : Classe;
+    unknownClasse : String;
     f : Optional<Declaration>;
     d : Declaration;
 do
@@ -496,15 +496,20 @@ do
 				superClasse := null;
 			end
 			if (ImplantationInterface^interfaces.size() = 0) then		-- Pas d'implantation
-			    classe := prg.createClasseHeritant(identificateur_type^txt, superClasse);
+			    classe := prg.createClasseHeritant(identificateur_type^txt, superClasse, null);
 			else
 				Collections.reverse(ImplantationInterface^interfaces);
-				classe := prg.createClasseHeritant(identificateur_type^txt, superClasse, ImplantationInterface^interfaces);
+				classe := prg.createClasseHeritant(identificateur_type^txt, superClasse, ImplantationInterface^interfaces, null);
 			end
 		else
-			error(MiniJava_Heritage_NonExist, HeritageClasse^superClasse);
-			classe := null;
-			Classe^unknownClasse := HeritageClasse^superClasse;
+			superClasse := null;
+			unknownClasse := HeritageClasse^superClasse;
+			if (ImplantationInterface^interfaces.size() = 0) then		-- Pas d'implantation
+			    classe := prg.createClasseHeritant(identificateur_type^txt, superClasse, unknownClasse);
+			else
+				Collections.reverse(ImplantationInterface^interfaces);
+				classe := prg.createClasseHeritant(identificateur_type^txt, superClasse, ImplantationInterface^interfaces, unknownClasse);
+			end
 		end    
     
     end

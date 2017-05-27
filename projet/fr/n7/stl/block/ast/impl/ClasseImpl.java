@@ -122,6 +122,15 @@ public class ClasseImpl implements Classe {
 		return Optional.empty();
 	}
 	
+	/** 
+	 * Renvoie la liste des méthodes de la classe. 
+	 * * @return Le résultat.
+	 */
+	public LinkedList<MethodImpl> getMethodes() {
+		return this.methods;
+	}
+	
+	
 	/**
 	 * Renvoie si elle existe la méthode de la classe associée au nom.
 	 * @return Le résultat.
@@ -135,12 +144,12 @@ public class ClasseImpl implements Classe {
 				methodes.add(_method);
 		}
 		
-		return methodes;
-		
+		return methodes;	
 	}
 	
 	/**
-	 * Renvoie si elle existe la méthode de la classe associée au nom.
+	 * Renvoie si elle existe la méthode de la classe associée au nom et 
+	 * matchant les arguments passés en paramètres.
 	 * @return Le résultat.
 	 */
 	public Optional<MethodImpl> getMethode(String nom, List<Expression> args_passes) {

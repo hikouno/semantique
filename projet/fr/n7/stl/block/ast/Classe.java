@@ -76,6 +76,10 @@ public interface Classe {
 	 */
 	public Optional<AttributImpl> getAttribut(String nom);
 	
+	
+	/** Renvoie la liste des méthodes de la classe. */
+	public LinkedList<MethodImpl> getMethodes();
+	
 	/**
 	 * Renvoie si elle existe la méthode de la classe associée au nom.
 	 * @return Le résultat.
