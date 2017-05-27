@@ -499,7 +499,7 @@ do
 			    classe := prg.createClasseHeritant(identificateur_type^txt, superClasse, null);
 			else
 				Collections.reverse(ImplantationInterface^interfaces);
-				classe := prg.createClasseHeritant(identificateur_type^txt, superClasse, ImplantationInterface^interfaces, null);
+				classe := prg.createClasseHeritant(identificateur_type^txt, superClasse, ImplantationInterface^interfaces, null); 
 			end
 		else
 			superClasse := null;
