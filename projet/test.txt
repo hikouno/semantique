@@ -26,7 +26,7 @@ class EtreVivant implements Boisson {
     }
 }
 
-class Poisson extends Liquide {
+class Poisson extends Ordi {
  
     public Poisson(int a, int b, boolean c, int be) {
         print 4;

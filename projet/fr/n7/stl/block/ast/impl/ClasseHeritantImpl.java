@@ -60,7 +60,9 @@ import fr.n7.stl.tam.ast.TAMFactory;
 	 @Override
 	public LinkedList<AttributImpl> getAttributs() {
 		LinkedList<AttributImpl> newListe = new LinkedList<AttributImpl>(this.attributs);
-		newListe.addAll(this.superClasse.getAttributs());
+		if(this.superClasse != null) {
+			newListe.addAll(this.superClasse.getAttributs());
+		}
 		return newListe;
 	}
 	
@@ -87,7 +89,9 @@ import fr.n7.stl.tam.ast.TAMFactory;
 	 */
 	public LinkedList<MethodImpl> getMethodes() {
 		LinkedList<MethodImpl> newListe = new LinkedList<MethodImpl>(this.methods);
-		newListe.addAll(this.superClasse.getMethodes());
+		if(this.superClasse != null) {
+			newListe.addAll(this.superClasse.getMethodes());
+		}
 		return newListe;
 	}
 	
@@ -110,6 +114,19 @@ import fr.n7.stl.tam.ast.TAMFactory;
 	}
 	
 	
+	/* Vérifie si une classe de la liste passée en paramètre a pour nom
+	 * la String passée en paramètre.
+	 */
+	 private ClasseDeclaration appartient(String nomClasse, List<ClasseDeclaration> classeDec) {
+		 for(ClasseDeclaration _classe : classeDec) {
+			 if (_classe.getName().equals(nomClasse)) {
+				 return _classe;
+			 }
+		 }
+		 return null;
+	 }
+	
+	
 	/**
 	 * Synthesized Semantics attribute to check if the AST is well formed according
 	 * to the scope.
@@ -118,8 +135,20 @@ import fr.n7.stl.tam.ast.TAMFactory;
 	 @Override
 	public ScopeCheckResult scopeCheck(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes) {
 		
-		//Parcours des attributs
 		String errorMsg = "";
+		
+		// La superClasse
+		if(this.unknownClasse != null) {
+			ClasseDeclaration res = appartient(this.unknownClasse, classes);
+			if(res != null) {
+				this.superClasse = res.getClasse();
+			} else {
+				errorMsg += "La classe " + this.unknownClasse + " n'existe pas.";
+			}
+		}
+		
+		
+		//Parcours des attributs
 		LinkedList<AttributImpl> nouv_attributs = new LinkedList<AttributImpl>();
 		
 		for (AttributImpl att : this.getAttributs()) {
@@ -169,6 +198,8 @@ import fr.n7.stl.tam.ast.TAMFactory;
 		
 		if (this.superClasse != null) {
 			text += " extends " + this.superClasse.getNom();
+		} else if (this.unknownClasse != null) {
+			text += " extends ???" + this.unknownClasse;
 		}
 		
 		if(this.interfacesImplementees.size() != 0) {
