@@ -134,7 +134,7 @@ import fr.n7.stl.tam.ast.TAMFactory;
 	 */	
 	 @Override
 	public ScopeCheckResult scopeCheck(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes) {
-		
+		super.scopeCheck(interfaces, classes);
 		String errorMsg = "";
 		
 		// La superClasse
@@ -143,7 +143,7 @@ import fr.n7.stl.tam.ast.TAMFactory;
 			if(res != null) {
 				this.superClasse = res.getClasse();
 			} else {
-				errorMsg += "La classe " + this.unknownClasse + " n'existe pas.";
+				errorMsg += "La classe " + this.unknownClasse + " n'existe pas. \n";
 			}
 		}
 		
