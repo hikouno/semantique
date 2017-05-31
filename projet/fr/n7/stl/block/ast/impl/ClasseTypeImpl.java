@@ -8,6 +8,7 @@ import java.util.List;
 import fr.n7.stl.block.ast.Classe;
 import fr.n7.stl.block.ast.ClasseDeclaration;
 import fr.n7.stl.block.ast.InterfaceDeclaration;
+import fr.n7.stl.block.ast.Interface;
 
 import fr.n7.stl.block.ast.AtomicType;
 import fr.n7.stl.block.ast.Type;
@@ -52,11 +53,26 @@ public class ClasseTypeImpl implements Type {
 	 */
 	@Override
 	public boolean compatibleWith(Type _other) {
+		boolean compatible = false;
 		if (_other instanceof ClasseTypeImpl) {
-			throw new SemanticsUndefinedException("Semantics compatibleWith is not implemented in ClasseTypeImpl.");
-		} else {
-			return false;
+			Classe autreClasse = ((ClasseTypeImpl) _other).getClasse();
+			if(autreClasse.equalsTo(this.getClasse())){
+				compatible = true;
+			}
+			else if(this.getClasse() instanceof ClasseHeritantImpl){
+				compatible = ((ClasseHeritantImpl)this.getClasse()).herite(autreClasse);				
+			}
 		}
+		else if(_other instanceof InterfaceTypeImpl && this.getClasse() instanceof ClasseImplementantImpl){
+			Interface interf = ((InterfaceTypeImpl) _other).getInterface();
+			if(this.getClasse() instanceof ClasseHeritantImpl){
+				compatible = ((ClasseHeritantImpl)this.getClasse()).implemente(interf);
+			}
+			else{
+				compatible = ((ClasseImplementantImpl)this.getClasse()).implemente(interf);
+			}
+		}
+		return compatible;
 	}
 
 	/* (non-Javadoc)

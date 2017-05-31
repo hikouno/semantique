@@ -72,7 +72,7 @@ public class ClassePrincipaleImpl implements ClassePrincipale {
 	 */
 	@Override
 	public boolean checkType() {
-		throw this.methodePrinc.checkType();
+		return this.methodePrinc.checkType();
 	}
 
 	/* (non-Javadoc)

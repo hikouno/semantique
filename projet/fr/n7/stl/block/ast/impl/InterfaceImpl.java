@@ -170,6 +170,21 @@ public class InterfaceImpl implements Interface {
 		return true;
 	}
 
+	/** 
+	 * verifier que cette classe implemente interfAImplementer
+	 */
+	public boolean implemente(Interface interfAImplementer){
+		if(this.equalsTo(interfAImplementer)){
+			return true;
+		}
+		for(Interface interf : this.interfaces){
+			if(interf.implemente(interfAImplementer)){
+				return true;
+			}
+		}
+		return false;
+	 }
+
 
 	/** Ajouter une constante. */
 	public boolean ajouterConstante(Type type, String nom, Expression valeur) {

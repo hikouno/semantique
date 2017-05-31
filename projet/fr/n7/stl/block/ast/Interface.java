@@ -60,6 +60,11 @@ public interface Interface {
 	 * @return Synthesized True if the instruction is well typed, False if not.
 	 */	
 	public boolean checkType();
+
+	/** 
+	 * verifier que cette classe implemente interfAImplementer
+	 */
+	public boolean implemente(Interface interfAImplementer);
 	
 	/**
 	 * Inherited Semantics attribute to allocate memory for the variables declared in the instruction.
