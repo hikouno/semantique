@@ -10,6 +10,7 @@ import java.util.Optional;
 import fr.n7.stl.block.ast.Classe;
 import fr.n7.stl.block.ast.Block;
 import fr.n7.stl.block.ast.Type;
+import fr.n7.stl.block.ast.MembreClasse.DroitAcces;
 import fr.n7.stl.block.ast.Interface;
 import fr.n7.stl.block.ast.ClasseDeclaration;
 import fr.n7.stl.block.ast.InterfaceDeclaration;
@@ -31,18 +32,55 @@ import fr.n7.stl.tam.ast.TAMFactory;
 	 
 	 protected Classe superClasse;
 	 protected String unknownClasse;
+	 protected LinkedList<MethodImpl> methodesHeritees;	
+	 protected LinkedList<AttributImpl> attributsHerites;
+
+	 
 	 
 	 public ClasseHeritantImpl (String name, Classe superClasse, String unknownClasse) {
 		 super(name);
 		 this.superClasse = superClasse;
 		 this.unknownClasse = unknownClasse;
+		 if(this.superClasse != null) {
+			 this.methodesHeritees.addAll(triMeth(this.superClasse.getMethodes()));
+			 this.attributsHerites.addAll(triAttr(this.superClasse.getAttributs()));
+		 }
 	 }
 	 
 	 public ClasseHeritantImpl (String name, Classe superClasse, LinkedList<Interface> interfaces, String unknownClasse) {
 		 super(name, interfaces);
 		 this.superClasse = superClasse;
 		 this.unknownClasse = unknownClasse;
+		 if(this.superClasse != null) {
+			 this.methodesHeritees.addAll(triMeth(this.superClasse.getMethodes()));
+			 this.attributsHerites.addAll(triAttr(this.superClasse.getAttributs()));
+		 }
 	 }
+	 
+	 
+	 /** Retourne la liste des attributs de la liste qui ne sont pas privés.
+	  */
+	  private static LinkedList<AttributImpl> triAttr(LinkedList<AttributImpl> source) {
+		  LinkedList<AttributImpl> result = new LinkedList<AttributImpl>();
+		  for(AttributImpl mbClasse : source) {
+			  if(!(mbClasse.getDroitAcces() == DroitAcces.PRIVATE)) {
+				  result.add(mbClasse);
+			  }
+		  }
+		  return result;
+	  }
+	  
+	  /** Retourne la liste des attributs de la liste qui ne sont pas privés.
+	  */
+	  private static LinkedList<MethodImpl> triMeth(LinkedList<MethodImpl> source) {
+		  LinkedList<MethodImpl> result = new LinkedList<MethodImpl>();
+		  for(MethodImpl mbClasse : source) {
+			  if(!(mbClasse.getDroitAcces() == DroitAcces.PRIVATE)) {
+				  result.add(mbClasse);
+			  }
+		  }
+		  return result;
+	  }
 	 
 	 
 	 /**
@@ -65,6 +103,12 @@ import fr.n7.stl.tam.ast.TAMFactory;
 		}
 		return newListe;
 	}
+	
+	/** Renvoie les attributs hérités seulement de la classe.
+	 */
+	 public LinkedList<AttributImpl> getAttributsHerites() {
+		 return this.triAttr(this.superClasse.getAttributs());
+	 }
 	
 	
 	/**
@@ -94,6 +138,12 @@ import fr.n7.stl.tam.ast.TAMFactory;
 		}
 		return newListe;
 	}
+	
+	/** Renvoie les méthodes hérités seulement de la classe.
+	 */
+	 public LinkedList<MethodImpl> getMethodesHeritees() {
+		 return this.triMeth(this.superClasse.getMethodes());
+	 }
 	
 	
 	/**
@@ -135,6 +185,7 @@ import fr.n7.stl.tam.ast.TAMFactory;
 	 @Override
 	public ScopeCheckResult scopeCheck(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes) {
 		super.scopeCheck(interfaces, classes);
+		
 		String errorMsg = "";
 		
 		// La superClasse
@@ -146,43 +197,44 @@ import fr.n7.stl.tam.ast.TAMFactory;
 				errorMsg += "La classe " + this.unknownClasse + " n'existe pas. \n";
 			}
 		}
-		
-		
-		//Parcours des attributs
-		LinkedList<AttributImpl> nouv_attributs = new LinkedList<AttributImpl>();
-		
-		for (AttributImpl att : this.getAttributs()) {
-			AttributImpl nouv_att;
+
+
+		//Parcours des attributs hérités
+		if(this.superClasse != null) {
+			LinkedList<AttributImpl> new_attributs = new LinkedList<AttributImpl>();
 			
-			try {
-				nouv_att = att.toDeclared(interfaces, classes, this);
-			} catch (ToDeclaredException e) {
-				errorMsg += e.getMessage() + "\n";
-				nouv_att = att;
+			for (AttributImpl att : this.getAttributsHerites()) {
+				AttributImpl nouv_att;
+				
+				try {
+					nouv_att = att.toDeclared(interfaces, classes, this);
+				} catch (ToDeclaredException e) {
+					errorMsg += e.getMessage() + "\n";
+					nouv_att = att;
+				}
+				
+				new_attributs.add(nouv_att);
 			}
-			
-			nouv_attributs.add(nouv_att);
+			this.attributsHerites = new_attributs;
 		}
 		
-		this.attributs = nouv_attributs;
-		
-		//Parcours des méthodes
-		LinkedList<MethodImpl> nouv_methodes = new LinkedList<MethodImpl>();
-		
-		for (MethodImpl methode : this.getMethodes()) {
-			MethodImpl nouv_methode;
+		//Parcours des méthodes heritées
+		if(this.superClasse != null) {
+			LinkedList<MethodImpl> new_methodes = new LinkedList<MethodImpl>();
 			
-			try {
-				nouv_methode = methode.toDeclared(interfaces, classes, this);
-			} catch (ToDeclaredException e) {
-				errorMsg += e.getMessage() + "\n";
-				nouv_methode = methode;
-			}
-			
-			nouv_methodes.add(nouv_methode);
+			for (MethodImpl methode : this.getMethodesHeritees()) {
+				MethodImpl nouv_methode;
+				
+				try {
+					nouv_methode = methode.toDeclared(interfaces, classes, this);
+				} catch (ToDeclaredException e) {
+					errorMsg += e.getMessage() + "\n";
+					nouv_methode = methode;
+				}			
+				new_methodes.add(nouv_methode);
+			}		
+			this.methodesHeritees = new_methodes;
 		}
-		
-		this.methods = nouv_methodes;
 		
 		return new ScopeCheckResult(errorMsg.equals(""), errorMsg);
 	}
@@ -221,16 +273,14 @@ import fr.n7.stl.tam.ast.TAMFactory;
 			text += att + "\n";
 		}
 		
-		//Les attributs de la superClasse
-		//Inutile apparement
-		
-		/*if(this.superClasse.getAttributs().size() != 0) {
+		//Les attributs de la superClasse		
+		if(this.superClasse != null && this.getAttributsHerites().size() != 0) {
 			text += "\n"
 					+ "--Attributs Hérités--" + "\n";
-			for(AttributImpl att : this.superClasse.getAttributs()) {
+			for(AttributImpl att : this.getAttributsHerites()) {
 				text += att + "\n";
 			}
-		}*/
+		}
 		
 		text += "\n";
 		
@@ -245,15 +295,13 @@ import fr.n7.stl.tam.ast.TAMFactory;
 		}
 		
 		//Les methodes de la superClasse
-		//Inutile apparement
-		
-		/*if(this.superClasse.getMethodes().size() != 0) {
+		if(this.superClasse != null && this.getMethodesHeritees().size() != 0) {
 			text += "\n"
 					+ "--Méthodes Hérités--" + "\n";
-			for(MethodImpl method : this.superClasse.getMethodes()) {
+			for(MethodImpl method : this.getMethodesHeritees()) {
 				text += method;
 			}
-		}*/
+		}
 		
 		text += "\n}";
 		return text;

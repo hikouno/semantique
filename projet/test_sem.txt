@@ -76,7 +76,7 @@ class Poisson extends Ordi {
 
 class Ordi {
     
-    public int pc;
+    private int pc;
     public Poisson p;
     
     public Ordi() {
