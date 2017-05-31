@@ -43,7 +43,7 @@ public class ClasseImpl implements Classe {
 	
 	public boolean ajouterConstructeur(Constructeur constructeur) {
 		for (Constructeur _constr : this.constructeurs) {
-			if (constructeur.match(_constr))
+			if (constructeur.match_constr(_constr))
 				return false; //Un constructeur similaire existe déjà.
 		}
 		
@@ -208,6 +208,24 @@ public class ClasseImpl implements Classe {
 		}
 		
 		this.methods = nouv_methodes;
+		
+		//Parcours des constructeurs
+		LinkedList<Constructeur> nouv_constrs = new LinkedList<Constructeur>();
+		
+		for (Constructeur constr : this.constructeurs) {
+			Constructeur nouv_constr;
+			
+			try {
+				nouv_constr = constr.toDeclared(interfaces, classes, this);
+			} catch (ToDeclaredException e) {
+				errorMsg += e.getMessage() + "\n";
+				nouv_constr = constr;
+			}
+			
+			nouv_constrs.add(nouv_constr);
+		}
+		
+		this.constructeurs = nouv_constrs;
 		
 		return new ScopeCheckResult(errorMsg.equals(""), errorMsg);
 	}

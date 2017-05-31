@@ -40,7 +40,12 @@ public class RepetitionImpl implements Instruction {
 	public String toString() {
 		return "while (" + this.condition + ") " + this.body;
 	}
-
+	
+	public boolean returnPresent() {
+		
+		return body.returnPresent();
+	}
+	
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Instruction#checkType()
 	 */
@@ -53,6 +58,7 @@ public class RepetitionImpl implements Instruction {
 	 * @see fr.n7.stl.block.ast.Instruction#toDeclared()
 	 */
 	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, MethodImpl methodeMere, Block blocPere) throws ToDeclaredException {
+		
 		return new RepetitionImpl(this.condition.toDeclared(interfaces, classes, classeMere, methodeMere, blocPere),
 									this.body.toDeclared(interfaces, classes, classeMere, methodeMere));
 	}

@@ -132,7 +132,30 @@ public class MethodImpl extends MembreClasse {
 											corps.toDeclared(interfaces, classes, classeMere, this),
 											this.getDroitAcces(), this.estStatique(), nouv_opt_type);
 		
+		method_declared.returnCheck();
+		
 		return method_declared;
+	}
+	
+	/** Renvoie une exception si on trouve une mauvaise utilisation des return. */
+	public void returnCheck() throws ToDeclaredException {
+		
+		if (retour.isPresent()) {
+			if (!corps.returnPresent_base()) {
+				//On force par convention un retour au niveau de base par méthode qui a un type de retour,
+				//On peut cependant ajouter des retours bien formés dans les sous-blocs.
+				throw new ToDeclaredException("Classe " + super.classe.getNom() + ", Méthode " + this.getNom() +
+					": Pas de return détecté (on en impose un au bloc racine par convention).");
+			}
+		} else {
+			if (corps.returnPresent()) {
+				//On force par convention un retour au niveau de base par méthode qui a un type de retour,
+				//On peut cependant ajouter des retours bien formés dans les sous-blocs.
+				throw new ToDeclaredException("Classe " + super.classe.getNom() + ", Méthode " + this.getNom() +
+					": Un return a été détecté (pas de retour demandé).");
+			}
+		}
+		
 	}
 	
 	/* (non-Javadoc)

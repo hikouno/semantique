@@ -41,6 +41,10 @@ public class ConditionalImpl implements Instruction {
 		this.thenBranch = _then;
 		this.elseBranch = Optional.empty();
 	}
+	
+	public boolean returnPresent() {
+		return thenBranch.returnPresent() || (elseBranch.isPresent() && elseBranch.get().returnPresent());
+	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
