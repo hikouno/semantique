@@ -3,13 +3,16 @@
  */
 package fr.n7.stl.block.ast.impl;
 
+import java.util.List;
+import java.util.LinkedList;
+import java.util.Optional;
+
 import fr.n7.stl.block.ast.Block;
+import fr.n7.stl.block.ast.ClasseDeclaration;
+import fr.n7.stl.block.ast.InterfaceDeclaration;
 import fr.n7.stl.block.ast.Classe;
 import fr.n7.stl.block.ast.Expression;
 import fr.n7.stl.block.ast.MembreClasse.DroitAcces;
-
-import java.util.LinkedList;
-import java.util.List;
 
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
@@ -19,37 +22,26 @@ import fr.n7.stl.tam.ast.TAMFactory;
  * A class method.
  *
  */
-public class Constructeur {
-
-	protected Classe classe; //La classe associée au constructeur.
-	protected DroitAcces auth;
-	
-	protected LinkedList<Argument> args;
-	protected Block corps;
-	
+public class Constructeur extends MethodImpl {
 	
 	public Constructeur(Classe classe, DroitAcces auth, LinkedList<Argument> args, Block corps) {
-		this.classe = classe;
-		
-		this.auth = auth;
-		
-		this.args = args;
-		this.corps = corps;
+		super(classe, classe.getNom(), args, corps, auth, false, Optional.empty());
 	}
 	
 	/**
 	 * Teste si un jeu d'expressions fourni correspond à la signature
 	 * du constructeur.
 	 */
+	@Override
 	public boolean match(List<Expression> args_fournis) {
 		
 		//1. Même nombre d'arguments
-		if (args_fournis.size() != this.args.size())
+		if (args_fournis.size() != super.args.size())
 			return false;
 		
 		//2. Arguments de même type.
-		for (int i = 0; i < this.args.size(); i++) {
-			if ( !this.args.get(i).getType().equalsTo(args_fournis.get(i).getType()) )
+		for (int i = 0; i < super.args.size(); i++) {
+			if ( !super.args.get(i).getType().equalsTo(args_fournis.get(i).getType()) )
 				return false;
 		}
 		
@@ -60,25 +52,21 @@ public class Constructeur {
 	 * Teste si la signature du constructeur correspond à celle du
 	 * constructeur passé en argument (équivalence des types).
 	 */
-	public boolean match(Constructeur _constructeur) {
+	public boolean match_constr(Constructeur _constructeur) {
 		
 		LinkedList<Argument> args_fournis = _constructeur.getArguments();
 		
 		//1. Même nombre d'arguments
-		if (args_fournis.size() != this.args.size())
+		if (args_fournis.size() != super.args.size())
 			return false;
 		
 		//2. Arguments de même type.
-		for (int i = 0; i < this.args.size(); i++) {
-			if ( !this.args.get(i).getType().equalsTo(args_fournis.get(i).getType()) )
+		for (int i = 0; i < super.args.size(); i++) {
+			if ( !super.args.get(i).getType().equalsTo(args_fournis.get(i).getType()) )
 				return false;
 		}
 		
 		return true;
-	}
-	
-	public LinkedList<Argument> getArguments() {
-		return this.args;
 	}
 	
 	/* (non-Javadoc)
@@ -87,18 +75,37 @@ public class Constructeur {
 	@Override
 	public String toString() {
 		
-		String text = (this.auth == DroitAcces.PRIVATE) ? "private " : ( (this.auth == DroitAcces.PUBLIC) ? "public " : "protected " );
-		text += this.classe.getNom() + " (";
+		String text = (super.auth == DroitAcces.PRIVATE) ? "private " : ( (super.auth == DroitAcces.PUBLIC) ? "public " : "protected " );
+		text += super.classe.getNom() + " (";
 		
 		for (int i = 0; i < args.size(); i++) {
-			text += args.get(i).toString() + ((i != args.size() - 1) ? ", " : "");
+			text += super.args.get(i).toString() + ((i != super.args.size() - 1) ? ", " : "");
 		}
 		
-		text += ")\n" + this.corps;
+		text += ")\n" + super.corps;
 		
 		return text;
 	}
-
+	
+	/**
+	 * Synthesized Semantics attribute to compute the type of an expression.
+	 * @return Synthesized Type of the expression.
+	 */
+	@Override
+	public Constructeur toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) throws ToDeclaredException {
+		Constructeur constr_declared;
+		
+		//DÉCLARATION DES ARGUMENTS
+		LinkedList<Argument> nouv_arguments = Argument.toDeclared_list(interfaces, classes, classeMere,
+						"Classe " + classeMere.getNom() + ", Constructeur : ", this.args);
+		
+		//DÉCLARATION DU CONSTRUCTEUR
+		constr_declared = new Constructeur(classeMere, super.getDroitAcces(), nouv_arguments,
+											corps.toDeclared(interfaces, classes, classeMere, this));
+		
+		return constr_declared;
+	}
+	
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Block#checkType()
 	 */

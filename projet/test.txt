@@ -13,7 +13,7 @@ interface Liquide {
 class EtreVivant implements Boisson {
 
     public EtreVivant(int a, int b) {
-        
+        print a;
     }
     
     public int t;
