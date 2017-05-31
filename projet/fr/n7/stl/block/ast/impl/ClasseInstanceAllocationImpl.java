@@ -37,6 +37,10 @@ public class ClasseInstanceAllocationImpl implements Expression {
 		return this.classe.getConstructeur(this.arguments).isPresent();
 	}
 	
+	public List<Expression> getArgs() {
+		return arguments;
+	}
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */

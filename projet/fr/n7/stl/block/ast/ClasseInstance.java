@@ -17,11 +17,6 @@ import fr.n7.stl.tam.ast.TAMFactory;
 public interface ClasseInstance {
 	
 	/**
-	 * Ajoute une méthode à la classe.
-	 */
-	//public boolean appelerMethode(String nom, LinkedList<Expression> parametres);
-	
-	/**
 	 * Renvoie la classe associée.
 	 * @return La classe associée.
 	 */
@@ -48,6 +43,6 @@ public interface ClasseInstance {
 	 * @param _factory Inherited Factory to build AST nodes for TAM code.
 	 * @return Synthesized AST for the generated TAM code.
 	 */
-	public Fragment getCode(TAMFactory _factory);
+	public Fragment getCode_allocation(TAMFactory _factory);
 
 }

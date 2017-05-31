@@ -3,6 +3,10 @@
  */
 package fr.n7.stl.block.ast.impl;
 
+import java.util.HashMap;
+import java.util.List;
+
+import fr.n7.stl.block.ast.Expression;
 import fr.n7.stl.block.ast.Classe;
 import fr.n7.stl.block.ast.ClasseInstance;
 
@@ -21,9 +25,13 @@ public class ClasseInstanceImpl implements ClasseInstance {
 	 * EFFECTIFS LIÉS À L'INSTANCE DE CLASSE. */
 	
 	protected Classe classe;
+	protected Constructeur appel; //appel constructeur.
+	protected HashMap<AttributImpl, Expression> attributs; //valeurs des attributs.
 	
-	public ClasseInstanceImpl(Classe _classe) {
+	public ClasseInstanceImpl(Classe _classe, List<Expression> appel_constructeur) {
 		this.classe = _classe;
+		this.appel = this.classe.getConstructeur(appel_constructeur).isPresent() ?
+				this.classe.getConstructeur(appel_constructeur).get() : null;
 	}
 	
 	/**
@@ -71,7 +79,7 @@ public class ClasseInstanceImpl implements ClasseInstance {
 	 * @param _factory Inherited Factory to build AST nodes for TAM code.
 	 * @return Synthesized AST for the generated TAM code.
 	 */
-	public Fragment getCode(TAMFactory _factory) {
+	public Fragment getCode_allocation(TAMFactory _factory) {
 		throw new RuntimeException("ClasseInstanceImpl getCode à implémenter");
 	}
 
