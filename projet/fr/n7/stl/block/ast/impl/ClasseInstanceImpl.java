@@ -57,7 +57,12 @@ public class ClasseInstanceImpl implements ClasseInstance {
 	 * @return Synthesized Size of the memory allocated to the variables.
 	 */	
 	public int allocateMemory(Register _register, int _offset) {
-		throw new RuntimeException("ClasseInstanceImpl allocateMemory à implémenter");
+		int local = _offset;
+		for (AttributImpl _atts : this.classe.getAttributs()) {
+			local += _atts.allocateMemory(_register, local);
+		}
+		
+		return local - _offset;
 	}
 	
 	/**

@@ -76,7 +76,12 @@ public class ClasseTypeImpl implements Type {
 	 */
 	@Override
 	public int length() {
-		throw new SemanticsUndefinedException("Semantics length is not implemented in ClasseTypeImpl.");
+		int length = 0;
+		for (AttributImpl _atts : this.classe.getAttributs()) {
+			length += _atts.getType().length();
+		}
+		
+		return length;
 	}
 
 	/* (non-Javadoc)

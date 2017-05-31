@@ -135,7 +135,7 @@ public class ProgramImpl implements Program {
 	 */
 	@Override
 	public int allocateMemory(Register _register, int _offset) {
-		throw new RuntimeException("ProgramImpl allocateMemory à implémenter");
+		return principale.allocateMemory(_register, _offset);
 	}
 
 	/* (non-Javadoc)
@@ -143,7 +143,7 @@ public class ProgramImpl implements Program {
 	 */
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
-		throw new RuntimeException("ProgramImpl getCode à implémenter");
+		return principale.getCode(_factory);
 	}
 
 }
