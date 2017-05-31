@@ -1,0 +1,24 @@
+class PoissonNomme {
+    
+    public String espece;
+    
+    public PoissonNomme(String nom) {
+        this.espece = nom;		
+    }
+}
+
+class Poisson extends Ovipare {
+    
+}
+
+class Ovipare {
+    
+}
+
+public class Test {
+
+    public static void main(String[] args) {
+        Ovipare nemo = new PoissonNomme("poisson clown");
+    }
+
+}

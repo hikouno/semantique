@@ -49,7 +49,7 @@ public class ConstanteImpl implements Constante {
 		 */
 		@Override
 		public Type getType() {
-			throw new RuntimeException("ClasseImpl getType à implémenter");
+			return this.valeur.getType();
 		}
 		
 		/* (non-Javadoc)

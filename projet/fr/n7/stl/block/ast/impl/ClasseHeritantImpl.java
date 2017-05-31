@@ -57,6 +57,14 @@ import fr.n7.stl.tam.ast.TAMFactory;
 		 }
 	 }
 	 
+	 public boolean herite(Classe ancetre){
+		 return (ancetre.equalsTo(superClasse) || (superClasse instanceof ClasseHeritantImpl)&&(((ClasseHeritantImpl)superClasse).herite(ancetre)));
+	 }
+
+	 public boolean implemente(Interface interfAImplementer){
+		 return super.implemente(interfAImplementer) || ((superClasse instanceof ClasseImplementantImpl)&&(((ClasseImplementantImpl)superClasse).implemente(interfAImplementer)));
+	 }
+	 
 	 
 	 /** Retourne la liste des attributs de la liste qui ne sont pas privés.
 	  */

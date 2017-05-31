@@ -28,6 +28,11 @@ public class Constructeur extends MethodImpl {
 		super(classe, classe.getNom(), args, corps, auth, false, Optional.empty());
 	}
 	
+	
+	public String getLabel() {
+		return super.classe.getNom();
+	}
+	
 	/**
 	 * Teste si un jeu d'expressions fourni correspond à la signature
 	 * du constructeur.
@@ -129,15 +134,20 @@ public class Constructeur extends MethodImpl {
 	 */
 
 	public int allocateMemory(Register _register, int _offset) {
-		throw new RuntimeException("Constructeur allocateMemory à implémenter");
+		return super.corps.allocateMemory(_register, _offset);
 	}
 
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Block#generateCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
-
-	public Fragment getCode(TAMFactory _factory) {
-		throw new RuntimeException("Constructeur getCode à implémenter");
+	public Fragment getCode(TAMFactory _factory, int argsLength, int returnLength) {
+		Fragment res = _factory.createFragment();
+		res.add( _factory.createLoad(Register.LB, -argsLength, argsLength) );
+		res.add( _factory.createPush(returnLength) );
+		res.append( super.corps.getCode(_factory) );
+		res.add( _factory.createReturn(returnLength, 0) );
+		
+		return res;
 	}
 
 }

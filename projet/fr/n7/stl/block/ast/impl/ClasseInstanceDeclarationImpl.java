@@ -110,7 +110,7 @@ public class ClasseInstanceDeclarationImpl implements ClasseInstanceDeclaration 
 	 */
 	@Override
 	public boolean checkType() {
-		throw new RuntimeException("ClasseInstanceDeclarationImpl checkType à implémenter");
+		return ((this.value.getType()).compatibleWith(this.type));
 	}
 	
 	/* (non-Javadoc)
@@ -138,7 +138,7 @@ public class ClasseInstanceDeclarationImpl implements ClasseInstanceDeclaration 
 	 */
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
-		throw new RuntimeException("ClasseInstanceDeclarationImpl getCode à implémenter");
+		return this.instance.getCode_allocation(_factory);
 	}
 	
 }

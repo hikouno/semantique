@@ -261,7 +261,7 @@ public class MembreClasseAccessImpl implements Expression {
      */
     @Override
     public Type getType() {
-        throw new RuntimeException("MembreClasseAccessImpl getType non implémentée");
+        return this.type;
     }
 
     /* (non-Javadoc)
@@ -269,6 +269,7 @@ public class MembreClasseAccessImpl implements Expression {
      */
     @Override
     public Fragment getCode(TAMFactory _factory) {
+        Fragment res = _factory.createFragment();
         throw new RuntimeException("MembreClasseAccessImpl getCode non implémentée");
     }
 }

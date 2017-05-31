@@ -41,7 +41,6 @@ public class MethodImpl extends MembreClasse {
 		this.retour = retour;
 	}
 	
-	
 	/**
 	 * Teste si la signature du constructeur correspond à celle du
 	 * constructeur passé en argument (équivalence des types et même nom).
@@ -93,6 +92,10 @@ public class MethodImpl extends MembreClasse {
 	
 	public Optional<Type> getTypeRetour() {
 		return this.retour;
+	}
+	
+	public Block getCorps() {
+		return this.corps;
 	}
 	
 	/**
@@ -199,8 +202,9 @@ public class MethodImpl extends MembreClasse {
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Block#generateCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
-	@Override
-	public Fragment getCode(TAMFactory _factory) {
+	public Fragment getCode(TAMFactory _factory, int argsLength) {
+		Fragment res = _factory.createFragment();
+		
 		throw new RuntimeException("MethodImpl getCode à implémenter");
 	}
 

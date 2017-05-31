@@ -57,13 +57,5 @@ public abstract class MembreClasse {
 	 * @return Synthesized Size of the memory allocated to the variables.
 	 */	
 	public abstract int allocateMemory(Register _register, int _offset);
-	
-	/**
-	 * Inherited Semantics attribute to build the nodes of the abstract syntax tree for the generated TAM code.
-	 * Synthesized Semantics attribute that provide the generated TAM code.
-	 * @param _factory Inherited Factory to build AST nodes for TAM code.
-	 * @return Synthesized AST for the generated TAM code.
-	 */
-	public abstract Fragment getCode(TAMFactory _factory);
 
 }
