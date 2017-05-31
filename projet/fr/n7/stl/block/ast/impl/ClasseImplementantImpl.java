@@ -17,6 +17,8 @@ import fr.n7.stl.block.ast.InterfaceDeclaration;
 
 
 import fr.n7.stl.block.ast.impl.ClasseImpl;
+import fr.n7.stl.block.ast.impl.InterfaceImpl;
+import fr.n7.stl.block.ast.impl.InterfaceImpl.Signature;
 
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
@@ -85,8 +87,40 @@ public class ClasseImplementantImpl extends ClasseImpl {
 	 */	
 	 @Override
 	public ScopeCheckResult scopeCheck(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes) {
-		return super.scopeCheck(interfaces, classes);
+		super.scopeCheck(interfaces, classes);
+		
+		String errorMsg = "";
+		
+		//Parcours des interfaces implémentées
+		for(Interface interf : this.interfacesImplementees) {
+			if (interf instanceof InterfaceImpl) {
+				InterfaceImpl interImpl = (InterfaceImpl) interf;
+				for(Signature sign : interImpl.getSignatures()) {
+					if (!this.existe(sign, this.getMethodes())) {
+						errorMsg += "La méthode " + sign.toString() + 
+						" n'est pas implémentée dans la classe : " + this.getNom();
+					}
+				}
+			}
+		}
+		return new ScopeCheckResult(errorMsg.equals(""), errorMsg);
 	}
+	
+	
+	/** Static method
+	 * return true if Signature sign is in the List of methods.
+	 */
+	 public static boolean existe(Signature sign, LinkedList<MethodImpl> methodes) {
+		 boolean result = false;
+		 for(MethodImpl meth : methodes) {
+			 if (result = sign.match((new InterfaceImpl(null, null, null)).new Signature(meth.getTypeRetour(), meth.getNom(), meth.getArguments()))) {
+				 break;
+			 }
+		 }
+		 return result;
+	 }
+	
+	
 	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()

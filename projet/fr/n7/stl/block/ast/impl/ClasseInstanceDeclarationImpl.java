@@ -29,7 +29,7 @@ public class ClasseInstanceDeclarationImpl implements ClasseInstanceDeclaration 
 	protected Type type;
 	protected Expression value;
 	
-	protected ClasseInstance instance;
+	protected ClasseInstance instance = null;
 	
 	/**
 	 * Creates a class declaration instruction node for the Abstract Syntax Tree.
@@ -42,22 +42,15 @@ public class ClasseInstanceDeclarationImpl implements ClasseInstanceDeclaration 
 			throw new RuntimeException("ClasseInstanceDeclaration demande un type ClasseType");
 		
 		this.value = _value;
-		
-		//Génération de l'instance de classe.
-		this.instance = new ClasseInstanceImpl( ((ClasseTypeImpl) _type).getClasse() );
 	}
 	
-	private ClasseInstanceDeclarationImpl(String _nom, Type _type, Expression _value, ClasseInstance _instance) {
-		this.nom = _nom;
-		this.type = _type;
-		
-		if (!(_type instanceof ClasseTypeImpl))
-			throw new RuntimeException("ClasseInstanceDeclaration demande un type ClasseType");
-		
-		this.value = _value;
-		
-		//Récupération de l'instance de classe.
-		this.instance = instance;
+	public void declareInstance() {
+		//Génération de l'instance de classe.
+		List<Expression> appel_constructeur;
+		if (this.value instanceof ClasseInstanceAllocationImpl) {
+			appel_constructeur = ((ClasseInstanceAllocationImpl) this.value).getArgs();
+			this.instance = new ClasseInstanceImpl( ((ClasseTypeImpl) this.type).getClasse(), appel_constructeur );
+		}
 	}
 	
 	/**
@@ -117,7 +110,7 @@ public class ClasseInstanceDeclarationImpl implements ClasseInstanceDeclaration 
 	 */
 	@Override
 	public boolean checkType() {
-		return this.value.getType().compatibleWith(this.type);
+		throw new RuntimeException("ClasseInstanceDeclarationImpl checkType à implémenter");
 	}
 	
 	/* (non-Javadoc)
@@ -125,9 +118,11 @@ public class ClasseInstanceDeclarationImpl implements ClasseInstanceDeclaration 
 	 */
 	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, MethodImpl methodeMere, Block blocPere) throws ToDeclaredException {
 		
-		return new ClasseInstanceDeclarationImpl(this.nom, this.type.toDeclared(interfaces, classes, classeMere),
-												this.value.toDeclared(interfaces, classes, classeMere, methodeMere, blocPere),
-												this.instance);
+		ClasseInstanceDeclarationImpl declared = new ClasseInstanceDeclarationImpl(this.nom, this.type.toDeclared(interfaces, classes, classeMere),
+												this.value.toDeclared(interfaces, classes, classeMere, methodeMere, blocPere));
+		
+		declared.declareInstance();
+		return declared;
 	}
 
 	/* (non-Javadoc)
@@ -135,7 +130,7 @@ public class ClasseInstanceDeclarationImpl implements ClasseInstanceDeclaration 
 	 */
 	@Override
 	public int allocateMemory(Register _register, int _offset) {
-		throw new RuntimeException("ClasseInstanceDeclarationImpl allocateMemory à implémenter");
+		return this.instance.allocateMemory(_register, _offset);
 	}
 
 	/* (non-Javadoc)
@@ -143,7 +138,7 @@ public class ClasseInstanceDeclarationImpl implements ClasseInstanceDeclaration 
 	 */
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
-		throw new RuntimeException("ClasseInstanceDeclarationImpl getCode à implémenter");
+		return this.instance.getCode_allocation(_factory);
 	}
 	
 }

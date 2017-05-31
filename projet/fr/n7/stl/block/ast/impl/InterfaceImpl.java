@@ -24,7 +24,7 @@ import fr.n7.stl.tam.ast.TAMFactory;
  */
 public class InterfaceImpl implements Interface {
 	
-	private class Signature {
+	public class Signature {
 		
 		private Optional<Type> type;
 		private String nom;
@@ -92,7 +92,7 @@ public class InterfaceImpl implements Interface {
 	protected String name;
 	protected LinkedList<Signature> signatures;
 	protected LinkedList<Constante> constantes;
-	protected LinkedList<Interface> interfaces;
+	protected LinkedList<Interface> interfaces;		//Interfaces dont this hérite.
 	protected LinkedList<String> unknownInterfaces;
 
 	
@@ -102,6 +102,12 @@ public class InterfaceImpl implements Interface {
 		this.constantes = new LinkedList<Constante>();
 		this.interfaces = interfaces;
 		this.unknownInterfaces = unknownInterfaces;
+	}
+	
+	
+	/** Renvoie les signatures de l'interface. */
+	public LinkedList<Signature> getSignatures() {
+		return this.signatures;
 	}
 
 	public ScopeCheckResult scopeCheck(List<InterfaceDeclaration> interfacesDec, List<ClasseDeclaration> classesDec, List<String> listePrecInterfaces) {

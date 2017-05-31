@@ -85,7 +85,7 @@ public class AttributImpl extends MembreClasse {
 	 */
 	@Override
 	public int allocateMemory(Register _register, int _offset) {
-		throw new RuntimeException("AttributImpl allocateMemory à implémenter");
+		return this.type.length();
 	}
 
 	/* (non-Javadoc)

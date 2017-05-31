@@ -1,0 +1,102 @@
+
+interface Soda extends Boisson {
+}
+
+interface Boisson extends Liquide {
+	
+	boolean estBoisson();
+	int cbBoisson(int param1, boolean param2);
+}
+
+interface Liquide {
+}
+
+
+
+class EtreVivant implements Boisson {
+
+    public EtreVivant(int a, int b) {
+        print a;
+    }
+    
+    public int t;
+    
+    public Poisson poiss;
+    
+    public Poisson est_incroyable(Ordi o, int i) {
+        int test = 4;
+        Poisson tee = 2;
+        return tee;
+    }
+
+    public boolean estBoisson() {
+    }
+
+    public int cbBoisson(int i, boolean param2) {
+    }
+}
+
+class Poisson extends Ordi {
+ 
+    public Poisson(int a, int b, boolean c, int be) {
+        print 4;
+    }
+    
+    public Ordi ma_methode_incroyable2(Ordi b, Poisson c, EtreVivant be) {
+        int j = 42;
+        
+        if (1 == 1) {
+			while (1 == 1) {
+				//return 5;
+				print 1;
+				return 1;
+			}
+			EtreVivant be = new EtreVivant(1, 2);
+			
+			//print be;
+			//print be.est_incroyable(new Ordi(), 4, 5).nageoires;
+		}
+		
+        Ordi c = 2;
+        
+        print super.be;
+        print this.be.est_incroyable(new Ordi(), 4);
+        print be.est_incroyable(new Ordi(), 4).nageoires;
+        
+        return 1;
+    }
+    
+    private int mon_attribut;
+    private static Ordi mon_attribut;
+    
+    public boolean nageoires;
+    private EtreVivant be;
+}
+
+
+class Ordi {
+    
+    public int pc;
+    public Poisson p;
+    
+    public Ordi() {
+		print 1;
+    }
+    
+    public Poisson est_incroyable() {
+        int test = 4;
+        Poisson tee = 2;
+        return tee;
+    }
+}
+
+public class Test {
+
+    public static void main(String[] args) {
+        
+        int j = 0;
+        int i = 1;
+        print i + j;
+    }
+
+}

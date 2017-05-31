@@ -95,6 +95,10 @@ public class MethodImpl extends MembreClasse {
 		return this.retour;
 	}
 	
+	public Block getCorps() {
+		return this.corps;
+	}
+	
 	/**
 	 * Synthesized Semantics attribute to compute the type of an expression.
 	 * @return Synthesized Type of the expression.
