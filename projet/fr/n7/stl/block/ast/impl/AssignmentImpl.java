@@ -65,8 +65,8 @@ public class AssignmentImpl implements Instruction {
 	 */
 	@Override
 	public boolean checkType() {
-		return (this.declaration != null) ? value.getType().equalsTo(declaration.getType()) :
-											value.getType().equalsTo(assignable.getType());
+		return (this.declaration != null) ? value.getType().compatibleWith(declaration.getType()) :
+											value.getType().compatibleWith(assignable.getType());
 	}
 	
 	/* (non-Javadoc)
