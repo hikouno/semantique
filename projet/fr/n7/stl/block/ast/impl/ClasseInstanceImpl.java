@@ -26,20 +26,13 @@ public class ClasseInstanceImpl implements ClasseInstance {
 	
 	protected Classe classe;
 	protected Constructeur appel; //appel constructeur.
-	protected HashMap<AttributImpl, Expression> attributs; //valeurs des attributs.
+	protected int memAllouee;
 	
 	public ClasseInstanceImpl(Classe _classe, List<Expression> appel_constructeur) {
 		this.classe = _classe;
 		this.appel = this.classe.getConstructeur(appel_constructeur).isPresent() ?
 				this.classe.getConstructeur(appel_constructeur).get() : null;
 	}
-	
-	/**
-	 * Ajoute une méthode à la classe.
-	 */
-	/*public boolean appelerMethode(String nom, LinkedList<Expression> parametres) {
-		return true;
-	}*/
 	
 	/**
 	 * Renvoie la classe associée.
@@ -70,6 +63,7 @@ public class ClasseInstanceImpl implements ClasseInstance {
 			local += _atts.allocateMemory(_register, local);
 		}
 		
+		this.memAllouee = local - _offset;
 		return local - _offset;
 	}
 	
@@ -80,7 +74,10 @@ public class ClasseInstanceImpl implements ClasseInstance {
 	 * @return Synthesized AST for the generated TAM code.
 	 */
 	public Fragment getCode_allocation(TAMFactory _factory) {
-		throw new RuntimeException("ClasseInstanceImpl getCode à implémenter");
+		Fragment res = _factory.createFragment();
+		res.add(_factory.createPush(memAllouee));
+		
+		return res;
 	}
 
 }
