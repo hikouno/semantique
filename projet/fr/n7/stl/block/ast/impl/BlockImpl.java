@@ -113,6 +113,42 @@ public class BlockImpl implements Block {
 		}
 	}
 	
+	/** Returns false if some code is unreachable through a misplaced return. */
+	public boolean returnCheck() {
+		for (int i = 0; i < instructions.size(); i++) {
+			if (instructions.get(i) instanceof ReturnImpl && i < instructions.size() - 1) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	/** Returns true if there is at least one return at the base level. */
+	public boolean returnPresent_base() {
+		for (int i = 0; i < instructions.size(); i++) {
+			if (instructions.get(i) instanceof ReturnImpl) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	public boolean returnPresent() {
+		for (int i = 0; i < instructions.size(); i++) {
+			if (instructions.get(i) instanceof ReturnImpl) {
+				return true;
+			} else if (instructions.get(i) instanceof RepetitionImpl) {
+				return ((RepetitionImpl) instructions.get(i)).returnPresent();
+			} else if (instructions.get(i) instanceof ConditionalImpl) {
+				return ((ConditionalImpl) instructions.get(i)).returnPresent();
+			}
+		}
+		
+		return false;
+	}
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
@@ -160,6 +196,10 @@ public class BlockImpl implements Block {
 		}
 		
 		block_declared.addAll(nouvListe);
+		
+		if (!block_declared.returnCheck()) {
+			throw new ToDeclaredException("Bloc :" + classeMere.getNom() + ", " + methodeMere.getNom() + " : Code inaccessible (erreur return).");
+		}
 		
 		return block_declared;
 	}
