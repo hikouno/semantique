@@ -5,10 +5,12 @@ package fr.n7.stl.block.ast.impl;
 
 import java.util.List;
 import java.util.LinkedList;
+import java.util.Optional;
 
 import fr.n7.stl.block.ast.ClasseDeclaration;
 import fr.n7.stl.block.ast.InterfaceDeclaration;
 
+import fr.n7.stl.block.ast.MembreClasse.DroitAcces;
 import fr.n7.stl.block.ast.Type;
 import fr.n7.stl.block.ast.Classe;
 import fr.n7.stl.block.ast.Expression;
@@ -27,8 +29,6 @@ import fr.n7.stl.tam.ast.TAMFactory;
  */
 public class MembreClasseAccessImpl implements Expression {
     
-    protected String PREFIX = "";
-    
     protected boolean verified = false;
     
     public enum Identifier {THIS, SUPER, ARGUMENT, UNKNOWN};
@@ -37,6 +37,7 @@ public class MembreClasseAccessImpl implements Expression {
     protected MembreClasseAccessImpl access;
     
     protected AppelOuAcces membreAccede;
+    protected Type type;
     
     public MembreClasseAccessImpl(Identifier _base) {
         this.base = _base;
@@ -76,12 +77,72 @@ public class MembreClasseAccessImpl implements Expression {
         return this.membreAccede.getArguments();
     }
     
+    public Type getPartialType(Classe classeMere, MethodImpl methodeMere) {
+        
+        Type previousType;
+        boolean checkAuth = true;
+        if (base != null) {
+			
+			if (base == Identifier.THIS || base == Identifier.SUPER) {
+				previousType = new ClasseTypeImpl(classeMere);
+				checkAuth = false;
+				
+			} else if (base == Identifier.ARGUMENT) {
+				
+				LinkedList<Argument> _args = methodeMere.getArguments();
+				for (Argument _arg : _args) {
+					if (_arg.getName().equals(this.membreAccede.getNom()))
+						return _arg.getType();
+				}
+				
+				return null;
+				
+			} else {
+				return null;
+			}
+			
+		} else {
+			previousType = access.getPartialType(classeMere, methodeMere);
+		}
+		
+        String nomAcces = membreAccede.getNom();
+        Classe classe;
+        
+        if (previousType instanceof ClasseTypeImpl)
+            classe = ((ClasseTypeImpl) previousType).getClasse();
+        else
+            return null;
+        
+        Optional<MethodImpl> methode = classe.getMethode(membreAccede.getNom(), membreAccede.getArguments());
+        Optional<AttributImpl> attribut = classe.getAttribut(membreAccede.getNom());
+        
+        if (attribut.isPresent() && membreAccede.getArguments() == null) {
+                
+            if (checkAuth && attribut.get().getDroitAcces() != DroitAcces.PUBLIC) {
+                return null;
+            }
+            
+            return attribut.get().getType();
+                
+        } else if (methode.isPresent() && (membreAccede.getArguments() != null)) {
+                
+            Optional<Type> retour = methode.get().getTypeRetour();
+            if (!retour.isPresent() || (checkAuth && methode.get().getDroitAcces() != DroitAcces.PUBLIC)) {
+                return null;
+            }
+            
+            return retour.get();
+        }
+        
+        return null;
+    }
+    
     /* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
-        String text = PREFIX;
+        String text = "";
         
         if (this.base != null) {
             text += ((!this.verified) ? "(???) " : "") + identifierToString(this.base);
@@ -128,9 +189,12 @@ public class MembreClasseAccessImpl implements Expression {
         }
         
         //Déclaration du type.
-        //if (type != null) {
-        //   this.type = type.toDeclared(interfaces, classes, classeMere);
-        //}
+        Type partialType = this.getPartialType(classeMere, methodeMere);
+        if (partialType == null) {
+            throw new ToDeclaredException("Problème d'accès dans : " + toString());
+        }
+        
+        this.type = partialType;
     }
     
     /* (non-Javadoc)
