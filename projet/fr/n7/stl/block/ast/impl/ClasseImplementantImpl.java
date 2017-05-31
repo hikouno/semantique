@@ -12,6 +12,8 @@ import fr.n7.stl.block.ast.Classe;
 import fr.n7.stl.block.ast.Block;
 import fr.n7.stl.block.ast.Type;
 import fr.n7.stl.block.ast.Interface;
+import fr.n7.stl.block.ast.ClasseDeclaration;
+import fr.n7.stl.block.ast.InterfaceDeclaration;
 
 
 import fr.n7.stl.block.ast.impl.ClasseImpl;
@@ -61,6 +63,17 @@ public class ClasseImplementantImpl extends ClasseImpl {
 	 */
 	public List<Interface> getClassesImplementees() {
 		return this.interfacesImplementees;
+	}
+	
+	
+	/**
+	 * Synthesized Semantics attribute to check if the AST is well formed according
+	 * to the scope.
+	 * @return The new AST with undeclared references replaces by actual ones.
+	 */	
+	 @Override
+	public ScopeCheckResult scopeCheck(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes) {
+		return super.scopeCheck(interfaces, classes);
 	}
 	
 	/* (non-Javadoc)
