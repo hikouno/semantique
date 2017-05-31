@@ -56,6 +56,12 @@ public interface Block {
 	
 	public Optional<Declaration> postScope_get(String _name);
 	
+	public boolean returnCheck();
+	
+	public boolean returnPresent();
+	
+	public boolean returnPresent_base();
+	
 	/**
 	 * Synthesized Semantics attribute to check that an instruction if well typed.
 	 * @return Synthesized True if the instruction is well typed, False if not.

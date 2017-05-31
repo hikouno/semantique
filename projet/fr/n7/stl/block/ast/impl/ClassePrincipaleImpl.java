@@ -54,6 +54,10 @@ public class ClassePrincipaleImpl implements ClassePrincipale {
 	public ScopeCheckResult scopeCheck(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes) {
 		try {
 			Block nouv_methodePrinc = methodePrinc.toDeclared(interfaces, classes, null, null);
+			
+			if (nouv_methodePrinc.returnPresent())
+				return new ScopeCheckResult(false, "Un return a été détecté dans la classe principale");
+			
 			this.methodePrinc = nouv_methodePrinc;
 			
 		} catch (ToDeclaredException e) {
