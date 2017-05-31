@@ -26,14 +26,16 @@ public class ClasseInstanceImpl implements ClasseInstance {
 	
 	protected Classe classe;
 	protected Constructeur appel; //appel constructeur.
-	protected HashMap<AttributImpl, Integer> offsets; //offsets
-	protected int memAllouee;
+	protected List<Expression> param_appels; //param appels constructeur.
+	protected HashMap<AttributImpl, Integer> offsets; //offsets.
+	protected int memAllouee_att, memAllouee_params, offset;
 	
 	public ClasseInstanceImpl(Classe _classe, List<Expression> appel_constructeur) {
 		this.classe = _classe;
 		this.appel = this.classe.getConstructeur(appel_constructeur).isPresent() ?
 				this.classe.getConstructeur(appel_constructeur).get() : null;
 		
+		this.param_appels = appel_constructeur;
 		this.offsets = new HashMap<AttributImpl, Integer>();
 	}
 	
@@ -65,13 +67,27 @@ public class ClasseInstanceImpl implements ClasseInstance {
 	 * @return Synthesized Size of the memory allocated to the variables.
 	 */	
 	public int allocateMemory(Register _register, int _offset) {
+		this.offset = _offset;
 		int local = _offset;
+		//Allocation des attributs de classe.
 		for (AttributImpl _att : this.classe.getAttributs()) {
 			this.offsets.put(_att, local);
 			local += _att.allocateMemory(_register, local);
 		}
 		
-		this.memAllouee = local - _offset;
+		this.memAllouee_att = local - _offset;
+		
+		//Allocation des paramètres du constructeur.
+		for (Expression _param : param_appels) {
+			local += _param.getType().length();
+		}
+		
+		this.memAllouee_params = local - this.memAllouee_att;
+		
+		//Allocation de l'appel du constructeur.
+		appel.allocateMemory(Register.LB, 3 + this.memAllouee_att);
+		
+		
 		return local - _offset;
 	}
 	
@@ -83,8 +99,19 @@ public class ClasseInstanceImpl implements ClasseInstance {
 	 */
 	public Fragment getCode_allocation(TAMFactory _factory) {
 		Fragment res = _factory.createFragment();
-		res.add(_factory.createPush(memAllouee));
-		//res.append(appel.getCode(_factory));
+		//On push les paramètres du constructeur.
+		for (Expression _param : param_appels) {
+			res.append(_param.getCode(_factory));
+		}
+		
+		res.add( _factory.createCall(appel.getLabel(), this.offset) );
+		
+		Fragment res_constr = _factory.createFragment();
+		res_constr.append(appel.getCode(_factory, memAllouee_params - 1, this.memAllouee_att));
+		res_constr.addPrefix(appel.getLabel() + ":");
+		res_constr.addComment("Appel du constructeur");
+		
+		res.append(res_constr);
 		
 		return res;
 	}

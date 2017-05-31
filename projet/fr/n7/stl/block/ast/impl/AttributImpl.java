@@ -91,7 +91,6 @@ public class AttributImpl extends MembreClasse {
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Block#generateCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
-	@Override
 	public Fragment getCode(TAMFactory _factory) {
 		throw new RuntimeException("AttributImpl getCode à implémenter");
 	}

@@ -17,8 +17,11 @@ class Ordi {
     public int pc4;
     public Poisson pc5;
     
-    public Ordi() {
-		
+    public Ordi(int a, int b) {
+        int i = 0;
+        int j = i + 2;
+        
+        print j;
     }
 }
 
@@ -27,7 +30,7 @@ public class Test {
     public static void main(String[] args) {
         
         int j = 0;
-        Ordi pc = new Ordi();
+        Ordi pc = new Ordi(5, 5);
         print 1;
     }
 
