@@ -24,7 +24,7 @@ import fr.n7.stl.tam.ast.TAMFactory;
  */
 public class InterfaceImpl implements Interface {
 	
-	private class Signature {
+	public class Signature {
 		
 		private Optional<Type> type;
 		private String nom;

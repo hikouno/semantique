@@ -18,6 +18,7 @@ import fr.n7.stl.block.ast.InterfaceDeclaration;
 
 import fr.n7.stl.block.ast.impl.ClasseImpl;
 import fr.n7.stl.block.ast.impl.InterfaceImpl;
+import fr.n7.stl.block.ast.impl.InterfaceImpl.Signature;
 
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
