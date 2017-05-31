@@ -44,6 +44,14 @@ import fr.n7.stl.tam.ast.TAMFactory;
 		 this.unknownClasse = unknownClasse;
 	 }
 	 
+	 public boolean herite(Classe ancetre){
+		 return (ancetre.equalsTo(superClasse) || (superClasse instanceof ClasseHeritantImpl)&&(((ClasseHeritantImpl)superClasse).herite(ancetre)));
+	 }
+
+	 public boolean implemente(Interface interfAImplementer){
+		 return super.implemente(interfAImplementer) || ((superClasse instanceof ClasseImplementantImpl)&&(((ClasseImplementantImpl)superClasse).implemente(interfAImplementer)));
+	 }
+	 
 	 
 	 /**
 	 * Renvoie la superClasse de la classe.

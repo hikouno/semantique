@@ -45,6 +45,18 @@ public class ClasseImplementantImpl extends ClasseImpl {
 	}
 	
 	/** 
+	 * verifier que cette classe implemente interfAImplementer
+	 */
+	public boolean implemente(Interface interfAImplementer){
+		for(Interface interf : this.getInterfacesImplementees()){
+			if(interf.implemente(interfAImplementer)){
+				return true;
+			}
+		}
+		return false;
+	 }
+
+	/** 
 	 * Ajouter une interface implémentée à la classe.
 	 */
 	public boolean ajouterInterface(InterfaceImpl interfac) {
@@ -63,7 +75,7 @@ public class ClasseImplementantImpl extends ClasseImpl {
 	 * Renvoie les interfaces de la classe.
 	 * @return Les interfaces de la classe.
 	 */
-	public List<Interface> getClassesImplementees() {
+	public List<Interface> getInterfacesImplementees() {
 		return this.interfacesImplementees;
 	}
 	
