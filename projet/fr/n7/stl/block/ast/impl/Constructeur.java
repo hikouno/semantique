@@ -121,7 +121,7 @@ public class Constructeur extends MethodImpl {
 	 */
 
 	public boolean checkType() {
-		throw new RuntimeException("Constructeur checkType à implémenter");
+		return this.corps.checkType();
 	}
 
 	/* (non-Javadoc)

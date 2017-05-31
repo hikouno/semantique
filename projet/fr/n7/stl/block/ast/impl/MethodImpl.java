@@ -185,7 +185,7 @@ public class MethodImpl extends MembreClasse {
 	 */
 	@Override
 	public boolean checkType() {
-		throw new RuntimeException("MethodImpl checkType à implémenter");
+		return this.corps.checkType();
 	}
 
 	/* (non-Javadoc)
