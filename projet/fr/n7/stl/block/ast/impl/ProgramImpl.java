@@ -81,7 +81,6 @@ public class ProgramImpl implements Program {
 			if (!res.wasSuccessful()) {
 				return res;
 			}
-			continue;
 		}
 		
 		/** Parcours des classes */
@@ -91,7 +90,6 @@ public class ProgramImpl implements Program {
 			if (!res.wasSuccessful()) {
 				return res;
 			}
-			continue;
 		}
 		
 		/** Parcours de la méthode principale */
@@ -127,7 +125,15 @@ public class ProgramImpl implements Program {
 	 */
 	@Override
 	public boolean checkType() {
-		throw new RuntimeException("ProgramImpl checkType à implémenter");
+		boolean test = true;
+		for(Interface inter : this.interfaces){
+			test = test && inter.checkType();
+		}
+		for(Classe classe : this.classes){
+			test = test && classe.checkType();
+		}
+		test = test && this.principale.checkType();
+		return test;
 	}
 
 	/* (non-Javadoc)

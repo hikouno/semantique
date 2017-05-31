@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import fr.n7.stl.block.ast.impl.MembreClasseAccessImpl;
 import fr.n7.stl.block.ast.impl.MembreClasseAccessImpl.Identifier;
+import fr.n7.stl.block.ast.impl.MethodImpl;
 import fr.n7.stl.block.ast.impl.InstanceUseImpl;
 import fr.n7.stl.block.ast.impl.InstanceAccessImpl;
 import fr.n7.stl.block.ast.impl.UndeclaredAccessImpl;
@@ -160,7 +161,7 @@ public interface BlockFactory extends ExpressionFactory, InstructionFactory, Typ
 	 * Create a node for a return in the Abstract Syntax Tree 
 	 * @return ReturnImpl instruction.
 	 */
-	public Instruction createReturn(Expression expr);
+	public Instruction createReturn(Expression expr, MethodImpl methodeMere);
     
     
 }

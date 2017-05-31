@@ -47,6 +47,7 @@ class Poisson extends Ordi {
         print super.be;
         print this.be;
         print be.est_incroyable(new Ordi(), 4).salut;
+	return 17;
     }
     
     private int mon_attribut;

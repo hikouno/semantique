@@ -357,8 +357,8 @@ public class BlockFactoryImpl implements BlockFactory {
 
 
     @Override
-    public Instruction createReturn(Expression expr) {
-        return new ReturnImpl(expr);
+    public Instruction createReturn(Expression expr, MethodImpl methodeMere) {
+        return new ReturnImpl(expr, methodeMere);
     }
 
     /* (non-Javadoc)

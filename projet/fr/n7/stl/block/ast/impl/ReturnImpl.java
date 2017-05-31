@@ -4,6 +4,7 @@
 package fr.n7.stl.block.ast.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import fr.n7.stl.block.ast.Assignable;
 import fr.n7.stl.block.ast.Expression;
@@ -13,6 +14,7 @@ import fr.n7.stl.block.ast.InterfaceDeclaration;
 import fr.n7.stl.block.ast.ClasseDeclaration;
 import fr.n7.stl.block.ast.Classe;
 import fr.n7.stl.block.ast.Block;
+import fr.n7.stl.block.ast.Type;
 
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
@@ -26,14 +28,16 @@ import fr.n7.stl.tam.ast.TAMFactory;
 public class ReturnImpl implements Instruction {
 
   	protected Expression value;
+  	protected MethodImpl methodeMere;
 
 	/**
 	 * Create an assignment instruction implementation from the assignable expression
 	 * and the assigned value.
 	 * @param _expr Value assigned to the expression.
 	 */
-	public ReturnImpl(Expression _expr) {
+	public ReturnImpl(Expression _expr, MethodImpl methodeMere) {
 		this.value = _expr;
+		this.methodeMere = methodeMere;
 	}
 
 	/* (non-Javadoc)
@@ -49,14 +53,16 @@ public class ReturnImpl implements Instruction {
 	 */
 	@Override
 	public boolean checkType() {
-		return true;
+		Optional<Type> typeRetour = this.methodeMere.getTypeRetour();
+		return typeRetour.isPresent() && this.value.getType().compatibleWith(typeRetour.get());
 	}
 	
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Instruction#toDeclared()
 	 */
 	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, MethodImpl methodeMere, Block blocPere) throws ToDeclaredException{
-		return new ReturnImpl(this.value.toDeclared(interfaces, classes, classeMere, methodeMere, blocPere));
+		
+		return new ReturnImpl(this.value.toDeclared(interfaces, classes, classeMere, methodeMere, blocPere), methodeMere);
 	}
 
 	/* (non-Javadoc)

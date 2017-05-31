@@ -68,7 +68,7 @@ public class ClassePrincipaleImpl implements ClassePrincipale {
 	 */
 	@Override
 	public boolean checkType() {
-		throw new RuntimeException("ClassePrincipaleImpl checkType à implémenter");
+		throw this.methodePrinc.checkType();
 	}
 
 	/* (non-Javadoc)

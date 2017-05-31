@@ -1383,7 +1383,7 @@ end
 
 #instr {
 do
-    Instruction^instr := Instruction^factory.createReturn(Expression^ast);
+    Instruction^instr := Instruction^factory.createReturn(Expression^ast, null);
 end
 }
 

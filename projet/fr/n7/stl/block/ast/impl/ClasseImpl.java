@@ -254,7 +254,17 @@ public class ClasseImpl implements Classe {
 	 */
 	@Override
 	public boolean checkType() {
-		throw new RuntimeException("ClasseImpl checkType à implémenter");
+		for(MethodImpl meth : this.methods){
+			if(!meth.checkType()){
+				return false;
+			}
+		}
+		for(Constructeur constr : this.constructeurs){
+			if(!constr.checkType()){
+				return false;
+			}
+		}
+		return true;		
 	}
 
 	/* (non-Javadoc)
