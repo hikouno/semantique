@@ -145,6 +145,8 @@ public class Constructeur extends MethodImpl {
 		res.add( _factory.createLoad(Register.LB, -argsLength, argsLength) );
 		res.add( _factory.createPush(returnLength) );
 		res.append( super.corps.getCode(_factory) );
+		res.add( _factory.createReturn(returnLength, 0) );
+		
 		return res;
 	}
 
