@@ -25,6 +25,7 @@ public interface Interface {
 	 */
 	public boolean ajouterSignature(Optional<Type> type, String nom, LinkedList<Argument> args);
 
+
 	/**
 	 * Ajoute une constante à l'interface. */
 	public boolean ajouterConstante(Type type, String nom, Expression valeur);
