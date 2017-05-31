@@ -80,7 +80,7 @@ public class ClassePrincipaleImpl implements ClassePrincipale {
 	 */
 	@Override
 	public int allocateMemory(Register _register, int _offset) {
-		throw new RuntimeException("ClassePrincipaleImpl allocateMemory à implémenter");
+		return methodePrinc.allocateMemory(_register, _offset);
 	}
 
 	/* (non-Javadoc)
@@ -88,7 +88,7 @@ public class ClassePrincipaleImpl implements ClassePrincipale {
 	 */
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
-		throw new RuntimeException("ClassePrincipaleImpl getCode à implémenter");
+		return methodePrinc.getCode(_factory);
 	}
 
 }

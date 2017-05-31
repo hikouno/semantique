@@ -57,7 +57,7 @@ public class ClasseInstanceDeclarationImpl implements ClasseInstanceDeclaration 
 		this.value = _value;
 		
 		//Récupération de l'instance de classe.
-		this.instance = instance;
+		this.instance = _instance;
 	}
 	
 	/**
@@ -135,7 +135,7 @@ public class ClasseInstanceDeclarationImpl implements ClasseInstanceDeclaration 
 	 */
 	@Override
 	public int allocateMemory(Register _register, int _offset) {
-		throw new RuntimeException("ClasseInstanceDeclarationImpl allocateMemory à implémenter");
+		return this.instance.allocateMemory(_register, _offset);
 	}
 
 	/* (non-Javadoc)

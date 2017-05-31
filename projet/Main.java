@@ -41,6 +41,19 @@ public class Main{
 		  ScopeCheckResult scopeCheck = bloc.get_ast().scopeCheck();
 		  if (scopeCheck.wasSuccessful()) {
 			  System.out.println("Scope check réussi :\n" + scopeCheck.getResult());
+			  
+			  /// CODE ///
+			  System.out.println("\n\n====================");
+			  System.out.println("========CODE========");
+			  System.out.println("====================");
+			  System.out.println( "mem allouee : " + bloc.get_ast().allocateMemory(Register.SB, 0) );
+			  TAMFactory factory = new TAMFactoryImpl();
+			  Fragment code = bloc.get_ast().getCode(factory);
+
+			  TAMInstruction halt = factory.createHalt();
+			  code.add(halt);
+
+			  System.out.println("Code \nmain : \n" + code);
 		  } else {
 			  System.out.println("Erreur dans le scope check :\n" + scopeCheck.getResult());
 		  }

@@ -95,7 +95,12 @@ public class VariableDeclarationImpl implements VariableDeclaration {
 	 * @see fr.n7.stl.block.ast.Instruction#toDeclared()
 	 */
 	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, MethodImpl methodeMere, Block blocPere) throws ToDeclaredException {
-		return (new VariableDeclarationImpl(this.name, this.type.toDeclared(interfaces, classes, classeMere), this.value.toDeclared(interfaces, classes, classeMere, methodeMere, blocPere)));
+		//Exceptionnellement on fait une modification a effets de bord,
+		//pour ne pas casser les VariableUse l'utilisant.
+		this.type = this.type.toDeclared(interfaces, classes, classeMere);
+		this.value = this.value.toDeclared(interfaces, classes, classeMere, methodeMere, blocPere);
+		
+		return this;
 	}
 
 	/* (non-Javadoc)
