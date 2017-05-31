@@ -71,7 +71,7 @@ class Ordi {
     public Poisson p;
     
     public Ordi() {
-    
+		print 1;
     }
     
     public Poisson est_incroyable() {
@@ -89,6 +89,7 @@ public class Test {
         Poisson poisson = new Poisson(5 + 2, 4, true, 5);
         //print ordi.est_incroyable(new Poisson(3), 2, 3).nageoires;
         
+        print 1;
     }
 
 }

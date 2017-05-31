@@ -102,8 +102,18 @@ public class Constructeur extends MethodImpl {
 		//DÉCLARATION DU CONSTRUCTEUR
 		constr_declared = new Constructeur(classeMere, super.getDroitAcces(), nouv_arguments,
 											corps.toDeclared(interfaces, classes, classeMere, this));
+		constr_declared.returnCheck();
 		
 		return constr_declared;
+	}
+	
+	/** Renvoie une exception si on trouve une mauvaise utilisation des return. */
+	@Override
+	public void returnCheck() throws ToDeclaredException {
+		
+		if (corps.returnPresent()) {
+			throw new ToDeclaredException("Classe " + super.classe.getNom() + ", un return a été détecté dans un des constructeurs.");
+		}
 	}
 	
 	/* (non-Javadoc)

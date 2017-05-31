@@ -197,7 +197,7 @@ public class BlockImpl implements Block {
 		
 		block_declared.addAll(nouvListe);
 		
-		if (!block_declared.returnCheck()) {
+		if (!block_declared.returnCheck() && classeMere != null) {
 			throw new ToDeclaredException("Bloc :" + classeMere.getNom() + ", " + methodeMere.getNom() + " : Code inaccessible (erreur return).");
 		}
 		
