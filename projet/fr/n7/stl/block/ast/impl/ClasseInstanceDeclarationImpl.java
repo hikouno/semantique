@@ -110,7 +110,7 @@ public class ClasseInstanceDeclarationImpl implements ClasseInstanceDeclaration 
 	 */
 	@Override
 	public boolean checkType() {
-		throw new RuntimeException("ClasseInstanceDeclarationImpl checkType à implémenter");
+		return ((this.value.getType()).compatibleWith(this.type));
 	}
 	
 	/* (non-Javadoc)

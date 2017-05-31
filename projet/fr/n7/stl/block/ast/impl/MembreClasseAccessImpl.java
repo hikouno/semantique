@@ -261,7 +261,7 @@ public class MembreClasseAccessImpl implements Expression {
      */
     @Override
     public Type getType() {
-        throw new RuntimeException("MembreClasseAccessImpl getType non implémentée");
+        return this.type;
     }
 
     /* (non-Javadoc)
