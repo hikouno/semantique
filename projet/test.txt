@@ -76,6 +76,7 @@ public class Test {
 
     public static void main(String[] args) {
         
+        print this.a;
         Ordi ordi = new Ordi();
         Poisson poisson = new Poisson(5 + 2, 4, true, 5);
         //print ordi.est_incroyable(new Poisson(3), 2, 3).nageoires;
