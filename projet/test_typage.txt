@@ -1,24 +1,43 @@
-class PoissonNomme {
+interface Ovipare {    
+}
+
+class PoissonNomme extends Poisson{
     
     public String espece;
     
-    public PoissonNomme(String nom) {
-        this.espece = nom;		
+    public PoissonNomme(String nom) {		
     }
 }
 
-class Poisson extends Ovipare {
-    
+class Poisson implements Ovipare {
+    public Poisson(){
+
+    }    
 }
 
-class Ovipare {
-    
+class Osef {
+
+    public Osef(){
+
+    }
+
+    public void methodeFoireuse(){
+        int i = 5+3;
+        i = 18;
+        Poisson dory = new PoissonNomme("poissonChirurgien");
+        Ovipare nemo = new PoissonNomme("poissonClown");
+    }
+
+    public void methodeVide(){
+        
+    }
+
 }
 
 public class Test {
 
     public static void main(String[] args) {
-        Ovipare nemo = new PoissonNomme("poisson clown");
+        Ovipare nemo = new PoissonNomme("poissonClown");
     }
 
 }

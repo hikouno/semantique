@@ -284,7 +284,12 @@ public class InterfaceImpl implements Interface {
 	 */
 	@Override
 	public boolean checkType() {
-		throw new RuntimeException("ClasseImpl checkType à implémenter");
+		for(Interface interf : this.interfaces){
+			if(!this.checkType()){
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/* (non-Javadoc)
