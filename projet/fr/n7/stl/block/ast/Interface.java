@@ -10,6 +10,8 @@ import java.util.Optional;
 
 import fr.n7.stl.block.ast.impl.Argument;
 import fr.n7.stl.block.ast.impl.ScopeCheckResult;
+import fr.n7.stl.block.ast.impl.InterfaceImpl.Signature;
+
 
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
@@ -35,6 +37,9 @@ public interface Interface {
 	
 	/** Renvoie la constante si elle est présente, null sinon. */
 	public Expression getValueConstante(String nom);
+	
+	/** Renvoie les signatures de l'interface. */
+	public LinkedList<Signature> getSignatures();
 
 	/**
 	 * Synthesized Semantics attribute to check if the AST is well formed according

@@ -91,6 +91,7 @@ public class InterfaceImpl implements Interface {
 	
 	protected String name;
 	protected LinkedList<Signature> signatures;
+	protected LinkedList<Signature> signaturesHeritees;
 	protected LinkedList<Constante> constantes;
 	protected LinkedList<Interface> interfaces;		//Interfaces dont la classe hérite.
 	protected LinkedList<String> unknownInterfaces;
@@ -101,15 +102,30 @@ public class InterfaceImpl implements Interface {
 		this.signatures = new LinkedList<Signature>();
 		this.constantes = new LinkedList<Constante>();
 		this.interfaces = interfaces;
+		this.signaturesHeritees = new LinkedList<Signature>();
 		this.unknownInterfaces = unknownInterfaces;
+		/*for(Interface interf : this.interfaces) {
+			this.signaturesHeritees.addAll(interf.getSignatures());
+		}*/
 	}
 	
 	
 	/** Renvoie les signatures de l'interface. */
 	public LinkedList<Signature> getSignatures() {
-		return this.signatures;
+		LinkedList<Signature> newListe = new LinkedList<Signature>(this.signatures);
+		/*if(this.interfaces != null) {
+			newListe.addAll(this.signaturesHeritees);
+		}*/
+		return newListe;
 	}
-
+	
+	/** Renvoie uniquement les signatures héritées. */
+	public LinkedList<Signature> getSignaturesHeritees() {
+		return this.signaturesHeritees;
+	}
+	
+	
+	@Override
 	public ScopeCheckResult scopeCheck(List<InterfaceDeclaration> interfacesDec, List<ClasseDeclaration> classesDec, List<String> listePrecInterfaces) {
 		for(String nomInterface : listePrecInterfaces){
 			if(this.name.equals(nomInterface)){
@@ -285,7 +301,7 @@ public class InterfaceImpl implements Interface {
 	@Override
 	public boolean checkType() {
 		for(Interface interf : this.interfaces){
-			if(!this.checkType()){
+			if(!interf.checkType()){
 				return false;
 			}
 		}

@@ -13,7 +13,7 @@ interface Liquide {
 
 
 
-class EtreVivant implements Boisson {
+class EtreVivant {
 
     public EtreVivant(int a, int b) {
         print a;
@@ -21,22 +21,22 @@ class EtreVivant implements Boisson {
     
     public int t;
     
-    public Poisson poiss;
-    
-    public Poisson est_incroyable(Ordi o, int i) {
+    public int est_incroyable(Ordi o, int i) {
         int test = 4;
-        Poisson tee = 2;
+        int tee = 2;
         return tee;
     }
 
     public boolean estBoisson() {
+	    return true;
     }
 
     public int cbBoisson(int i, boolean param2) {
+	    return 2;
     }
 }
 
-class Poisson extends Ordi {
+class Poisson extends EtreVivant {
  
     public Poisson(int a, int b, boolean c, int be) {
         print 4;
