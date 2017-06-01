@@ -221,7 +221,6 @@ public class MembreClasseAccessImpl implements Expression {
         if (partialType == null) {
             throw new ToDeclaredException("Problème d'accès dans : " + toString());
         }
-        
         this.type = partialType;
     }
     
@@ -264,7 +263,7 @@ public class MembreClasseAccessImpl implements Expression {
         
         declared.declare(interfaces, classes, classeMere, methodeMere, blocPere);
         declared.setVerified(true);
-        
+
         return declared;
 	}
     

@@ -1,24 +1,22 @@
-interface Animal{
-
+interface Mammifere{
+    void allaite();
 }
 
-interface Mammifere extends Animal{
-    
-}
-
-interface Ovipare extends Animal{
+interface Ovipare{
     Oeuf pondre();
 }
 
+
+
 class Oeuf{
 
-    private boolean comestible;
-
-    public Oeuf(boolean comestible){
+    public Oeuf(){
 
     }
 
-    void manger(){}
+    public void manger(){
+
+    }
 
 }
 
@@ -30,39 +28,46 @@ class PoissonNomme extends Poisson{
     }
 }
 
-class Poisson implements Ovipare {
+class Poisson {
     public Poisson(){
 
     }
 
     public Oeuf pondre(){
-        return new Oeuf(true);
+        return new Oeuf();
     }
 
 }
 
-class Osef {
+class Ornithorynque extends Vivant{
 
-    public Osef(){
+    public Ornithorynque(){
 
     }
+  
+}
 
-    public void methodeFoireuse(){
-        int i = 5+3;
-        i = 18;
-        Poisson dory = new PoissonNomme("poissonChirurgien");
-        Ovipare nemo = new PoissonNomme("poissonClown");
+
+class Vivant {
+    private boolean vis;
+    public Vivant(){
+        this.vis = true;    
     }
 
-    public void methodeVide(){
-        
+    public void meurt(){
+        this.vis = false;
     }
 
+    public boolean estEnVie(){
+        return this.vis;
+    }
 }
 
 public class Test {
 
     public static void main(String[] args) {
+
+
         
     }
 

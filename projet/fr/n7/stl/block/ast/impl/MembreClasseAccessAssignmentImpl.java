@@ -11,6 +11,7 @@ import fr.n7.stl.block.ast.InterfaceDeclaration;
 import fr.n7.stl.block.ast.Assignable;
 import fr.n7.stl.block.ast.Block;
 import fr.n7.stl.block.ast.impl.MembreClasseAccessImpl.Identifier;
+import fr.n7.stl.block.ast.Type;
 
 import fr.n7.stl.block.ast.Classe;
 import fr.n7.stl.block.ast.Expression;
@@ -42,9 +43,16 @@ public class MembreClasseAccessAssignmentImpl extends MembreClasseAccessImpl imp
         
         MembreClasseAccessAssignmentImpl dec_assign = new MembreClasseAccessAssignmentImpl(declared, true);
         dec_assign.setVerified(true);
+        dec_assign.setType(declared.getType());
         
         return dec_assign;
 	}
+
+	private void setType(Type nouvType){
+		super.type = nouvType;
+	}
+
+
 	
 	
 	@Override
