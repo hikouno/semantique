@@ -1149,7 +1149,7 @@ do
                 d := Instruction^factory.createUndeclaredInstanceDeclaration(identificateur^txt, Type^ast.getNom(), Expression^ast);
             
             with InterfaceTypeImpl then
-                d := null;
+                d := Instruction^factory.createInterfaceInstanceDeclaration(identificateur^txt, Type^ast, Expression^ast);
             
             else d := Instruction^factory.createVariableDeclaration(identificateur^txt, Type^ast, Expression^ast);
         end
