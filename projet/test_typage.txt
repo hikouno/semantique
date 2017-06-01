@@ -1,4 +1,25 @@
-interface Ovipare {    
+interface Animal{
+
+}
+
+interface Mammifere extends Animal{
+    
+}
+
+interface Ovipare extends Animal{
+    Oeuf pondre();
+}
+
+class Oeuf{
+
+    private boolean comestible;
+
+    public Oeuf(boolean comestible){
+
+    }
+
+    void manger(){}
+
 }
 
 class PoissonNomme extends Poisson{
@@ -12,7 +33,12 @@ class PoissonNomme extends Poisson{
 class Poisson implements Ovipare {
     public Poisson(){
 
-    }    
+    }
+
+    public Oeuf pondre(){
+        return new Oeuf(true);
+    }
+
 }
 
 class Osef {
@@ -37,7 +63,7 @@ class Osef {
 public class Test {
 
     public static void main(String[] args) {
-        Ovipare nemo = new PoissonNomme("poissonClown");
+        
     }
 
 }
