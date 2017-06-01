@@ -38,6 +38,12 @@ public interface BlockFactory extends ExpressionFactory, InstructionFactory, Typ
 	 * @return Abstract Syntax Tree node for the ClasseInstanceDeclaration type.
 	 */
 	public ClasseInstanceDeclaration createClasseInstanceDeclaration(String nom, Type type, Expression value);
+
+	/**
+	 * Create an Abstract Syntax Tree node for the InterfaceInstanceDeclaration type.
+	 * @return Abstract Syntax Tree node for the InterfaceInstanceDeclaration type.
+	 */
+	public InterfaceInstanceDeclaration createInterfaceInstanceDeclaration(String nom, Type type, Expression value);
 	
 	/**
 	 * Create an Abstract Syntax Tree node for the UndefinedInstanceDeclaration type.
@@ -127,6 +133,7 @@ public interface BlockFactory extends ExpressionFactory, InstructionFactory, Typ
 	* @return Abstract Syntax Tree node for the access to a variable.
 	*/
 	public Assignable createMembreClasseAccessAssignment_access(MembreClasseAccessImpl _access);
+	public Assignable createMembreClasseAccessAssignment_accesstxt(MembreClasseAccessImpl _access, String txt);
 	
 	/**
 	* Create a node for a variable use expression in the Abstract Syntax Tree.

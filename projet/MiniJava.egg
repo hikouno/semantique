@@ -1148,6 +1148,9 @@ do
             with UndeclaredTypeImpl then
                 d := Instruction^factory.createUndeclaredInstanceDeclaration(identificateur^txt, Type^ast.getNom(), Expression^ast);
             
+            with InterfaceTypeImpl then
+                d := Instruction^factory.createInterfaceInstanceDeclaration(identificateur^txt, Type^ast, Expression^ast);
+            
             else d := Instruction^factory.createVariableDeclaration(identificateur^txt, Type^ast, Expression^ast);
         end
 		
@@ -1254,8 +1257,7 @@ do
 
         
         with MembreClasseAccessAssignmentImpl then
-            supp.setNomAcces(identificateur^txt);
-            AppelOuAcces^support := supp;
+            AppelOuAcces^support := SuiteAffectable^factory.createMembreClasseAccessAssignment_accesstxt( supp, identificateur^txt );
         
         with UndeclaredAccessAssignmentImpl then
             supp.setNomAcces(identificateur^txt);

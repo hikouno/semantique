@@ -28,6 +28,11 @@ public abstract class AccessTools {
             this.arguments = null;
         }
         
+        public AppelOuAcces(String _nom, LinkedList<Expression> _args) {
+            this.nom = _nom;
+            this.arguments = _args;
+        }
+        
         public void setNom(String _nom) {
             this.nom = _nom;
         }

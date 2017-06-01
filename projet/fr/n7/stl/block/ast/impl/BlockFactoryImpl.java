@@ -19,6 +19,7 @@ import fr.n7.stl.block.ast.ConstantDeclaration;
 import fr.n7.stl.block.ast.InterfaceDeclaration;
 import fr.n7.stl.block.ast.ClasseDeclaration;
 import fr.n7.stl.block.ast.ClasseInstanceDeclaration;
+import fr.n7.stl.block.ast.InterfaceInstanceDeclaration;
 import fr.n7.stl.block.ast.UndeclaredInstanceDeclaration;
 import fr.n7.stl.block.ast.Expression;
 //import fr.n7.stl.block.ast.FieldDeclaration;
@@ -70,6 +71,15 @@ public class BlockFactoryImpl implements BlockFactory {
     public ClasseInstanceDeclaration createClasseInstanceDeclaration(String nom, Type type, Expression value) {
         return new ClasseInstanceDeclarationImpl(nom, type, value);
     }
+
+    /**
+     * Create an Abstract Syntax Tree node for the InterfaceInstanceDeclaration type.
+     * @return Abstract Syntax Tree node for the InterfaceInstanceDeclaration type.
+     */
+    public InterfaceInstanceDeclaration createInterfaceInstanceDeclaration(String nom, Type type, Expression value) {
+        return new InterfaceInstanceDeclarationImpl(nom, type, value);
+    }
+    
     
     /**
 	 * Create an Abstract Syntax Tree node for the UndefinedInstanceDeclaration type.
@@ -282,7 +292,14 @@ public class BlockFactoryImpl implements BlockFactory {
 	* @return Abstract Syntax Tree node for the access to a variable.
 	*/
 	public Assignable createMembreClasseAccessAssignment_access(MembreClasseAccessImpl _access) {
-		return new MembreClasseAccessAssignmentImpl(_access);
+		return new MembreClasseAccessAssignmentImpl(_access, true);
+	}
+    
+    public Assignable createMembreClasseAccessAssignment_accesstxt(MembreClasseAccessImpl _access, String txt) {
+		MembreClasseAccessAssignmentImpl m = new MembreClasseAccessAssignmentImpl(_access, (_access.getNomAcces() == null));
+        m.setNomAcces(txt);
+        
+        return m;
 	}
     
     /**
