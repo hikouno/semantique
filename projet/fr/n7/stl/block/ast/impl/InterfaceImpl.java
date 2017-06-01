@@ -92,7 +92,7 @@ public class InterfaceImpl implements Interface {
 	protected String name;
 	protected LinkedList<Signature> signatures;
 	protected LinkedList<Constante> constantes;
-	protected LinkedList<Interface> interfaces;		//Interfaces dont this hérite.
+	protected LinkedList<Interface> interfaces;		//Interfaces dont la classe hérite.
 	protected LinkedList<String> unknownInterfaces;
 
 	
