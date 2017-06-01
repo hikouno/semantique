@@ -3,23 +3,10 @@ interface Mammifere{
 }
 
 interface Ovipare{
-    
+    Oeuf pondre();
 }
 
-class Vivant {
-    private boolean vis;
-    public Vivant(){
-        this.vis = true;    
-    }
 
-    public void meurt(){
-        this.vis = false;
-    }
-
-    public boolean estEnVie(){
-        return this.vis;
-    }
-}
 
 class Oeuf{
 
@@ -41,24 +28,46 @@ class PoissonNomme extends Poisson{
     }
 }
 
-class Poisson implements Ovipare {
+class Poisson {
     public Poisson(){
 
     }
 
-    
+    public Oeuf pondre(){
+        return new Oeuf();
+    }
 
 }
 
+class Ornithorynque extends Vivant{
+
+    public Ornithorynque(){
+
+    }
+  
+}
 
 
+class Vivant {
+    private boolean vis;
+    public Vivant(){
+        this.vis = true;    
+    }
+
+    public void meurt(){
+        this.vis = false;
+    }
+
+    public boolean estEnVie(){
+        return this.vis;
+    }
+}
 
 public class Test {
 
     public static void main(String[] args) {
 
-        //Ornithorynque perry = new Ornythorynque();
-        //perry.allaite();
+
         
     }
 
