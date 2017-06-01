@@ -21,10 +21,9 @@ class Ordi {
         int i = 0;
         int j = i + 2;
         
-        pc5.test = 4;
-        b.salut().test.test44 = 3;
-        
-        test.deux() = 4;
+        this.pc5.pc2 = 4;
+        pc5.pc2 = 2;
+        b = 3;
         
         print j;
     }

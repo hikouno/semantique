@@ -286,7 +286,7 @@ public class BlockFactoryImpl implements BlockFactory {
 	}
     
     public Assignable createMembreClasseAccessAssignment_accesstxt(MembreClasseAccessImpl _access, String txt) {
-		MembreClasseAccessAssignmentImpl m = new MembreClasseAccessAssignmentImpl(_access, false);
+		MembreClasseAccessAssignmentImpl m = new MembreClasseAccessAssignmentImpl(_access, (_access.getNomAcces() == null));
         m.setNomAcces(txt);
         
         return m;
