@@ -53,6 +53,26 @@ public class MembreClasseAccessImpl implements Expression {
         this.membreAccede = new AppelOuAcces();
     }
     
+    public MembreClasseAccessImpl(MembreClasseAccessImpl _access, boolean copy) {
+        if (!copy) {
+            this.access = _access;
+            this.base = null;
+        
+            this.membreAccede = new AppelOuAcces();
+        } else {
+            if (_access.getBase() != null) {
+                this.access = null;
+                this.base = _access.getBase();
+            } else {
+                this.base = null;
+                this.access = _access.getParent();
+            }
+            
+            this.membreAccede = new AppelOuAcces(_access.getNomAcces(),
+                                            _access.getArgumentsAcces());
+        }
+    }
+    
     public void setVerified(boolean _verified) {
         this.verified = _verified;
     }
@@ -75,6 +95,14 @@ public class MembreClasseAccessImpl implements Expression {
     
     public LinkedList<Expression> getArgumentsAcces() {
         return this.membreAccede.getArguments();
+    }
+    
+    public Identifier getBase() {
+        return this.base;
+    }
+    
+    public MembreClasseAccessImpl getParent() {
+        return this.access;
     }
     
     public Type getPartialType(Classe classeMere, MethodImpl methodeMere) {
@@ -150,7 +178,7 @@ public class MembreClasseAccessImpl implements Expression {
             text += access.toString() + ".";
         }
         
-        if (membreAccede.getNom() != null) text += membreAccede.getNom();
+        text += (membreAccede.getNom() != null) ? membreAccede.getNom() : "null";
         
         if (membreAccede.getArguments() != null) {
             text += "(";

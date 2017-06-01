@@ -282,7 +282,14 @@ public class BlockFactoryImpl implements BlockFactory {
 	* @return Abstract Syntax Tree node for the access to a variable.
 	*/
 	public Assignable createMembreClasseAccessAssignment_access(MembreClasseAccessImpl _access) {
-		return new MembreClasseAccessAssignmentImpl(_access);
+		return new MembreClasseAccessAssignmentImpl(_access, true);
+	}
+    
+    public Assignable createMembreClasseAccessAssignment_accesstxt(MembreClasseAccessImpl _access, String txt) {
+		MembreClasseAccessAssignmentImpl m = new MembreClasseAccessAssignmentImpl(_access, false);
+        m.setNomAcces(txt);
+        
+        return m;
 	}
     
     /**

@@ -15,14 +15,21 @@ class Ordi {
     public int pc2;
     public int pc3;
     public int pc4;
-    public Poisson pc5;
+    
     
     public Ordi(int a, int b) {
         int i = 0;
         int j = i + 2;
         
+        pc5.test = 4;
+        b.salut().test.test44 = 3;
+        
+        test.deux() = 4;
+        
         print j;
     }
+    
+    public Poisson pc5;
 }
 
 public class Test {

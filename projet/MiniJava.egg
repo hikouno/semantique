@@ -1254,8 +1254,7 @@ do
 
         
         with MembreClasseAccessAssignmentImpl then
-            supp.setNomAcces(identificateur^txt);
-            AppelOuAcces^support := supp;
+            AppelOuAcces^support := SuiteAffectable^factory.createMembreClasseAccessAssignment_accesstxt( supp, identificateur^txt );
         
         with UndeclaredAccessAssignmentImpl then
             supp.setNomAcces(identificateur^txt);
