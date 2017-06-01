@@ -1148,6 +1148,9 @@ do
             with UndeclaredTypeImpl then
                 d := Instruction^factory.createUndeclaredInstanceDeclaration(identificateur^txt, Type^ast.getNom(), Expression^ast);
             
+            with InterfaceTypeImpl then
+                d := null;
+            
             else d := Instruction^factory.createVariableDeclaration(identificateur^txt, Type^ast, Expression^ast);
         end
 		
