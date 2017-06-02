@@ -117,12 +117,12 @@ public class ClasseInstanceDeclarationImpl implements ClasseInstanceDeclaration 
 	 * @see fr.n7.stl.block.ast.Instruction#toDeclared()
 	 */
 	public Instruction toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, MethodImpl methodeMere, Block blocPere) throws ToDeclaredException {
-		
-		ClasseInstanceDeclarationImpl declared = new ClasseInstanceDeclarationImpl(this.nom, this.type.toDeclared(interfaces, classes, classeMere),
-												this.value.toDeclared(interfaces, classes, classeMere, methodeMere, blocPere));
-		
-		declared.declareInstance();
-		return declared;
+		//Exceptionnellement on le fait en place pour éviter des problèmes de liens entre déclaration et accès par la suite.
+		this.type = this.type.toDeclared(interfaces, classes, classeMere);
+		this.value = this.value.toDeclared(interfaces, classes, classeMere, methodeMere, blocPere);
+
+		this.declareInstance();
+		return this;
 	}
 
 	/* (non-Javadoc)

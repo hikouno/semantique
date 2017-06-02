@@ -49,8 +49,8 @@ public class InstanceUseImpl implements Expression {
 	 * @see fr.n7.stl.block.ast.Expression#toDeclared()
 	 */
 	@Override
-	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, MethodImpl methodeMere, Block blocPere) {
-		return this;
+	public Expression toDeclared(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere, MethodImpl methodeMere, Block blocPere) throws ToDeclaredException {
+		return new InstanceUseImpl((ClasseInstanceDeclaration)this.declaration.toDeclared(interfaces, classes, classeMere, methodeMere, blocPere));
 	}
 	
 	/* (non-Javadoc)
