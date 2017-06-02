@@ -121,7 +121,7 @@ import fr.n7.stl.tam.ast.TAMFactory;
 	/** Renvoie les attributs hérités seulement de la classe.
 	 */
 	 public LinkedList<AttributImpl> getAttributsHerites() {
-		 return ClasseHeritantImpl.triAttr(this.superClasse.getAttributs());
+		 return ClasseHeritantImpl.triAttr(this.attributsHerites);
 	 }
 	
 	
@@ -157,7 +157,7 @@ import fr.n7.stl.tam.ast.TAMFactory;
 	/** Renvoie les méthodes hérités seulement de la classe.
 	 */
 	 public LinkedList<MethodImpl> getMethodesHeritees() {
-		 return ClasseHeritantImpl.triMeth(this.superClasse.getMethodes());
+		 return ClasseHeritantImpl.triMeth(this.methodesHeritees);
 	 }
 	
 	
