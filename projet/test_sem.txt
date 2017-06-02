@@ -13,7 +13,7 @@ interface Liquide extends Boisson {
 
 
 
-class EtreVivant extends Poisson implements Boisson {
+class EtreVivant {
 
     public EtreVivant(int a, int b) {
         print a;
@@ -27,13 +27,7 @@ class EtreVivant extends Poisson implements Boisson {
         return tee;
     }
 
-    public boolean estBoisson(int i) {
-	    return true;
-    }
-
-    public int cbBoisson(int i, boolean param2) {
-	    return 2;
-    }
+    
 }
 
 class Poisson {
@@ -60,14 +54,23 @@ class Poisson {
         
         return 1;
     }
+
+    public int estBoisson(int i) {
+	    return 2;
+    }
+
+
+    public int cbBoisson(int p1, boolean p2) {
+	    return 1;
+    }
     
     private int mon_attribut;
-    
     public boolean nageoires;
+    private EtreVivant be;
 }
 
 
-class Ordi {
+class Ordi extends Poisson implements Boisson {
     
     private int pc;
     public Poisson p;
