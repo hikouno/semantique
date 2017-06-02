@@ -55,7 +55,7 @@ class Poisson {
         return 1;
     }
 
-    public int estBoisson(int i) {
+    public boolean estBoisson(int i) {
 	    return 2;
     }
 
