@@ -63,6 +63,16 @@ import fr.n7.stl.tam.ast.TAMFactory;
 		}
 	 }
 	 
+	 @Override
+	 public boolean ajouterAttribut(AttributImpl attribut) {
+		 
+		if (superClasse != null && this.attributsHerites.contains(attribut)) {
+			throw new RuntimeException("Redéfinition d'attribut interdite dans notre implémentation !");
+		}
+		
+		return super.ajouterAttribut(attribut);
+	 }
+	 
 	 public boolean herite(Classe ancetre){
 		 return (ancetre.equalsTo(superClasse) || (superClasse instanceof ClasseHeritantImpl)&&(((ClasseHeritantImpl)superClasse).herite(ancetre)));
 	 }
@@ -170,12 +180,22 @@ import fr.n7.stl.tam.ast.TAMFactory;
 		
 		List<MethodImpl> methodes = new LinkedList<MethodImpl>();
 		
-		for (MethodImpl _method : this.getMethodes()) {
+		//On parcourt d'abord les méthodes définies localement.
+		for (MethodImpl _method : super.methods) {
 			if (_method.getNom().equals(nom))
 				methodes.add(_method);
 		}
 		
-		return methodes;	
+		//Puis éventuellement les méthodes héritées
+		if (methodes.size() == 0) {
+			
+			for (MethodImpl _method : this.getMethodesHeritees()) {
+				if (_method.getNom().equals(nom))
+					methodes.add(_method);
+			}
+		}
+		
+		return methodes;
 	}
 	
 	/* Vérifie si une classe de la liste passée en paramètre a pour nom
