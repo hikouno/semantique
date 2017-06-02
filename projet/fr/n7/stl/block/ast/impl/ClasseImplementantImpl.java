@@ -116,8 +116,9 @@ public class ClasseImplementantImpl extends ClasseImpl {
 				InterfaceImpl interImpl = (InterfaceImpl) interf;
 				for(Signature sign : interImpl.getSignatures()) {
 					if (!this.existe(sign, this.getMethodes())) {
-						errorMsg += "La méthode " + sign.toString() + 
-						" n'est pas implémentée dans la classe : " + this.getNom();
+						errorMsg += "La méthode " + sign.toString() 
+						+ " n'est pas implémentée dans la classe : " 
+						+ this.getNom() + "\n";
 					}
 				}
 			}
@@ -130,13 +131,28 @@ public class ClasseImplementantImpl extends ClasseImpl {
 	 * return true if Signature sign is in the List of methods.
 	 */
 	 public static boolean existe(Signature sign, LinkedList<MethodImpl> methodes) {
-		 boolean result = false;
 		 for(MethodImpl meth : methodes) {
-			 if (result = sign.match((new InterfaceImpl(null, null, null)).new Signature(meth.getTypeRetour(), meth.getNom(), meth.getArguments()))) {
-				 break;
+			 if(sign.getType().equals(meth.getTypeRetour())
+			 && sign.getNom().equals(meth.getNom())
+			 && ClasseImplementantImpl.equArg(sign.getArguments(), meth.getArguments())) {
+				 return true;
 			 }
 		 }
-		 return result;
+		 return false;
+	 }
+	 
+	 
+	 private static boolean equArg(LinkedList<Argument> l1, LinkedList<Argument> l2) {
+		 if(l1.size() == l2.size()) {
+			 for(int i = 0; i < l1.size(); i++) {
+				 if(!(l1.get(i).getType().equals(l2.get(i).getType()))) {
+					 return false;
+				 }
+			 }
+			 return true;
+		 } else {
+			 return false;
+		 }
 	 }
 	
 	

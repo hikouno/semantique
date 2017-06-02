@@ -73,6 +73,7 @@ public class InterfaceImpl implements Interface {
 		
 		public String getNom() { return this.nom; }
 		public LinkedList<Argument> getArguments() { return this.args; }
+		public Optional<Type> getType() { return this.type; }
 		
 		@Override
 		public String toString() {
@@ -104,9 +105,9 @@ public class InterfaceImpl implements Interface {
 		this.interfaces = interfaces;
 		this.signaturesHeritees = new LinkedList<Signature>();
 		this.unknownInterfaces = unknownInterfaces;
-		/*for(Interface interf : this.interfaces) {
+		for(Interface interf : this.interfaces) {
 			this.signaturesHeritees.addAll(interf.getSignatures());
-		}*/
+		}
 	}
 	
 	

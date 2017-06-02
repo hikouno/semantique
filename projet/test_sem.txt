@@ -4,7 +4,7 @@ interface Soda extends Boisson {
 
 interface Boisson {
 	
-	boolean estBoisson();
+	boolean estBoisson(int i);
 	int cbBoisson(int param1, boolean param2);
 }
 
@@ -13,7 +13,7 @@ interface Liquide extends Boisson {
 
 
 
-class EtreVivant {
+class EtreVivant extends Poisson implements Boisson {
 
     public EtreVivant(int a, int b) {
         print a;
@@ -27,7 +27,7 @@ class EtreVivant {
         return tee;
     }
 
-    public Ordi estBoisson() {
+    public boolean estBoisson(int i) {
 	    return true;
     }
 
