@@ -119,13 +119,9 @@ public class UndeclaredInstanceDeclarationImpl implements UndeclaredInstanceDecl
 			declared = new ClasseInstanceDeclarationImpl(this.nom, new ClasseTypeImpl(dec.getClasse()),
 							this.value.toDeclared(interfaces, classes, classeMere, methodeMere, blocPere));
 			
-			if (blocPere.postScope_contains(this.nom))
-				throw new ToDeclaredException(this.nom + " déjà défini dans le scope courant !");
-			
 			try {
-				blocPere.postScope_register(declared);
+					blocPere.postScope_register(declared);
 			} catch (Exception e) {
-				throw new ToDeclaredException("Erreur postScope_register : " + e.getMessage());
 			}
 			
 		} else {
