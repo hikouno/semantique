@@ -2,13 +2,13 @@
 interface Soda extends Boisson {
 }
 
-interface Boisson extends Liquide {
+interface Boisson {
 	
 	boolean estBoisson();
 	int cbBoisson(int param1, boolean param2);
 }
 
-interface Liquide {
+interface Liquide extends Boisson {
 }
 
 
@@ -74,7 +74,7 @@ class Poisson extends EtreVivant {
 }
 
 
-class Ordi {
+class Ordi extends Ordi {
     
     private int pc;
     public Poisson p;

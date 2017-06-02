@@ -228,6 +228,8 @@ public class InterfaceImpl implements Interface {
 					return true; //Une constante de même nom existe déjà.
 				}
 		}
+		
+		
 		return false;
 	}
 	
