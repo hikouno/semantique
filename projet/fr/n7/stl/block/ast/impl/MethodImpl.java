@@ -134,7 +134,7 @@ public class MethodImpl extends MembreClasse {
 		method_declared = new MethodImpl(classeMere, getNom(), nouv_arguments,
 											corps.toDeclared(interfaces, classes, classeMere, this),
 											this.getDroitAcces(), this.estStatique(), nouv_opt_type);
-		
+		System.out.println(getNom());
 		method_declared.returnCheck();
 		
 		return method_declared;
