@@ -1,0 +1,70 @@
+
+//INTERFACES
+interface ObjetCel {
+
+	final static int tailleMax = 100;
+
+	void briller();
+}
+
+interface GeanteGaz extends ObjetCel, Satellite {
+	int tempeter();
+}
+
+interface Satellite {
+	int orbiter();
+}
+
+//CLASSES
+class Planete implements Satellite {
+
+	private int rayon;
+	public int masse;
+
+	public Planete(int rayon, int masse) {
+		this.rayon = rayon;
+		this.masse = masse;
+	}
+
+	public int orbiter() {
+		return this.masse * 5;
+	}
+}
+
+class ExoPlanete extends Planete {
+	public ExoPlanete(int masse) {
+	}
+
+class Amas {
+
+	public Amas() {
+	}
+
+	public int element() {
+		return 2;
+	}
+}
+
+class Galaxie extends Amas {
+
+	public Galaxie() {
+	}
+}
+
+class SystSol extends Amas {
+	public SystSol() {
+	}
+}
+
+
+//MAIN
+public class Test {
+	public static void main(String args[]) {
+
+		Planete neptune = new Planete();
+
+	}
+}
+
+
+
