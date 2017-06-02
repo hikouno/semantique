@@ -1,0 +1,64 @@
+interface InterfaceTest {
+	
+}
+interface InterfaceTest2 {
+	boolean aImpl(int param);
+	
+}
+interface InterfaceTest3 extends InterfaceTest4{
+	
+}
+interface InterfaceTest4 {
+	
+}
+
+class ClasseHeritageTest{
+	public boolean methodeQuiDoitEtreHeritee(){
+		return true;
+	}
+}
+
+class Compteur extends ClasseHeritageTest implements InterfaceTest, InterfaceTest2, InterfaceTest3{
+
+	private int cmp;
+
+	public Compteur(){
+		this.cmp = 0;
+	}
+
+	public boolean aImpl(int param){
+		return param == 0;
+	}
+
+	public void incr(boolean bool){
+		if(bool){
+			this.cmp = this.cmp + 1;
+		}
+	}
+
+	public int getCmp(){
+		return this.cmp;
+	}
+
+}
+
+class A extends B implements InterfaceTest4 {
+
+}
+
+class B {
+
+}
+
+
+public class Test {
+
+    public static void main(String[] args) {
+    	InterfaceTest4 peuImporte = new Compteur();
+    	Compteur c = new Compteur();
+    	int j = c.getCmp();
+    	boolean test = c.methodeQuiDoitEtreHeritee();
+        
+    }
+
+}
