@@ -17,7 +17,8 @@ import fr.n7.stl.block.ast.InterfaceDeclaration;
 
 import fr.n7.stl.block.ast.impl.ClasseImpl;
 import fr.n7.stl.block.ast.impl.ClasseImplementantImpl;
-
+import fr.n7.stl.block.ast.impl.InterfaceImpl;
+import fr.n7.stl.block.ast.impl.InterfaceImpl.Signature;
 
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
@@ -266,6 +267,20 @@ import fr.n7.stl.tam.ast.TAMFactory;
 				new_methodes.add(nouv_methode);
 			}		
 			this.methodesHeritees = new_methodes;
+		}
+		
+		//Parcours des interfaces implémentées
+		for(Interface interf : super.interfacesImplementees) {
+			if (interf instanceof InterfaceImpl) {
+				InterfaceImpl interImpl = (InterfaceImpl) interf;
+				for(Signature sign : interImpl.getSignatures()) {
+					if (!super.existe(sign, this.getMethodes())) {
+						errorMsg += "La méthode " + sign.toString() 
+						+ " n'est pas implémentée dans la classe : " 
+						+ this.getNom() + "\n";
+					}
+				}
+			}
 		}
 		
 		return new ScopeCheckResult(errorMsg.equals(""), errorMsg);
