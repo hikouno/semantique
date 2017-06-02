@@ -178,7 +178,6 @@ import fr.n7.stl.tam.ast.TAMFactory;
 		return methodes;	
 	}
 	
-	
 	/* Vérifie si une classe de la liste passée en paramètre a pour nom
 	 * la String passée en paramètre.
 	 */
