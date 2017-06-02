@@ -42,6 +42,14 @@ class Compteur extends ClasseHeritageTest implements InterfaceTest, InterfaceTes
 
 }
 
+class A extends B implements InterfaceTest4 {
+
+}
+
+class B {
+
+}
+
 
 public class Test {
 

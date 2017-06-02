@@ -56,8 +56,10 @@ import fr.n7.stl.tam.ast.TAMFactory;
 		 this.methodesHeritees = new LinkedList<MethodImpl>();
 		 this.attributsHerites = new LinkedList<AttributImpl>();
 		 
-		 this.methodesHeritees.addAll(triMeth(superClasse.getMethodes()));
-		 this.attributsHerites.addAll(triAttr(superClasse.getAttributs()));
+		 if (superClasse != null) {
+			this.methodesHeritees.addAll(triMeth(superClasse.getMethodes()));
+			this.attributsHerites.addAll(triAttr(superClasse.getAttributs()));
+		}
 	 }
 	 
 	 public boolean herite(Classe ancetre){
