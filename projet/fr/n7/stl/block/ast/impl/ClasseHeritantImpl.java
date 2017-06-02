@@ -274,7 +274,7 @@ import fr.n7.stl.tam.ast.TAMFactory;
 			if (interf instanceof InterfaceImpl) {
 				InterfaceImpl interImpl = (InterfaceImpl) interf;
 				for(Signature sign : interImpl.getSignatures()) {
-					if (!this.existe(sign, this.getMethodes())) {
+					if (!super.existe(sign, this.getMethodes())) {
 						errorMsg += "La méthode " + sign.toString() 
 						+ " n'est pas implémentée dans la classe : " 
 						+ this.getNom() + "\n";
