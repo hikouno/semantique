@@ -165,6 +165,29 @@ public class ClasseImpl implements Classe {
 		
 	}
 	
+	protected static LinkedList<Constructeur> declareConstructeurs(LinkedList<Constructeur> constrs, List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) throws ToDeclaredException {
+		String errorMsg = "";
+		LinkedList<Constructeur> nouv_constrs = new LinkedList<Constructeur>();
+		
+		for (Constructeur constr : constrs) {
+			Constructeur nouv_constr;
+			
+			try {
+				nouv_constr = constr.toDeclared(interfaces, classes, classeMere);
+			} catch (ToDeclaredException e) {
+				errorMsg += e.getMessage() + "\n";
+				nouv_constr = constr;
+			}
+			
+			nouv_constrs.add(nouv_constr);
+		}
+		
+		if (!errorMsg.equals(""))
+			throw new ToDeclaredException(errorMsg);
+		
+		return nouv_constrs;
+	}
+	
 	protected static LinkedList<AttributImpl> declareAttributes(LinkedList<AttributImpl> atts, List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) throws ToDeclaredException {
 		String errorMsg = "";
 		LinkedList<AttributImpl> nouv_attributs = new LinkedList<AttributImpl>();
@@ -235,22 +258,11 @@ public class ClasseImpl implements Classe {
 		}
 		
 		//Parcours des constructeurs
-		LinkedList<Constructeur> nouv_constrs = new LinkedList<Constructeur>();
-		
-		for (Constructeur constr : this.constructeurs) {
-			Constructeur nouv_constr;
-			
-			try {
-				nouv_constr = constr.toDeclared(interfaces, classes, this);
-			} catch (ToDeclaredException e) {
-				errorMsg += e.getMessage() + "\n";
-				nouv_constr = constr;
-			}
-			
-			nouv_constrs.add(nouv_constr);
+		try {
+			this.constructeurs = ClasseImpl.declareConstructeurs(this.constructeurs, interfaces, classes, this);
+		} catch (ToDeclaredException e) {
+			errorMsg += e.getMessage() + "\n";
 		}
-		
-		this.constructeurs = nouv_constrs;
 		
 		return new ScopeCheckResult(errorMsg.equals(""), errorMsg);
 	}

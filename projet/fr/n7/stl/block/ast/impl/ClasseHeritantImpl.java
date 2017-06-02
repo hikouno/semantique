@@ -198,6 +198,13 @@ import fr.n7.stl.tam.ast.TAMFactory;
 	public ScopeCheckResult scopeCheck(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes) {
 		String errorMsg = "";
 		
+		//Déclaration des constructeurs
+		try {
+			super.constructeurs = ClasseImpl.declareConstructeurs(super.constructeurs, interfaces, classes, this);
+		} catch (ToDeclaredException e) {
+			errorMsg += e.getMessage() + "\n";
+		}
+		
 		//Déclaration des attributs
 		try {
 			super.attributs = ClasseImpl.declareAttributes(super.attributs, interfaces, classes, this);
