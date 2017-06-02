@@ -201,9 +201,10 @@ public class InstanceAccessImpl implements Expression {
         declared.setArgumentsAcces(this.getArgumentsAcces());
         
         declared.declare(interfaces, classes, classeMere, methodeMere, blocPere);
+        
         return declared;
     }
-    
+
     /* (non-Javadoc)
      * @see fr.n7.stl.block.ast.Expression#getType()
      */
