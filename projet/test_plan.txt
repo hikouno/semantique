@@ -20,6 +20,7 @@ class Planete implements Satellite {
 
 	private int rayon;
 	public int masse;
+	public Galaxie mere;
 
 	public Planete(int rayon, int masse) {
 		this.rayon = rayon;
@@ -27,6 +28,7 @@ class Planete implements Satellite {
 	}
 
 	public int orbiter() {
+		int i = this.mere.element();
 		return this.masse * 5;
 	}
 }
