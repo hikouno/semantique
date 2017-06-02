@@ -1,0 +1,17 @@
+class Poisson {
+}
+
+class PoissonNomme extends Poisson {
+	public PoissonNomme() {
+	}
+}
+
+public class Test {
+
+	public static void main(String[] args) {
+	}
+}
+
+
+
+

@@ -41,6 +41,8 @@ import fr.n7.stl.tam.ast.TAMFactory;
 		 super(name);
 		 this.superClasse = superClasse;
 		 this.unknownClasse = unknownClasse;
+		 this.methodesHeritees = new LinkedList<MethodImpl>();
+		 this.attributsHerites = new LinkedList<AttributImpl>();
 		 if(this.superClasse != null) {
 			 this.methodesHeritees.addAll(triMeth(this.superClasse.getMethodes()));
 			 this.attributsHerites.addAll(triAttr(this.superClasse.getAttributs()));
@@ -51,6 +53,8 @@ import fr.n7.stl.tam.ast.TAMFactory;
 		 super(name, interfaces);
 		 this.superClasse = superClasse;
 		 this.unknownClasse = unknownClasse;
+		 this.methodesHeritees = new LinkedList<MethodImpl>();
+		 this.attributsHerites = new LinkedList<AttributImpl>();
 		 if(this.superClasse != null) {
 			 this.methodesHeritees.addAll(triMeth(this.superClasse.getMethodes()));
 			 this.attributsHerites.addAll(triAttr(this.superClasse.getAttributs()));
