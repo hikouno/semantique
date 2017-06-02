@@ -66,8 +66,14 @@ import fr.n7.stl.tam.ast.TAMFactory;
 	 @Override
 	 public boolean ajouterAttribut(AttributImpl attribut) {
 		 
-		if (superClasse != null && this.attributsHerites.contains(attribut)) {
-			throw new RuntimeException("Redéfinition d'attribut interdite dans notre implémentation !");
+		if (superClasse != null) {
+			for (AttributImpl _att : this.attributsHerites) {
+				if (_att.getNom().equals(attribut.getNom()) && _att.getDroitAcces() != DroitAcces.PRIVATE) {
+					System.out.println("Redéfinition d'attribut interdite dans notre implémentation !");
+					throw new RuntimeException("Redéfinition d'attribut interdite dans notre implémentation !");
+				}
+			}
+			
 		}
 		
 		return super.ajouterAttribut(attribut);
