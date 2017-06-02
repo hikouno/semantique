@@ -87,6 +87,7 @@ public class BlockImpl implements Block {
 	}
 	
 	public boolean postScope_contains(String _name) {
+		System.out.println(this.postScope);
 		return this.postScope.contains(_name);
 	}
 	
