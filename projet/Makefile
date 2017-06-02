@@ -26,7 +26,7 @@ compile :
 	$(JAVAC) -classpath $(EGGJAR):. Main.java
 
 exec :
-	$(JAVA) -classpath $(EGGJAR):. Main test_qui_marche.txt
+	$(JAVA) -classpath $(EGGJAR):. Main test_sem.txt
 clean :
 	-rm Main.class
 	-rm -rf egg
