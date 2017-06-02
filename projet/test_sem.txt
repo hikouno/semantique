@@ -69,7 +69,7 @@ class Poisson extends EtreVivant {
 }
 
 
-class Ordi extends Ordi {
+class Ordi {
     
     private int pc;
     public Poisson p;

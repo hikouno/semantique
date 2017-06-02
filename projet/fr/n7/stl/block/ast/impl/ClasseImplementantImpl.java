@@ -87,9 +87,28 @@ public class ClasseImplementantImpl extends ClasseImpl {
 	 */	
 	 @Override
 	public ScopeCheckResult scopeCheck(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes) {
-		super.scopeCheck(interfaces, classes);
-		
 		String errorMsg = "";
+		
+		//Déclaration des constructeurs
+		try {
+			super.constructeurs = ClasseImpl.declareConstructeurs(super.constructeurs, interfaces, classes, this);
+		} catch (ToDeclaredException e) {
+			errorMsg += e.getMessage() + "\n";
+		}
+		
+		//Déclaration des attributs
+		try {
+			super.attributs = ClasseImpl.declareAttributes(super.attributs, interfaces, classes, this);
+		} catch (ToDeclaredException e) {
+			errorMsg += e.getMessage() + "\n";
+		}
+		
+		//Déclaration des méthodes
+		try {
+			super.methods = ClasseImpl.declareMethods(super.methods, interfaces, classes, this);
+		} catch (ToDeclaredException e) {
+			errorMsg += e.getMessage() + "\n";
+		}
 		
 		//Parcours des interfaces implémentées
 		for(Interface interf : this.interfacesImplementees) {
