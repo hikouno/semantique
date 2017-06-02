@@ -131,7 +131,7 @@ public class ClasseImplementantImpl extends ClasseImpl {
 	 * return true if Signature sign is in the List of methods.
 	 */
 	 public static boolean existe(Signature sign, LinkedList<MethodImpl> methodes) {
-		 for(MethodImpl meth : methodes) {
+		 for(MethodImpl meth : super.getMethodes()) {
 			 if(sign.getType().equals(meth.getTypeRetour())
 			 && sign.getNom().equals(meth.getNom())
 			 && ClasseImplementantImpl.equArg(sign.getArguments(), meth.getArguments())) {
