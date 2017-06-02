@@ -39,17 +39,9 @@ class Poisson {
 
 }
 
-class Ornithorynque extends Vivant{
-
-    public Ornithorynque(){
-
-    }
-  
-}
-
-
 class Vivant {
     private boolean vis;
+
     public Vivant(){
         this.vis = true;    
     }
@@ -61,6 +53,14 @@ class Vivant {
     public boolean estEnVie(){
         return this.vis;
     }
+}
+
+class Ornithorynque extends Vivant implements Ovipare{
+
+    public Ornithorynque(){
+
+    }
+  
 }
 
 public class Test {
