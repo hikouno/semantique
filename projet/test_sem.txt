@@ -38,7 +38,6 @@ class Poisson {
     
     public Ordi ma_methode_incroyable2(Ordi b, Poisson c, EtreVivant be) {
         Ordi cc = new Ordi();
-	Ordi cc = new Ordi();
 
         
         return 1;
