@@ -217,7 +217,7 @@ public class MembreClasseAccessImpl implements Expression {
         }
         
         //Déclaration du type.
-        Type partialType = this.getPartialType(classeMere, methodeMere);
+        Type partialType = this.getPartialType(classeMere, methodeMere).toDeclared(interfaces, classes, classeMere);
         if (partialType == null) {
             throw new ToDeclaredException("Problème d'accès dans : " + toString());
         }

@@ -26,6 +26,12 @@ class Planete implements Satellite {
 		this.rayon = rayon;
 		this.masse = masse;
 	}
+	
+	public Planete(int rayon, int masse, Galaxie gal) {
+		this.rayon = rayon;
+		this.masse = masse;
+		this.mere = gal;
+	}
 
 	public int orbiter() {
 		int i = this.mere.element();
