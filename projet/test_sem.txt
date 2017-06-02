@@ -36,7 +36,7 @@ class EtreVivant extends Poisson implements Boisson {
     }
 }
 
-class Poisson extends EtreVivant {
+class Poisson {
  
     public Poisson(int a, int b, boolean c, int be) {
         print 4;
@@ -62,10 +62,8 @@ class Poisson extends EtreVivant {
     }
     
     private int mon_attribut;
-    private static Ordi mon_attribut;
     
     public boolean nageoires;
-    private EtreVivant be;
 }
 
 
