@@ -27,7 +27,7 @@ class EtreVivant {
         return tee;
     }
 
-    public boolean estBoisson() {
+    public Ordi estBoisson() {
 	    return true;
     }
 
@@ -52,16 +52,11 @@ class Poisson extends EtreVivant {
 				return 1;
 			}
 			EtreVivant be = new EtreVivant(1, 2);
-			
-			//print be;
-			//print be.est_incroyable(new Ordi(), 4, 5).nageoires;
+
 		}
 		
         Ordi c = 2;
-        
-        print super.be;
-        print this.be.est_incroyable(new Ordi(), 4);
-        print be.est_incroyable(new Ordi(), 4).nageoires;
+
         
         return 1;
     }

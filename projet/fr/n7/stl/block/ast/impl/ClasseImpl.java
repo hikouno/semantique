@@ -165,22 +165,15 @@ public class ClasseImpl implements Classe {
 		
 	}
 	
-	/**
-	 * Synthesized Semantics attribute to check if the AST is well formed according
-	 * to the scope.
-	 * @return The new AST with undeclared references replaces by actual ones.
-	 */	
-	public ScopeCheckResult scopeCheck(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes) {
-		
-		//Parcours des attributs
+	protected static LinkedList<AttributImpl> declareAttributes(LinkedList<AttributImpl> atts, List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) throws ToDeclaredException {
 		String errorMsg = "";
 		LinkedList<AttributImpl> nouv_attributs = new LinkedList<AttributImpl>();
 		
-		for (AttributImpl att : this.attributs) {
+		for (AttributImpl att : atts) {
 			AttributImpl nouv_att;
 			
 			try {
-				nouv_att = att.toDeclared(interfaces, classes, this);
+				nouv_att = att.toDeclared(interfaces, classes, classeMere);
 			} catch (ToDeclaredException e) {
 				errorMsg += e.getMessage() + "\n";
 				nouv_att = att;
@@ -189,16 +182,21 @@ public class ClasseImpl implements Classe {
 			nouv_attributs.add(nouv_att);
 		}
 		
-		this.attributs = nouv_attributs;
+		if (!errorMsg.equals(""))
+			throw new ToDeclaredException(errorMsg);
 		
-		//Parcours des méthodes
+		return nouv_attributs;
+	}
+	
+	protected static LinkedList<MethodImpl> declareMethods(LinkedList<MethodImpl> meths, List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes, Classe classeMere) throws ToDeclaredException {
+		String errorMsg = "";
 		LinkedList<MethodImpl> nouv_methodes = new LinkedList<MethodImpl>();
 		
-		for (MethodImpl methode : this.methods) {
+		for (MethodImpl methode : meths) {
 			MethodImpl nouv_methode;
 			
 			try {
-				nouv_methode = methode.toDeclared(interfaces, classes, this);
+				nouv_methode = methode.toDeclared(interfaces, classes, classeMere);
 			} catch (ToDeclaredException e) {
 				errorMsg += e.getMessage() + "\n";
 				nouv_methode = methode;
@@ -207,7 +205,34 @@ public class ClasseImpl implements Classe {
 			nouv_methodes.add(nouv_methode);
 		}
 		
-		this.methods = nouv_methodes;
+		if (!errorMsg.equals(""))
+			throw new ToDeclaredException(errorMsg);
+		
+		return nouv_methodes;
+	}
+	
+	/**
+	 * Synthesized Semantics attribute to check if the AST is well formed according
+	 * to the scope.
+	 * @return The new AST with undeclared references replaces by actual ones.
+	 */	
+	public ScopeCheckResult scopeCheck(List<InterfaceDeclaration> interfaces, List<ClasseDeclaration> classes) {
+		
+		//Déclaration des attributs
+		String errorMsg = "";
+		
+		try {
+			this.attributs = ClasseImpl.declareAttributes(this.attributs, interfaces, classes, this);
+		} catch (ToDeclaredException e) {
+			errorMsg += e.getMessage() + "\n";
+		}
+		
+		//Déclaration des méthodes
+		try {
+			this.methods = ClasseImpl.declareMethods(this.methods, interfaces, classes, this);
+		} catch (ToDeclaredException e) {
+			errorMsg += e.getMessage() + "\n";
+		}
 		
 		//Parcours des constructeurs
 		LinkedList<Constructeur> nouv_constrs = new LinkedList<Constructeur>();

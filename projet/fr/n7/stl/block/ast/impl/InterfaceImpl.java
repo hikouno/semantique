@@ -116,7 +116,7 @@ public class InterfaceImpl implements Interface {
 		/*if(this.interfaces != null) {
 			newListe.addAll(this.signaturesHeritees);
 		}*/
-		return newListe;
+		return this.signatures;
 	}
 	
 	/** Renvoie uniquement les signatures héritées. */
