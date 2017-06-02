@@ -53,7 +53,7 @@ class Poisson {
     }
     
     private int mon_attribut;
-    public boolean nageoires;
+    private boolean nageoires;
     private EtreVivant be;
 }
 
@@ -62,6 +62,7 @@ class Ordi extends Poisson implements Boisson {
     
     private int pc;
     public Poisson p;
+    private int nageoires;
     
     public Ordi() {
 		print 1;
